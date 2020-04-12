@@ -40,6 +40,9 @@ namespace MusWinService
 
         [DataMember]
         public int Round { get; set; }
+
+        [DataMember]
+        public string Error { get; set; }
     }
     [DataContract]
     public class MusTeamData

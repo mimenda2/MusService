@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MusService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:8000/MusService/MusService?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:8000/MusService/MusService?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:8000/MusService/MusService?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:8000/MusService/MusService?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/MusWinService" />
+      <xsd:import schemaLocation="http://localhost:8000/MusService/MusService?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Common.Enums" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IMusService_Login_InputMessage">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_Login_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_GetConnectedUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetConnectedUsers" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_GetConnectedUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetConnectedUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_CreateTeam_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateTeam" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_CreateTeam_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateTeamResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_StartGame_InputMessage">
+    <wsdl:part name="parameters" element="tns:StartGame" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_StartGame_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StartGameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_GetMusData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMusData" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_GetMusData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMusDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_GetCards_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCards" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_GetCards_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_ChangeCards_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeCards" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_ChangeCards_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeCardsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_ChangePoints_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangePoints" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_ChangePoints_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangePointsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_ResetRound_InputMessage">
+    <wsdl:part name="parameters" element="tns:ResetRound" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_ResetRound_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ResetRoundResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IMusService">
+    <wsdl:operation name="Login">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMusService/Login" message="tns:IMusService_Login_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMusService/LoginResponse" message="tns:IMusService_Login_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetConnectedUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMusService/GetConnectedUsers" message="tns:IMusService_GetConnectedUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMusService/GetConnectedUsersResponse" message="tns:IMusService_GetConnectedUsers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateTeam">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMusService/CreateTeam" message="tns:IMusService_CreateTeam_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMusService/CreateTeamResponse" message="tns:IMusService_CreateTeam_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StartGame">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMusService/StartGame" message="tns:IMusService_StartGame_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMusService/StartGameResponse" message="tns:IMusService_StartGame_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMusData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMusService/GetMusData" message="tns:IMusService_GetMusData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMusService/GetMusDataResponse" message="tns:IMusService_GetMusData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCards">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMusService/GetCards" message="tns:IMusService_GetCards_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMusService/GetCardsResponse" message="tns:IMusService_GetCards_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCards">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMusService/ChangeCards" message="tns:IMusService_ChangeCards_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMusService/ChangeCardsResponse" message="tns:IMusService_ChangeCards_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangePoints">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMusService/ChangePoints" message="tns:IMusService_ChangePoints_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMusService/ChangePointsResponse" message="tns:IMusService_ChangePoints_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ResetRound">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMusService/ResetRound" message="tns:IMusService_ResetRound_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMusService/ResetRoundResponse" message="tns:IMusService_ResetRound_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IMusService" type="tns:IMusService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/IMusService/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetConnectedUsers">
+      <soap:operation soapAction="http://tempuri.org/IMusService/GetConnectedUsers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateTeam">
+      <soap:operation soapAction="http://tempuri.org/IMusService/CreateTeam" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartGame">
+      <soap:operation soapAction="http://tempuri.org/IMusService/StartGame" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMusData">
+      <soap:operation soapAction="http://tempuri.org/IMusService/GetMusData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCards">
+      <soap:operation soapAction="http://tempuri.org/IMusService/GetCards" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCards">
+      <soap:operation soapAction="http://tempuri.org/IMusService/ChangeCards" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangePoints">
+      <soap:operation soapAction="http://tempuri.org/IMusService/ChangePoints" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResetRound">
+      <soap:operation soapAction="http://tempuri.org/IMusService/ResetRound" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MusService">
+    <wsdl:port name="BasicHttpBinding_IMusService" binding="tns:BasicHttpBinding_IMusService">
+      <soap:address location="http://localhost:8000/MusService/MusService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

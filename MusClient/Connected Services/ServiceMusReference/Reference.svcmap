@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="40a0ebc4-fa08-4246-b9f6-52052d0d7c1c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8000/MusService/MusService" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="MusService.wsdl" MetadataType="Wsdl" ID="999c9f50-58b5-4d74-89b0-ff9ab81ddf02" SourceId="1" SourceUrl="http://localhost:8000/MusService/MusService?wsdl" />
+    <MetadataFile FileName="MusService.xsd" MetadataType="Schema" ID="a2f52750-c72e-4c1d-a103-eb68f26f8b41" SourceId="1" SourceUrl="http://localhost:8000/MusService/MusService?xsd=xsd4" />
+    <MetadataFile FileName="MusService.disco" MetadataType="Disco" ID="145c3be1-5cb9-447e-8d6f-d78b2c6d839b" SourceId="1" SourceUrl="http://localhost:8000/MusService/MusService?disco" />
+    <MetadataFile FileName="MusService1.xsd" MetadataType="Schema" ID="84082fe5-89da-46a0-8184-e3fc379c9a46" SourceId="1" SourceUrl="http://localhost:8000/MusService/MusService?xsd=xsd2" />
+    <MetadataFile FileName="MusService2.xsd" MetadataType="Schema" ID="0200c5dd-772c-4243-95c2-e24393dafd33" SourceId="1" SourceUrl="http://localhost:8000/MusService/MusService?xsd=xsd0" />
+    <MetadataFile FileName="MusService3.xsd" MetadataType="Schema" ID="18734c84-a234-492d-bd5d-e1a5edc2c8c4" SourceId="1" SourceUrl="http://localhost:8000/MusService/MusService?xsd=xsd1" />
+    <MetadataFile FileName="MusService4.xsd" MetadataType="Schema" ID="62821968-73e0-4a31-bdaa-10b0bcb45b84" SourceId="1" SourceUrl="http://localhost:8000/MusService/MusService?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

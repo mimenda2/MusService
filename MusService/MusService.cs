@@ -15,15 +15,21 @@ namespace MusWinService
         #region Service methods
         public string Login(string userName, string gameName, string password)
         {
-            var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
-            if (game == null)
+            try
             {
-                game = new MusGame(gameName);
-                MusDatabase.Games.Add(game);
+                var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
+                if (game == null)
+                {
+                    game = new MusGame(gameName);
+                    MusDatabase.Games.Add(game);
+                }
+                if (!game.Users.Any(x => x.UserName == userName))
+                    game.Users.Add(new MusUser(userName));
             }
-            if (!game.Users.Any(x => x.UserName == userName))
-                game.Users.Add(new MusUser(userName));
-
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
             return "OK";
         }
         public List<string> GetConnectedUsers(string gameName)
@@ -37,21 +43,28 @@ namespace MusWinService
         }
         public string CreateTeam(string gameName, string teamName, string[] users)
         {
-            var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
-            if (game != null)
+            try
             {
-                var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
-                if (team == null)
+                var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
+                if (game != null)
                 {
-                    team = new MusTeam(teamName);
-                    game.Teams.Add(team);
+                    var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
+                    if (team == null)
+                    {
+                        team = new MusTeam(teamName);
+                        game.Teams.Add(team);
+                    }
+                    foreach (string user in users)
+                    {
+                        var seluser = game.Users.FirstOrDefault(x => x.UserName == user);
+                        if (seluser != null && !team.Users.Contains(seluser))
+                            team.Users.Add(seluser);
+                    }
                 }
-                foreach (string user in users)
-                {
-                    var seluser = game.Users.FirstOrDefault(x => x.UserName == user);
-                    if (seluser != null && !team.Users.Contains(seluser))
-                        team.Users.Add(seluser);
-                }
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
             }
             return "OK";
         }
@@ -68,21 +81,28 @@ namespace MusWinService
         public MusData GetMusData(string gameName)
         {
             MusData musData = new MusData();
-            var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
-            if (game != null)
+            try
             {
-                musData.MusTeams = new List<MusTeamData>();
-                foreach (var team in game.Teams)
+                var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
+                if (game != null)
                 {
-                    musData.MusTeams.Add(new MusTeamData()
+                    musData.MusTeams = new List<MusTeamData>();
+                    foreach (var team in game.Teams)
                     {
-                        TeamName = team.TeamName,
-                        UserName1 = team.Users[0].UserName,
-                        UserName2 = team.Users[1].UserName,
-                        Points = team.Puntuacion
-                    });
+                        musData.MusTeams.Add(new MusTeamData()
+                        {
+                            TeamName = team.TeamName,
+                            UserName1 = team.Users?.Count > 0 ? team.Users[0].UserName : null,
+                            UserName2 = team.Users?.Count > 1 ? team.Users[1].UserName : null,
+                            Points = team.Puntuacion
+                        });
+                    }
+                    musData.PointsToWin = game.PointsToWin;
                 }
-                musData.PointsToWin = game.PointsToWin;
+            }
+            catch (Exception ex)
+            {
+                musData.Error = ex.ToString();
             }
             return musData;
         }

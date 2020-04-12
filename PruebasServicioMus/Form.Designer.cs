@@ -98,6 +98,7 @@
             this.txtUserName.Size = new System.Drawing.Size(121, 20);
             this.txtUserName.TabIndex = 0;
             this.txtUserName.Text = "MiMenda1";
+            this.txtUserName.TextChanged += new System.EventHandler(this.txtUserName_TextChanged);
             // 
             // lblName
             // 
@@ -107,6 +108,7 @@
             this.lblName.Size = new System.Drawing.Size(96, 13);
             this.lblName.TabIndex = 1;
             this.lblName.Text = "Nombre de usuario";
+            this.lblName.Click += new System.EventHandler(this.lblName_Click);
             // 
             // btnLogin
             // 
@@ -126,6 +128,7 @@
             this.lblGameName.Size = new System.Drawing.Size(94, 13);
             this.lblGameName.TabIndex = 4;
             this.lblGameName.Text = "Nombre de partida";
+            this.lblGameName.Click += new System.EventHandler(this.lblGameName_Click);
             // 
             // txtGameName
             // 
@@ -134,6 +137,7 @@
             this.txtGameName.Size = new System.Drawing.Size(121, 20);
             this.txtGameName.TabIndex = 3;
             this.txtGameName.Text = "LAS MESAS";
+            this.txtGameName.TextChanged += new System.EventHandler(this.txtGameName_TextChanged);
             // 
             // btngetConnectedUsers
             // 

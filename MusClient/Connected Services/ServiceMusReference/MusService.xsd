@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Common.Enums" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Common.Enums" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfMusCard">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MusCard" type="tns:MusCard" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMusCard" nillable="true" type="tns:ArrayOfMusCard" />
+  <xs:simpleType name="MusCard">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="O1" />
+      <xs:enumeration value="O2" />
+      <xs:enumeration value="O3" />
+      <xs:enumeration value="O4" />
+      <xs:enumeration value="O5" />
+      <xs:enumeration value="O6" />
+      <xs:enumeration value="O7" />
+      <xs:enumeration value="O10" />
+      <xs:enumeration value="O11" />
+      <xs:enumeration value="O12" />
+      <xs:enumeration value="C1" />
+      <xs:enumeration value="C2" />
+      <xs:enumeration value="C3" />
+      <xs:enumeration value="C4" />
+      <xs:enumeration value="C5" />
+      <xs:enumeration value="C6" />
+      <xs:enumeration value="C7" />
+      <xs:enumeration value="C10" />
+      <xs:enumeration value="C11" />
+      <xs:enumeration value="C12" />
+      <xs:enumeration value="E1" />
+      <xs:enumeration value="E2" />
+      <xs:enumeration value="E3" />
+      <xs:enumeration value="E4" />
+      <xs:enumeration value="E5" />
+      <xs:enumeration value="E6" />
+      <xs:enumeration value="E7" />
+      <xs:enumeration value="E10" />
+      <xs:enumeration value="E11" />
+      <xs:enumeration value="E12" />
+      <xs:enumeration value="B1" />
+      <xs:enumeration value="B2" />
+      <xs:enumeration value="B3" />
+      <xs:enumeration value="B4" />
+      <xs:enumeration value="B5" />
+      <xs:enumeration value="B6" />
+      <xs:enumeration value="B7" />
+      <xs:enumeration value="B10" />
+      <xs:enumeration value="B11" />
+      <xs:enumeration value="B12" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="MusCard" nillable="true" type="tns:MusCard" />
+</xs:schema>

@@ -255,5 +255,25 @@ namespace PruebasServicioMus
                 }
             }
         }
+
+        private void txtGameName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblGameName_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblName_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtUserName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

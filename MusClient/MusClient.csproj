@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{324DA7C0-BCF6-4861-B038-2CD9CA0AB312}</ProjectGuid>
+    <ProjectGuid>{F7417EC0-EFCA-480E-B4C9-24D996366586}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>PruebasServicioMus</RootNamespace>
-    <AssemblyName>PruebasServicioMus</AssemblyName>
+    <RootNamespace>MusClient</RootNamespace>
+    <AssemblyName>MusClient</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\DebugPruebas\</OutputPath>
+    <OutputPath>bin\DebugClient\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -27,7 +27,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\ReleasePruebas\</OutputPath>
+    <OutputPath>bin\ReleaseClient\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -48,22 +48,42 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connected Services\MusServiceReference\Reference.cs">
+    <Compile Include="Connected Services\ServiceMusReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Form.cs">
+    <Compile Include="Interface\IGeneralData.cs" />
+    <Compile Include="MusClient.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form.Designer.cs">
-      <DependentUpon>Form.cs</DependentUpon>
+    <Compile Include="MusClient.Designer.cs">
+      <DependentUpon>MusClient.cs</DependentUpon>
     </Compile>
+    <Compile Include="Enum\MusState.cs" />
     <Compile Include="MyServiceClient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form.resx">
-      <DependentUpon>Form.cs</DependentUpon>
+    <Compile Include="User controls\GameControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User controls\GameControl.Designer.cs">
+      <DependentUpon>GameControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User controls\LoginControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User controls\LoginControl.Designer.cs">
+      <DependentUpon>LoginControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User controls\MakeTeamsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User controls\MakeTeamsControl.Designer.cs">
+      <DependentUpon>MakeTeamsControl.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="MusClient.resx">
+      <DependentUpon>MusClient.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -74,24 +94,33 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="Connected Services\MusServiceReference\MusService.wsdl" />
-    <None Include="Connected Services\MusServiceReference\MusService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\MusServiceReference\MusService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\MusServiceReference\MusService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\MusServiceReference\MusService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\MusServiceReference\MusService4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\MusServiceReference\PruebasServicioMus.MusServiceReference.MusData.datasource">
+    <EmbeddedResource Include="User controls\GameControl.resx">
+      <DependentUpon>GameControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User controls\LoginControl.resx">
+      <DependentUpon>LoginControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User controls\MakeTeamsControl.resx">
+      <DependentUpon>MakeTeamsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Connected Services\ServiceMusReference\MusClient.ServiceMusReference.MusData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ServiceMusReference\MusService.wsdl" />
+    <None Include="Connected Services\ServiceMusReference\MusService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceMusReference\MusService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceMusReference\MusService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceMusReference\MusService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceMusReference\MusService4.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -110,28 +139,28 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\MusServiceReference\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\MusServiceReference\MusService.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\MusServiceReference\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\MusServiceReference\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\MusServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{4764d923-a4c9-46cb-8ecd-d5281dc8cefe}</Project>
       <Name>Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\ServiceMusReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServiceMusReference\MusService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServiceMusReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServiceMusReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServiceMusReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
