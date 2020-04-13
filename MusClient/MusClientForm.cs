@@ -159,8 +159,11 @@ namespace MusClient
 
         void FinishGame()
         {
-            using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
-                c.FinishGame(generalData.GameName);
+            if (generalData != null)
+            {
+                using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
+                    c.FinishGame(generalData.GameName);
+            }
         }
 
         MusState State

@@ -83,6 +83,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="gameName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="teamName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -98,6 +99,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="gameName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="teamName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
         <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Common.Enums" minOccurs="0" name="discarded" nillable="true" type="q5:ArrayOfMusCard" />
       </xs:sequence>

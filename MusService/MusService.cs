@@ -20,11 +20,16 @@ namespace MusWinService
                 var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
                 if (game == null)
                 {
+                    mySource.TraceMessage(TraceEventType.Information, 58, $"Create game {gameName}");
+
                     game = new MusGame(gameName);
                     MusDatabase.Games.Add(game);
                 }
                 if (!game.Users.Any(x => x.UserName == userName))
+                {
+                    mySource.TraceMessage(TraceEventType.Information, 58, $"Añado el user {userName} al game {gameName}");
                     game.Users.Add(new MusUser(userName));
+                }
             }
             catch (Exception ex)
             {
@@ -52,7 +57,12 @@ namespace MusWinService
                     if (team == null)
                     {
                         if (game.Teams.Count == 2)
+                        {
+                            mySource.TraceMessage(TraceEventType.Warning, 58, $"No se crea el team {teamName} porque ya hay otros dos");
                             return "YA SE HAN CREADO OTROS DOS EQUIPOS";
+                        }
+
+                        mySource.TraceMessage(TraceEventType.Information, 58, $"Create team {teamName}");
 
                         team = new MusTeam(teamName);
                         game.Teams.Add(team);
@@ -61,7 +71,17 @@ namespace MusWinService
                     {
                         var seluser = game.Users.FirstOrDefault(x => x.UserName == user);
                         if (seluser != null && !team.Users.Contains(seluser))
+                        {
+                            if (team.Users.Count == 2)
+                            {
+                                mySource.TraceMessage(TraceEventType.Warning, 58, $"No se añade el user {user} al team {teamName} porque ya hay otros dos");
+                                return "EL EQUIPO YA TIENE DOS MIEMBROS";
+                            }
+
+                            mySource.TraceMessage(TraceEventType.Information, 58, $"Añadir el user {user} al team {teamName}");
+
                             team.Users.Add(seluser);
+                        }
                     }
                 }
             }
@@ -103,7 +123,9 @@ namespace MusWinService
                             UserName2 = team.Users?.Count > 1 ? team.Users[1].UserName : null,
                             RoundUserName1 = team.Users?.Count > 0 ? team.Users[0].CurrentRound : 0,
                             RoundUserName2 = team.Users?.Count > 1 ? team.Users[1].CurrentRound : 0,
-                            Points = team.Puntuacion
+                            Points = team.Puntuacion,
+                            CardsUser1 = getCards && team.Users?.Count > 0 ? team.Users[0].Cards : null,
+                            CardsUser2 = getCards && team.Users?.Count > 1 ? team.Users[1].Cards : null
                         });
                     }
                     musData.PointsToWin = game.PointsToWin;
@@ -118,18 +140,24 @@ namespace MusWinService
 
         public MusData GetAllUserCards(string gameName, string userName)
         {
+            var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
+            AddTrace(game, $"{userName} pide mostrar cartas de todos los jugadores");
             return GetMusData(gameName, userName, true);
         }
-        public List<MusCard> GetCards(string gameName, string userName)
+        public List<MusCard> GetCards(string gameName, string teamName, string userName)
         {
-            return GetCards(gameName, userName, 4);
+            return GetCards(gameName, teamName, userName, 4);
         }
-        public List<MusCard> ChangeCards(string gameName, string userName, List<MusCard> discarded)
+        public List<MusCard> ChangeCards(string gameName, string teamName, string userName, List<MusCard> discarded)
         {
             var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
-            game.Traces.Add($"{userName} se descarta {discarded?.Count} cartas");
+            var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
+            var user = team.Users.FirstOrDefault(x => x.UserName == userName);
+            foreach(MusCard discard in discarded)
+                user.Cards.Remove(discard);
+            AddTrace(game, $"{userName} se descarta {discarded?.Count} cartas");
             game.Cards.CardsDiscarded.AddRange(discarded);
-            return GetCards(gameName, userName, discarded.Count);
+            return GetCards(gameName, teamName, userName, discarded.Count);
         }
         public void ChangePoints(string gameName, string teamName, string userName, int points)
         {
@@ -137,19 +165,24 @@ namespace MusWinService
             var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
             if (team.Puntuacion != points)
             {
-                game.Traces.Add($"{userName} va a cambiar los puntos del equipo {teamName}: {points}");
+                AddTrace(game, $"{userName} va a cambiar los puntos del equipo {teamName}: {points}");
                 team.Puntuacion = points;
             }
         }
         public void ResetRound(string gameName)
         {
             var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
+            foreach (MusTeam t in game.Teams)
+            {
+                foreach (MusUser u in t.Users)
+                    u.Cards.Clear();
+            }
             game.Cards = new MusCards();
         }
         public void NextRound(string gameName, string teamName, string userName, int round)
         {
             var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
-            game.Traces.Add($"{userName} va a empezar siguiente ronda");
+            AddTrace(game, $"{userName} va a empezar siguiente ronda");
             var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
             var user = team.Users.FirstOrDefault(x => x.UserName == userName);
             user.CurrentRound = round;
@@ -199,9 +232,14 @@ namespace MusWinService
             }
             catch { }
         }
+        static void AddTrace(MusGame game, string trace)
+        {
+            mySource.TraceMessage(TraceEventType.Information, 58, trace);
+            game.Traces.Add($"{DateTime.Now.ToString("HH:mm:ss")} {trace}");
+        }
         #endregion  
 
-        static List<MusCard> GetCards(string gameName, string userName, int numCards)
+        static List<MusCard> GetCards(string gameName, string teamName, string userName, int numCards)
         {
             List<MusCard> retVal = new List<MusCard>();
             try
@@ -209,16 +247,20 @@ namespace MusWinService
                 var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
                 if (game != null)
                 {
+                    var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
+                    var user = team.Users.FirstOrDefault(x => x.UserName == userName);
                     for (int i = 0; i < numCards; i++)
                     {
                         if (game.Cards.CardsToPlay.Count == 0)
                         {
+                            AddTrace(game, "Se vuelven a barajar las cartas descartadas");
                             game.Cards.CardsToPlay.AddRange(game.Cards.CardsDiscarded);
                             game.Cards.CardsDiscarded.Clear();
                         }
                         int randomIndex = rnd.Next(game.Cards.CardsToPlay.Count - 1);
                         MusCard card = game.Cards.CardsToPlay[randomIndex];
                         retVal.Add(card);
+                        user.Cards.Add(card);
                         game.Cards.CardsToPlay.Remove(card);
                     }
                     mySource.TraceMessage(TraceEventType.Information, 58, $"QUEDAN {game.Cards.CardsToPlay.Count} CARTAS");

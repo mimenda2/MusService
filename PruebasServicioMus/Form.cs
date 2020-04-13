@@ -126,7 +126,9 @@ namespace PruebasServicioMus
         { 
             using (MyServiceClient c = new MyServiceClient(serverIP))
             {
-                MusCard[] cards = c.GetCards(txtGameName.Text, userName);
+                MusCard[] cards = c.GetCards(txtGameName.Text,
+                    userName == txtPlayer1B.Text || userName == txtPlayer2B.Text ? txtTeamName2.Text : txtTeamName1.Text,
+                    userName);
                 TextBox card1 = txtPlayer1ACard1;
                 TextBox card2 = txtPlayer1ACard2;
                 TextBox card3 = txtPlayer1ACard3;
@@ -200,7 +202,7 @@ namespace PruebasServicioMus
                     discards.Add((MusCard)Enum.Parse(typeof(MusCard), txtPlayer2BCard3.Text));
                 if (chkPlayer2BCard4.Checked)
                     discards.Add((MusCard)Enum.Parse(typeof(MusCard), txtPlayer2BCard4.Text));
-                var cards = c.ChangeCards(txtGameName.Text, txtPlayer2B.Text, discards.ToArray());
+                var cards = c.ChangeCards(txtGameName.Text, txtTeamName2.Text, txtPlayer2B.Text, discards.ToArray());
                 int i = 0;
                 if (chkPlayer2BCard1.Checked)
                 {
@@ -231,7 +233,7 @@ namespace PruebasServicioMus
                     discards.Add((MusCard)Enum.Parse(typeof(MusCard), txtPlayer1BCard3.Text));
                 if (chkPlayer1BCard4.Checked)
                     discards.Add((MusCard)Enum.Parse(typeof(MusCard), txtPlayer1BCard4.Text));
-                cards = c.ChangeCards(txtGameName.Text, txtPlayer1B.Text, discards.ToArray());
+                cards = c.ChangeCards(txtGameName.Text, txtTeamName1.Text, txtPlayer1B.Text, discards.ToArray());
                 i = 0;
                 if (chkPlayer1BCard1.Checked)
                 {

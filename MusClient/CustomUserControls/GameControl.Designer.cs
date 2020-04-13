@@ -39,11 +39,11 @@
             this.btnNextRound = new System.Windows.Forms.Button();
             this.btnDiscard = new System.Windows.Forms.Button();
             this.txtTraces = new System.Windows.Forms.TextBox();
+            this.btnShowCards = new System.Windows.Forms.Button();
             this.playerControl4 = new MusClient.CustomUserControls.PlayerControl();
             this.playerControl2 = new MusClient.CustomUserControls.PlayerControl();
             this.playerControl3 = new MusClient.CustomUserControls.PlayerControl();
             this.playerControl1 = new MusClient.CustomUserControls.PlayerControl();
-            this.btnShowCards = new System.Windows.Forms.Button();
             this.grpPoints.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudTeam2Points)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudTeam1Points)).BeginInit();
@@ -130,7 +130,7 @@
             // 
             this.btnNextRound.Location = new System.Drawing.Point(64, 9);
             this.btnNextRound.Name = "btnNextRound";
-            this.btnNextRound.Size = new System.Drawing.Size(75, 45);
+            this.btnNextRound.Size = new System.Drawing.Size(104, 54);
             this.btnNextRound.TabIndex = 10;
             this.btnNextRound.Text = "EMPEZAR!";
             this.btnNextRound.UseVisualStyleBackColor = true;
@@ -152,8 +152,19 @@
             this.txtTraces.Location = new System.Drawing.Point(350, 240);
             this.txtTraces.Multiline = true;
             this.txtTraces.Name = "txtTraces";
+            this.txtTraces.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtTraces.Size = new System.Drawing.Size(353, 265);
             this.txtTraces.TabIndex = 12;
+            // 
+            // btnShowCards
+            // 
+            this.btnShowCards.Location = new System.Drawing.Point(26, 706);
+            this.btnShowCards.Name = "btnShowCards";
+            this.btnShowCards.Size = new System.Drawing.Size(75, 34);
+            this.btnShowCards.TabIndex = 13;
+            this.btnShowCards.Text = "Enseñar cartas";
+            this.btnShowCards.UseVisualStyleBackColor = true;
+            this.btnShowCards.Click += new System.EventHandler(this.btnShowCards_Click);
             // 
             // playerControl4
             // 
@@ -162,7 +173,7 @@
             this.playerControl4.Location = new System.Drawing.Point(55, 150);
             this.playerControl4.Name = "playerControl4";
             this.playerControl4.Position = MusClient.Enum.CardPosition.Left;
-            this.playerControl4.Size = new System.Drawing.Size(171, 469);
+            this.playerControl4.Size = new System.Drawing.Size(170, 430);
             this.playerControl4.TabIndex = 3;
             this.playerControl4.UserNameAndTeam = null;
             // 
@@ -173,7 +184,7 @@
             this.playerControl2.Location = new System.Drawing.Point(801, 150);
             this.playerControl2.Name = "playerControl2";
             this.playerControl2.Position = MusClient.Enum.CardPosition.Right;
-            this.playerControl2.Size = new System.Drawing.Size(171, 469);
+            this.playerControl2.Size = new System.Drawing.Size(170, 430);
             this.playerControl2.TabIndex = 2;
             this.playerControl2.UserNameAndTeam = null;
             // 
@@ -184,7 +195,7 @@
             this.playerControl3.Location = new System.Drawing.Point(277, 38);
             this.playerControl3.Name = "playerControl3";
             this.playerControl3.Position = MusClient.Enum.CardPosition.Top;
-            this.playerControl3.Size = new System.Drawing.Size(469, 171);
+            this.playerControl3.Size = new System.Drawing.Size(430, 170);
             this.playerControl3.TabIndex = 1;
             this.playerControl3.UserNameAndTeam = null;
             // 
@@ -195,19 +206,9 @@
             this.playerControl1.Location = new System.Drawing.Point(277, 539);
             this.playerControl1.Name = "playerControl1";
             this.playerControl1.Position = MusClient.Enum.CardPosition.Bottom;
-            this.playerControl1.Size = new System.Drawing.Size(469, 171);
+            this.playerControl1.Size = new System.Drawing.Size(430, 170);
             this.playerControl1.TabIndex = 0;
             this.playerControl1.UserNameAndTeam = null;
-            // 
-            // btnShowCards
-            // 
-            this.btnShowCards.Location = new System.Drawing.Point(23, 720);
-            this.btnShowCards.Name = "btnShowCards";
-            this.btnShowCards.Size = new System.Drawing.Size(75, 34);
-            this.btnShowCards.TabIndex = 13;
-            this.btnShowCards.Text = "Enseñar cartas";
-            this.btnShowCards.UseVisualStyleBackColor = true;
-            this.btnShowCards.Click += new System.EventHandler(this.btnShowCards_Click);
             // 
             // GameControl
             // 
