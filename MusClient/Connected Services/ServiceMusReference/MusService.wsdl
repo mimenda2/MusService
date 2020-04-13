@@ -63,6 +63,30 @@
   <wsdl:message name="IMusService_ResetRound_OutputMessage">
     <wsdl:part name="parameters" element="tns:ResetRoundResponse" />
   </wsdl:message>
+  <wsdl:message name="IMusService_NextRound_InputMessage">
+    <wsdl:part name="parameters" element="tns:NextRound" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_NextRound_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NextRoundResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_FinishGame_InputMessage">
+    <wsdl:part name="parameters" element="tns:FinishGame" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_FinishGame_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FinishGameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_GetTraces_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTraces" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_GetTraces_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTracesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_GetAllUserCards_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllUserCards" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_GetAllUserCards_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllUserCardsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IMusService">
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IMusService/Login" message="tns:IMusService_Login_InputMessage" />
@@ -99,6 +123,22 @@
     <wsdl:operation name="ResetRound">
       <wsdl:input wsaw:Action="http://tempuri.org/IMusService/ResetRound" message="tns:IMusService_ResetRound_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMusService/ResetRoundResponse" message="tns:IMusService_ResetRound_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NextRound">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMusService/NextRound" message="tns:IMusService_NextRound_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMusService/NextRoundResponse" message="tns:IMusService_NextRound_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FinishGame">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMusService/FinishGame" message="tns:IMusService_FinishGame_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMusService/FinishGameResponse" message="tns:IMusService_FinishGame_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTraces">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMusService/GetTraces" message="tns:IMusService_GetTraces_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMusService/GetTracesResponse" message="tns:IMusService_GetTraces_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUserCards">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMusService/GetAllUserCards" message="tns:IMusService_GetAllUserCards_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMusService/GetAllUserCardsResponse" message="tns:IMusService_GetAllUserCards_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IMusService" type="tns:IMusService">
@@ -177,6 +217,42 @@
     </wsdl:operation>
     <wsdl:operation name="ResetRound">
       <soap:operation soapAction="http://tempuri.org/IMusService/ResetRound" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NextRound">
+      <soap:operation soapAction="http://tempuri.org/IMusService/NextRound" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FinishGame">
+      <soap:operation soapAction="http://tempuri.org/IMusService/FinishGame" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTraces">
+      <soap:operation soapAction="http://tempuri.org/IMusService/GetTraces" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUserCards">
+      <soap:operation soapAction="http://tempuri.org/IMusService/GetAllUserCards" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

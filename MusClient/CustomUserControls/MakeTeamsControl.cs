@@ -11,7 +11,7 @@ using MusClient.Interface;
 using System.Threading;
 using MusClient.ServiceMusReference;
 
-namespace MusClient.User_controls
+namespace MusClient.CustomUserControls
 {
     public partial class MakeTeamsControl : UserControl
     {
@@ -21,12 +21,12 @@ namespace MusClient.User_controls
             InitializeComponent();
             this.generalData = generalData;
         }
-
-        private void btnStartGame_Click(object sender, EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
+            CheckTeamsCreated();
 
+            base.OnLoad(e);
         }
-
         private void btnOK_Click(object sender, EventArgs e)
         {
             generalData.TeamName = cmbTeam.Text;
@@ -49,13 +49,20 @@ namespace MusClient.User_controls
             {
                 while (true)
                 {
-                    MusData data = c.GetMusData(generalData.GameName);
+                    data = c.GetMusData(generalData.GameName, generalData.UserName);
                     if (data.MusTeams.Length == 2 &&
                         !string.IsNullOrEmpty(data.MusTeams[0].UserName1) &&
                         !string.IsNullOrEmpty(data.MusTeams[0].UserName2) &&
                         !string.IsNullOrEmpty(data.MusTeams[1].UserName1) &&
                         !string.IsNullOrEmpty(data.MusTeams[1].UserName2))
                     {
+                        if (string.IsNullOrEmpty(generalData.TeamName))
+                        {
+                            if (data.MusTeams[0].UserName1 == generalData.UserName || data.MusTeams[0].UserName2 == generalData.UserName)
+                                generalData.TeamName = data.MusTeams[0].TeamName;
+                            else
+                                generalData.TeamName = data.MusTeams[1].TeamName;
+                        }
                         TeamsCreated?.Invoke(this, EventArgs.Empty);
                         break;
                     }
@@ -68,6 +75,12 @@ namespace MusClient.User_controls
                 }
             }
         }
+
+        public MusData MusData
+        {
+            get { return data; }
+        }
+        MusData data;
         public event EventHandler TeamsCreated;
     }
 }

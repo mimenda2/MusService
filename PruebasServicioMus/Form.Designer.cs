@@ -170,7 +170,7 @@
             this.txtTeamName1.Name = "txtTeamName1";
             this.txtTeamName1.Size = new System.Drawing.Size(121, 20);
             this.txtTeamName1.TabIndex = 8;
-            this.txtTeamName1.Text = "A";
+            this.txtTeamName1.Text = "Equipo 1";
             // 
             // label1
             // 
@@ -248,7 +248,7 @@
             this.txtTeamName2.Name = "txtTeamName2";
             this.txtTeamName2.Size = new System.Drawing.Size(121, 20);
             this.txtTeamName2.TabIndex = 14;
-            this.txtTeamName2.Text = "B";
+            this.txtTeamName2.Text = "Equipo 2";
             // 
             // txtTeamUserB1
             // 

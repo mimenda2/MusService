@@ -23,6 +23,9 @@ namespace PruebasServicioMus.MusServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ErrorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private PruebasServicioMus.MusServiceReference.MusTeamData[] MusTeamsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -38,6 +41,19 @@ namespace PruebasServicioMus.MusServiceReference {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Error {
+            get {
+                return this.ErrorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorField, value) != true)) {
+                    this.ErrorField = value;
+                    this.RaisePropertyChanged("Error");
+                }
             }
         }
         
@@ -100,7 +116,16 @@ namespace PruebasServicioMus.MusServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Common.Enums.MusCard[] CardsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int PointsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int RoundUserName1Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int RoundUserName2Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TeamNameField;
@@ -122,6 +147,19 @@ namespace PruebasServicioMus.MusServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public Common.Enums.MusCard[] Cards {
+            get {
+                return this.CardsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CardsField, value) != true)) {
+                    this.CardsField = value;
+                    this.RaisePropertyChanged("Cards");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public int Points {
             get {
                 return this.PointsField;
@@ -130,6 +168,32 @@ namespace PruebasServicioMus.MusServiceReference {
                 if ((this.PointsField.Equals(value) != true)) {
                     this.PointsField = value;
                     this.RaisePropertyChanged("Points");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int RoundUserName1 {
+            get {
+                return this.RoundUserName1Field;
+            }
+            set {
+                if ((this.RoundUserName1Field.Equals(value) != true)) {
+                    this.RoundUserName1Field = value;
+                    this.RaisePropertyChanged("RoundUserName1");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int RoundUserName2 {
+            get {
+                return this.RoundUserName2Field;
+            }
+            set {
+                if ((this.RoundUserName2Field.Equals(value) != true)) {
+                    this.RoundUserName2Field = value;
+                    this.RaisePropertyChanged("RoundUserName2");
                 }
             }
         }
@@ -212,10 +276,10 @@ namespace PruebasServicioMus.MusServiceReference {
         System.Threading.Tasks.Task<string> StartGameAsync(string gameName, int pointsToWin);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/GetMusData", ReplyAction="http://tempuri.org/IMusService/GetMusDataResponse")]
-        PruebasServicioMus.MusServiceReference.MusData GetMusData(string gameName);
+        PruebasServicioMus.MusServiceReference.MusData GetMusData(string gameName, string userName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/GetMusData", ReplyAction="http://tempuri.org/IMusService/GetMusDataResponse")]
-        System.Threading.Tasks.Task<PruebasServicioMus.MusServiceReference.MusData> GetMusDataAsync(string gameName);
+        System.Threading.Tasks.Task<PruebasServicioMus.MusServiceReference.MusData> GetMusDataAsync(string gameName, string userName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/GetCards", ReplyAction="http://tempuri.org/IMusService/GetCardsResponse")]
         Common.Enums.MusCard[] GetCards(string gameName, string userName);
@@ -230,16 +294,40 @@ namespace PruebasServicioMus.MusServiceReference {
         System.Threading.Tasks.Task<Common.Enums.MusCard[]> ChangeCardsAsync(string gameName, string userName, Common.Enums.MusCard[] discarded);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/ChangePoints", ReplyAction="http://tempuri.org/IMusService/ChangePointsResponse")]
-        void ChangePoints(string gameName, string teamName, int points);
+        void ChangePoints(string gameName, string teamName, string userName, int points);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/ChangePoints", ReplyAction="http://tempuri.org/IMusService/ChangePointsResponse")]
-        System.Threading.Tasks.Task ChangePointsAsync(string gameName, string teamName, int points);
+        System.Threading.Tasks.Task ChangePointsAsync(string gameName, string teamName, string userName, int points);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/ResetRound", ReplyAction="http://tempuri.org/IMusService/ResetRoundResponse")]
         void ResetRound(string gameName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/ResetRound", ReplyAction="http://tempuri.org/IMusService/ResetRoundResponse")]
         System.Threading.Tasks.Task ResetRoundAsync(string gameName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/NextRound", ReplyAction="http://tempuri.org/IMusService/NextRoundResponse")]
+        void NextRound(string gameName, string teamName, string userName, int round);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/NextRound", ReplyAction="http://tempuri.org/IMusService/NextRoundResponse")]
+        System.Threading.Tasks.Task NextRoundAsync(string gameName, string teamName, string userName, int round);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/FinishGame", ReplyAction="http://tempuri.org/IMusService/FinishGameResponse")]
+        void FinishGame(string gameName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/FinishGame", ReplyAction="http://tempuri.org/IMusService/FinishGameResponse")]
+        System.Threading.Tasks.Task FinishGameAsync(string gameName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/GetTraces", ReplyAction="http://tempuri.org/IMusService/GetTracesResponse")]
+        string[] GetTraces(string gameName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/GetTraces", ReplyAction="http://tempuri.org/IMusService/GetTracesResponse")]
+        System.Threading.Tasks.Task<string[]> GetTracesAsync(string gameName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/GetAllUserCards", ReplyAction="http://tempuri.org/IMusService/GetAllUserCardsResponse")]
+        PruebasServicioMus.MusServiceReference.MusData GetAllUserCards(string gameName, string userName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/GetAllUserCards", ReplyAction="http://tempuri.org/IMusService/GetAllUserCardsResponse")]
+        System.Threading.Tasks.Task<PruebasServicioMus.MusServiceReference.MusData> GetAllUserCardsAsync(string gameName, string userName);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -301,12 +389,12 @@ namespace PruebasServicioMus.MusServiceReference {
             return base.Channel.StartGameAsync(gameName, pointsToWin);
         }
         
-        public PruebasServicioMus.MusServiceReference.MusData GetMusData(string gameName) {
-            return base.Channel.GetMusData(gameName);
+        public PruebasServicioMus.MusServiceReference.MusData GetMusData(string gameName, string userName) {
+            return base.Channel.GetMusData(gameName, userName);
         }
         
-        public System.Threading.Tasks.Task<PruebasServicioMus.MusServiceReference.MusData> GetMusDataAsync(string gameName) {
-            return base.Channel.GetMusDataAsync(gameName);
+        public System.Threading.Tasks.Task<PruebasServicioMus.MusServiceReference.MusData> GetMusDataAsync(string gameName, string userName) {
+            return base.Channel.GetMusDataAsync(gameName, userName);
         }
         
         public Common.Enums.MusCard[] GetCards(string gameName, string userName) {
@@ -325,12 +413,12 @@ namespace PruebasServicioMus.MusServiceReference {
             return base.Channel.ChangeCardsAsync(gameName, userName, discarded);
         }
         
-        public void ChangePoints(string gameName, string teamName, int points) {
-            base.Channel.ChangePoints(gameName, teamName, points);
+        public void ChangePoints(string gameName, string teamName, string userName, int points) {
+            base.Channel.ChangePoints(gameName, teamName, userName, points);
         }
         
-        public System.Threading.Tasks.Task ChangePointsAsync(string gameName, string teamName, int points) {
-            return base.Channel.ChangePointsAsync(gameName, teamName, points);
+        public System.Threading.Tasks.Task ChangePointsAsync(string gameName, string teamName, string userName, int points) {
+            return base.Channel.ChangePointsAsync(gameName, teamName, userName, points);
         }
         
         public void ResetRound(string gameName) {
@@ -339,6 +427,38 @@ namespace PruebasServicioMus.MusServiceReference {
         
         public System.Threading.Tasks.Task ResetRoundAsync(string gameName) {
             return base.Channel.ResetRoundAsync(gameName);
+        }
+        
+        public void NextRound(string gameName, string teamName, string userName, int round) {
+            base.Channel.NextRound(gameName, teamName, userName, round);
+        }
+        
+        public System.Threading.Tasks.Task NextRoundAsync(string gameName, string teamName, string userName, int round) {
+            return base.Channel.NextRoundAsync(gameName, teamName, userName, round);
+        }
+        
+        public void FinishGame(string gameName) {
+            base.Channel.FinishGame(gameName);
+        }
+        
+        public System.Threading.Tasks.Task FinishGameAsync(string gameName) {
+            return base.Channel.FinishGameAsync(gameName);
+        }
+        
+        public string[] GetTraces(string gameName) {
+            return base.Channel.GetTraces(gameName);
+        }
+        
+        public System.Threading.Tasks.Task<string[]> GetTracesAsync(string gameName) {
+            return base.Channel.GetTracesAsync(gameName);
+        }
+        
+        public PruebasServicioMus.MusServiceReference.MusData GetAllUserCards(string gameName, string userName) {
+            return base.Channel.GetAllUserCards(gameName, userName);
+        }
+        
+        public System.Threading.Tasks.Task<PruebasServicioMus.MusServiceReference.MusData> GetAllUserCardsAsync(string gameName, string userName) {
+            return base.Channel.GetAllUserCardsAsync(gameName, userName);
         }
     }
 }

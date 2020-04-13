@@ -16,7 +16,7 @@ namespace MusClient
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MusClient());
+            Application.Run(new MusClientForm());
         }
     }
 }

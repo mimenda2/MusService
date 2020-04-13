@@ -1,6 +1,6 @@
-﻿namespace MusClient.User_controls
+﻿namespace MusClient.CustomUserControls
 {
-    partial class GameControl
+    partial class CardControl
     {
         /// <summary> 
         /// Variable del diseñador necesaria.
@@ -28,18 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.chkDiscard = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
-            // GameControl
+            // chkDiscard
+            // 
+            this.chkDiscard.AutoSize = true;
+            this.chkDiscard.Location = new System.Drawing.Point(70, 133);
+            this.chkDiscard.Name = "chkDiscard";
+            this.chkDiscard.Size = new System.Drawing.Size(15, 14);
+            this.chkDiscard.TabIndex = 0;
+            this.chkDiscard.UseVisualStyleBackColor = true;
+            this.chkDiscard.Visible = false;
+            // 
+            // CardControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "GameControl";
-            this.Size = new System.Drawing.Size(404, 257);
+            this.Controls.Add(this.chkDiscard);
+            this.Name = "CardControl";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        private System.Windows.Forms.CheckBox chkDiscard;
     }
 }

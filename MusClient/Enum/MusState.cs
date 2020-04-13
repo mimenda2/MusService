@@ -13,5 +13,8 @@ namespace MusClient
         WaitingPlayers,
         MakeTeams,
         StartGame,
+        NextRoundRequest,
+        NextRound,
+        FinishGame
     }
 }

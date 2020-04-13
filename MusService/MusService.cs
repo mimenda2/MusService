@@ -51,6 +51,9 @@ namespace MusWinService
                     var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
                     if (team == null)
                     {
+                        if (game.Teams.Count == 2)
+                            return "YA SE HAN CREADO OTROS DOS EQUIPOS";
+
                         team = new MusTeam(teamName);
                         game.Teams.Add(team);
                     }
@@ -78,7 +81,11 @@ namespace MusWinService
             return "OK";
         }
 
-        public MusData GetMusData(string gameName)
+        public MusData GetMusData(string gameName, string userName)
+        {
+            return GetMusData(gameName, userName, false);
+        }
+        MusData GetMusData(string gameName, string userName, bool getCards)
         {
             MusData musData = new MusData();
             try
@@ -94,6 +101,8 @@ namespace MusWinService
                             TeamName = team.TeamName,
                             UserName1 = team.Users?.Count > 0 ? team.Users[0].UserName : null,
                             UserName2 = team.Users?.Count > 1 ? team.Users[1].UserName : null,
+                            RoundUserName1 = team.Users?.Count > 0 ? team.Users[0].CurrentRound : 0,
+                            RoundUserName2 = team.Users?.Count > 1 ? team.Users[1].CurrentRound : 0,
                             Points = team.Puntuacion
                         });
                     }
@@ -107,6 +116,10 @@ namespace MusWinService
             return musData;
         }
 
+        public MusData GetAllUserCards(string gameName, string userName)
+        {
+            return GetMusData(gameName, userName, true);
+        }
         public List<MusCard> GetCards(string gameName, string userName)
         {
             return GetCards(gameName, userName, 4);
@@ -114,20 +127,56 @@ namespace MusWinService
         public List<MusCard> ChangeCards(string gameName, string userName, List<MusCard> discarded)
         {
             var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
+            game.Traces.Add($"{userName} se descarta {discarded?.Count} cartas");
             game.Cards.CardsDiscarded.AddRange(discarded);
             return GetCards(gameName, userName, discarded.Count);
         }
-        public void ChangePoints(string gameName, string teamName, int points)
+        public void ChangePoints(string gameName, string teamName, string userName, int points)
         {
             var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
             var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
-            team.Puntuacion = points;
+            if (team.Puntuacion != points)
+            {
+                game.Traces.Add($"{userName} va a cambiar los puntos del equipo {teamName}: {points}");
+                team.Puntuacion = points;
+            }
         }
         public void ResetRound(string gameName)
         {
             var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
             game.Cards = new MusCards();
         }
+        public void NextRound(string gameName, string teamName, string userName, int round)
+        {
+            var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
+            game.Traces.Add($"{userName} va a empezar siguiente ronda");
+            var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
+            var user = team.Users.FirstOrDefault(x => x.UserName == userName);
+            user.CurrentRound = round;
+            bool allInSameRound = true;
+            foreach (var t in game.Teams)
+            {
+                if (team.Users.Any(x => x.CurrentRound != round))
+                {
+                    allInSameRound = false;
+                    break;
+                }
+            }
+            if (allInSameRound)
+                ResetRound(gameName);
+        }
+        public void FinishGame(string gameName)
+        {
+            var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
+            if (game != null)
+                MusDatabase.Games.Remove(game);
+        }
+        public List<string> GetTraces(string gameName)
+        {
+            var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
+            return game.Traces;
+        }
+
         #endregion
 
         #region Traces

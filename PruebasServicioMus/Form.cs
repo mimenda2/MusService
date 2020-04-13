@@ -71,7 +71,7 @@ namespace PruebasServicioMus
             MusData musData;
             using (MyServiceClient c = new MyServiceClient(serverIP))
             {
-                musData = c.GetMusData(txtGameName.Text);
+                musData = c.GetMusData(txtGameName.Text, txtSelectedPlayer.Text);
             }
             txtNumCuentasA.Text = musData.MusTeams[0].Points.ToString();
             txtNumCuentasB.Text = musData.MusTeams[1].Points.ToString();
@@ -165,7 +165,7 @@ namespace PruebasServicioMus
             using (MyServiceClient c = new MyServiceClient(serverIP))
             {
                 c.ChangePoints(txtGameName.Text, 
-                    txtTeamName1.Text, int.Parse(txtNumCuentasA.Text));
+                    txtTeamName1.Text, txtSelectedPlayer.Text, int.Parse(txtNumCuentasA.Text));
             }
         }
 
@@ -174,7 +174,7 @@ namespace PruebasServicioMus
             using (MyServiceClient c = new MyServiceClient(serverIP))
             {
                 c.ChangePoints(txtGameName.Text,
-                    txtTeamName2.Text, int.Parse(txtNumCuentasB.Text));
+                    txtTeamName2.Text, txtSelectedPlayer.Text, int.Parse(txtNumCuentasB.Text));
             }
         }
 

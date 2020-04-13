@@ -18,15 +18,23 @@ namespace MusWinService
         [OperationContract]
         string StartGame(string gameName, int pointsToWin);
         [OperationContract]
-        MusData GetMusData(string gameName);
+        MusData GetMusData(string gameName, string userName);
         [OperationContract]
         List<MusCard> GetCards(string gameName, string userName);
         [OperationContract]
         List<MusCard> ChangeCards(string gameName, string userName, List<MusCard> discarded);
         [OperationContract]
-        void ChangePoints(string gameName, string teamName, int points);
+        void ChangePoints(string gameName, string teamName, string userName, int points);
         [OperationContract]
         void ResetRound(string gameName);
+        [OperationContract]
+        void NextRound(string gameName, string teamName, string userName, int round);
+        [OperationContract]
+        void FinishGame(string gameName);
+        [OperationContract]
+        List<string> GetTraces(string gameName);
+        [OperationContract]
+        MusData GetAllUserCards(string gameName, string userName);
     }
 
     [DataContract]
@@ -57,6 +65,15 @@ namespace MusWinService
         public string UserName2 { get; set; }
 
         [DataMember]
+        public int RoundUserName1 { get; set; }
+
+        [DataMember]
+        public int RoundUserName2 { get; set; }
+
+        [DataMember]
         public int Points { get; set; }
+
+        [DataMember]
+        public List<MusCard> Cards { get; set; }
     }
 }

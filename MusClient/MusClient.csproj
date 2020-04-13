@@ -53,37 +53,59 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Enum\CardPosition.cs" />
     <Compile Include="Interface\IGeneralData.cs" />
-    <Compile Include="MusClient.cs">
+    <Compile Include="MusClientForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MusClient.Designer.cs">
-      <DependentUpon>MusClient.cs</DependentUpon>
+    <Compile Include="MusClientForm.Designer.cs">
+      <DependentUpon>MusClientForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Enum\MusState.cs" />
     <Compile Include="MyServiceClient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User controls\GameControl.cs">
+    <Compile Include="CustomUserControls\CardControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="User controls\GameControl.Designer.cs">
+    <Compile Include="CustomUserControls\CardControl.Designer.cs">
+      <DependentUpon>CardControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomUserControls\CardsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomUserControls\CardsControl.Designer.cs">
+      <DependentUpon>CardsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomUserControls\GameControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomUserControls\GameControl.Designer.cs">
       <DependentUpon>GameControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="User controls\LoginControl.cs">
+    <Compile Include="CustomUserControls\LoginControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="User controls\LoginControl.Designer.cs">
+    <Compile Include="CustomUserControls\LoginControl.Designer.cs">
       <DependentUpon>LoginControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="User controls\MakeTeamsControl.cs">
+    <Compile Include="CustomUserControls\MakeTeamsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="User controls\MakeTeamsControl.Designer.cs">
+    <Compile Include="CustomUserControls\MakeTeamsControl.Designer.cs">
       <DependentUpon>MakeTeamsControl.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="MusClient.resx">
-      <DependentUpon>MusClient.cs</DependentUpon>
+    <Compile Include="CustomUserControls\PlayerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomUserControls\PlayerControl.Designer.cs">
+      <DependentUpon>PlayerControl.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="CustomUserControls\CardControl.resx">
+      <DependentUpon>CardControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MusClientForm.resx">
+      <DependentUpon>MusClientForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -94,14 +116,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="User controls\GameControl.resx">
+    <EmbeddedResource Include="CustomUserControls\cardsControl.resx">
+      <DependentUpon>CardsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomUserControls\GameControl.resx">
       <DependentUpon>GameControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="User controls\LoginControl.resx">
+    <EmbeddedResource Include="CustomUserControls\LoginControl.resx">
       <DependentUpon>LoginControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="User controls\MakeTeamsControl.resx">
+    <EmbeddedResource Include="CustomUserControls\MakeTeamsControl.resx">
       <DependentUpon>MakeTeamsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomUserControls\PlayerControl.resx">
+      <DependentUpon>PlayerControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Connected Services\ServiceMusReference\MusClient.ServiceMusReference.MusData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -161,6 +189,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Res\tapeteverde.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

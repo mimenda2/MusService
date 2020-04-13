@@ -48,6 +48,8 @@
       <xs:enumeration value="B10" />
       <xs:enumeration value="B11" />
       <xs:enumeration value="B12" />
+      <xs:enumeration value="Empty" />
+      <xs:enumeration value="Back" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="MusCard" nillable="true" type="tns:MusCard" />

@@ -48,5 +48,7 @@ namespace Common.Enums
         B10,
         B11,
         B12,
+        Empty,
+        Back
     }
 }

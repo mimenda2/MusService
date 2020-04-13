@@ -1,5 +1,5 @@
 ﻿using MusClient.Interface;
-using MusClient.User_controls;
+using MusClient.CustomUserControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,18 +13,32 @@ using System.Windows.Forms;
 
 namespace MusClient
 {
-    public partial class MusClient : Form
+    public partial class MusClientForm : Form
     {
         IGeneralData generalData;
         LoginControl loginControl;
         MakeTeamsControl makeTeamsControl;
         GameControl gameControl;
 
-        public MusClient()
+        public MusClientForm()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Limpiar los recursos que se estén usando.
+        /// </summary>
+        /// <param name="disposing">true si los recursos administrados se deben desechar; false en caso contrario.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+                State = MusState.FinishGame;
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -35,8 +49,6 @@ namespace MusClient
         void WaitForPlayers()
         {
             string[] players = null;
-            txtServerIP.Text = generalData.ServerIP;
-            txtUserName.Text = generalData.UserName;
 
             using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
             {
@@ -52,6 +64,42 @@ namespace MusClient
                         Thread.Sleep(500);
                         Application.DoEvents();
                     }
+                }
+            }
+        }
+        #endregion
+
+        #region Make teams
+        void WaitForAllPlayersInNextRound()
+        {
+            while (true)
+            {
+                int round = -1;
+                using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
+                {
+                    var musData = c.GetMusData(generalData.GameName, generalData.UserName);
+                    foreach (var t in musData.MusTeams)
+                    {
+                        if (round < 0)
+                        {
+                            if (t.RoundUserName1 != t.RoundUserName2)
+                                break;
+                            round = t.RoundUserName1;
+                        }
+                        if (t.RoundUserName1 != round || t.RoundUserName2 != round)
+                        {
+                            round = -1;
+                            break;
+                        }
+                    }
+                }
+                if (round > 0)
+                    break;
+                else
+                {
+                    Application.DoEvents();
+                    Thread.Sleep(500);
+                    Application.DoEvents();
                 }
             }
         }
@@ -95,14 +143,25 @@ namespace MusClient
         {
             makeTeamsControl.Visible = false;
 
-            gameControl = new GameControl(generalData);
+            gameControl = new GameControl(generalData, makeTeamsControl.MusData);
             gameControl.Name = "gameControl";
-            gameControl.Location = new Point(10, 50);
-            gameControl.Size = new Size(this.Width - 20, this.Height - 60);
-            gameControl.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
+            gameControl.Location = new Point(10, 10);
+            gameControl.Dock = DockStyle.Fill;
+            gameControl.NextRoundRequest += GameControl_NextRoundRequest;
             this.Controls.Add(gameControl);
         }
+
+        private void GameControl_NextRoundRequest(object sender, EventArgs e)
+        {
+            State = MusState.NextRoundRequest;
+        }
         #endregion
+
+        void FinishGame()
+        {
+            using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
+                c.FinishGame(generalData.GameName);
+        }
 
         MusState State
         {
@@ -125,6 +184,15 @@ namespace MusClient
                             break;
                         case MusState.StartGame:
                             StartGame();
+                            break;
+                        case MusState.NextRoundRequest:
+                            WaitForAllPlayersInNextRound();
+                            State = MusState.NextRound;
+                            break;
+                        case MusState.NextRound:
+                            break;
+                        case MusState.FinishGame:
+                            FinishGame();
                             break;
                     }
                 }

@@ -14,6 +14,7 @@ namespace MusWinService.DTO
             GameName = gameName;
             Users = new List<MusUser>();
             Teams = new List<MusTeam>();
+            Traces = new List<string>();
             Cards = new MusCards();
             CreationDate = DateTime.Now;
         }
@@ -21,6 +22,7 @@ namespace MusWinService.DTO
         public string GameName { get; set; }
         public List<MusUser> Users { get; set; }
         public List<MusTeam> Teams { get; set; }
+        public List<string> Traces { get; set; }
         public MusCards Cards { get; set; }
         public DateTime CreationDate { get; set; }
         public long PointsToWin { get; set; }

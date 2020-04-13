@@ -1,4 +1,4 @@
-﻿namespace MusClient.User_controls
+﻿namespace MusClient.CustomUserControls
 {
     partial class MakeTeamsControl
     {

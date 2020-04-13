@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MusClient.Interface;
 
-namespace MusClient.User_controls
+namespace MusClient.CustomUserControls
 {
     public partial class LoginControl : UserControl, IGeneralData
     {
