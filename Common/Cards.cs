@@ -1,4 +1,4 @@
-﻿using Common.Enums;
+﻿using MusCommon.Enums;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common
+namespace MusCommon
 {
     public static class Cards
     {

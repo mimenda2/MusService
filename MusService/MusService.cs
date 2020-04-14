@@ -1,4 +1,4 @@
-﻿using Common.Enums;
+﻿using MusCommon.Enums;
 using MusWinService.Database;
 using MusWinService.DTO;
 using System;

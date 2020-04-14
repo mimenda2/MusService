@@ -36,7 +36,7 @@
             // 
             // card4
             // 
-            this.card4.Card = Common.Enums.MusCard.Empty;
+            this.card4.Card = MusCommon.Enums.MusCard.Empty;
             this.card4.Location = new System.Drawing.Point(389, 2);
             this.card4.Name = "card4";
             this.card4.Size = new System.Drawing.Size(120, 140);
@@ -44,7 +44,7 @@
             // 
             // card3
             // 
-            this.card3.Card = Common.Enums.MusCard.Empty;
+            this.card3.Card = MusCommon.Enums.MusCard.Empty;
             this.card3.Location = new System.Drawing.Point(260, 2);
             this.card3.Name = "card3";
             this.card3.Size = new System.Drawing.Size(128, 141);
@@ -52,7 +52,7 @@
             // 
             // card2
             // 
-            this.card2.Card = Common.Enums.MusCard.Empty;
+            this.card2.Card = MusCommon.Enums.MusCard.Empty;
             this.card2.Location = new System.Drawing.Point(131, 2);
             this.card2.Name = "card2";
             this.card2.Size = new System.Drawing.Size(128, 141);
@@ -60,7 +60,7 @@
             // 
             // card1
             // 
-            this.card1.Card = Common.Enums.MusCard.Empty;
+            this.card1.Card = MusCommon.Enums.MusCard.Empty;
             this.card1.Location = new System.Drawing.Point(2, 2);
             this.card1.Name = "card1";
             this.card1.Size = new System.Drawing.Size(120, 140);

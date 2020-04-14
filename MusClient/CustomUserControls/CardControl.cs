@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Common.Enums;
-using Common;
+using MusCommon.Enums;
+using MusCommon;
 using MusClient.Enum;
 
 namespace MusClient.CustomUserControls

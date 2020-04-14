@@ -132,10 +132,10 @@ namespace MusClient.ServiceMusReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Common.Enums.MusCard[] CardsUser1Field;
+        private MusCommon.Enums.MusCard[] CardsUser1Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Common.Enums.MusCard[] CardsUser2Field;
+        private MusCommon.Enums.MusCard[] CardsUser2Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int PointsField;
@@ -166,7 +166,7 @@ namespace MusClient.ServiceMusReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Common.Enums.MusCard[] CardsUser1 {
+        public MusCommon.Enums.MusCard[] CardsUser1 {
             get {
                 return this.CardsUser1Field;
             }
@@ -179,7 +179,7 @@ namespace MusClient.ServiceMusReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Common.Enums.MusCard[] CardsUser2 {
+        public MusCommon.Enums.MusCard[] CardsUser2 {
             get {
                 return this.CardsUser2Field;
             }
@@ -314,16 +314,16 @@ namespace MusClient.ServiceMusReference {
         System.Threading.Tasks.Task<MusClient.ServiceMusReference.MusData> GetMusDataAsync(string gameName, string userName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/GetCards", ReplyAction="http://tempuri.org/IMusService/GetCardsResponse")]
-        Common.Enums.MusCard[] GetCards(string gameName, string teamName, string userName);
+        MusCommon.Enums.MusCard[] GetCards(string gameName, string teamName, string userName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/GetCards", ReplyAction="http://tempuri.org/IMusService/GetCardsResponse")]
-        System.Threading.Tasks.Task<Common.Enums.MusCard[]> GetCardsAsync(string gameName, string teamName, string userName);
+        System.Threading.Tasks.Task<MusCommon.Enums.MusCard[]> GetCardsAsync(string gameName, string teamName, string userName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/ChangeCards", ReplyAction="http://tempuri.org/IMusService/ChangeCardsResponse")]
-        Common.Enums.MusCard[] ChangeCards(string gameName, string teamName, string userName, Common.Enums.MusCard[] discarded);
+        MusCommon.Enums.MusCard[] ChangeCards(string gameName, string teamName, string userName, MusCommon.Enums.MusCard[] discarded);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/ChangeCards", ReplyAction="http://tempuri.org/IMusService/ChangeCardsResponse")]
-        System.Threading.Tasks.Task<Common.Enums.MusCard[]> ChangeCardsAsync(string gameName, string teamName, string userName, Common.Enums.MusCard[] discarded);
+        System.Threading.Tasks.Task<MusCommon.Enums.MusCard[]> ChangeCardsAsync(string gameName, string teamName, string userName, MusCommon.Enums.MusCard[] discarded);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/ChangePoints", ReplyAction="http://tempuri.org/IMusService/ChangePointsResponse")]
         void ChangePoints(string gameName, string teamName, string userName, int points);
@@ -429,19 +429,19 @@ namespace MusClient.ServiceMusReference {
             return base.Channel.GetMusDataAsync(gameName, userName);
         }
         
-        public Common.Enums.MusCard[] GetCards(string gameName, string teamName, string userName) {
+        public MusCommon.Enums.MusCard[] GetCards(string gameName, string teamName, string userName) {
             return base.Channel.GetCards(gameName, teamName, userName);
         }
         
-        public System.Threading.Tasks.Task<Common.Enums.MusCard[]> GetCardsAsync(string gameName, string teamName, string userName) {
+        public System.Threading.Tasks.Task<MusCommon.Enums.MusCard[]> GetCardsAsync(string gameName, string teamName, string userName) {
             return base.Channel.GetCardsAsync(gameName, teamName, userName);
         }
         
-        public Common.Enums.MusCard[] ChangeCards(string gameName, string teamName, string userName, Common.Enums.MusCard[] discarded) {
+        public MusCommon.Enums.MusCard[] ChangeCards(string gameName, string teamName, string userName, MusCommon.Enums.MusCard[] discarded) {
             return base.Channel.ChangeCards(gameName, teamName, userName, discarded);
         }
         
-        public System.Threading.Tasks.Task<Common.Enums.MusCard[]> ChangeCardsAsync(string gameName, string teamName, string userName, Common.Enums.MusCard[] discarded) {
+        public System.Threading.Tasks.Task<MusCommon.Enums.MusCard[]> ChangeCardsAsync(string gameName, string teamName, string userName, MusCommon.Enums.MusCard[] discarded) {
             return base.Channel.ChangeCardsAsync(gameName, teamName, userName, discarded);
         }
         

@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using System;
 using System.Collections.Generic;
-using Common.Enums;
+using MusCommon.Enums;
 
 namespace MusWinService
 {

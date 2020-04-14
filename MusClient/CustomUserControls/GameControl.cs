@@ -72,12 +72,12 @@ namespace MusClient.CustomUserControls
                 }
             }
             playerControl2.Cards = playerControl3.Cards = playerControl4.Cards =
-                new List<Common.Enums.MusCard>()
+                new List<MusCommon.Enums.MusCard>()
                 {
-                    Common.Enums.MusCard.Back,
-                    Common.Enums.MusCard.Back,
-                    Common.Enums.MusCard.Back,
-                    Common.Enums.MusCard.Back,
+                    MusCommon.Enums.MusCard.Back,
+                    MusCommon.Enums.MusCard.Back,
+                    MusCommon.Enums.MusCard.Back,
+                    MusCommon.Enums.MusCard.Back,
                 };
         }
 
@@ -173,12 +173,12 @@ namespace MusClient.CustomUserControls
             btnNextRound.Enabled = false;
             btnNextRound.Text = "Esperando al resto...";
             Application.DoEvents();
-            playerControl1.Cards = new List<Common.Enums.MusCard>()
+            playerControl1.Cards = new List<MusCommon.Enums.MusCard>()
             {
-                Common.Enums.MusCard.Empty,
-                Common.Enums.MusCard.Empty,
-                Common.Enums.MusCard.Empty,
-                Common.Enums.MusCard.Empty
+                MusCommon.Enums.MusCard.Empty,
+                MusCommon.Enums.MusCard.Empty,
+                MusCommon.Enums.MusCard.Empty,
+                MusCommon.Enums.MusCard.Empty
             };
             round++;
             using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
@@ -191,12 +191,12 @@ namespace MusClient.CustomUserControls
                 var cards = c.GetCards(generalData.GameName, generalData.TeamName, generalData.UserName);
                 playerControl1.Cards = cards.ToList();
             }
-            playerControl2.Cards = playerControl3.Cards = playerControl4.Cards = new List<Common.Enums.MusCard>()
+            playerControl2.Cards = playerControl3.Cards = playerControl4.Cards = new List<MusCommon.Enums.MusCard>()
             {
-                Common.Enums.MusCard.Back,
-                Common.Enums.MusCard.Back,
-                Common.Enums.MusCard.Back,
-                Common.Enums.MusCard.Back
+                MusCommon.Enums.MusCard.Back,
+                MusCommon.Enums.MusCard.Back,
+                MusCommon.Enums.MusCard.Back,
+                MusCommon.Enums.MusCard.Back
             };
             btnNextRound.Text = $"Siguiente ronda {(round+1)}";
             btnNextRound.Enabled = true;

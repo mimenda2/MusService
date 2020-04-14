@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MusClient.Enum;
-using Common.Enums;
+using MusCommon.Enums;
 
 namespace MusClient.CustomUserControls
 {

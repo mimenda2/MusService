@@ -128,9 +128,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
+    <ProjectReference Include="..\Common\MusCommon.csproj">
       <Project>{4764d923-a4c9-46cb-8ecd-d5281dc8cefe}</Project>
-      <Name>Common</Name>
+      <Name>MusCommon</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

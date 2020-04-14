@@ -7,8 +7,8 @@
     <ProjectGuid>{4764D923-A4C9-46CB-8ECD-D5281DC8CEFE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Common</RootNamespace>
-    <AssemblyName>Common</AssemblyName>
+    <RootNamespace>MusCommon</RootNamespace>
+    <AssemblyName>MusCommon</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
