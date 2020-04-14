@@ -29,8 +29,9 @@
         private void InitializeComponent()
         {
             this.btnOK = new System.Windows.Forms.Button();
-            this.cmbTeam = new System.Windows.Forms.ComboBox();
             this.lblWaitingPlayers = new System.Windows.Forms.Label();
+            this.radTeam1 = new System.Windows.Forms.RadioButton();
+            this.radTeam2 = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // btnOK
@@ -43,18 +44,6 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
-            // cmbTeam
-            // 
-            this.cmbTeam.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbTeam.FormattingEnabled = true;
-            this.cmbTeam.Items.AddRange(new object[] {
-            "Equipo 1",
-            "Equipo 2"});
-            this.cmbTeam.Location = new System.Drawing.Point(12, 14);
-            this.cmbTeam.Name = "cmbTeam";
-            this.cmbTeam.Size = new System.Drawing.Size(150, 21);
-            this.cmbTeam.TabIndex = 1;
-            // 
             // lblWaitingPlayers
             // 
             this.lblWaitingPlayers.AutoSize = true;
@@ -65,12 +54,37 @@
             this.lblWaitingPlayers.Size = new System.Drawing.Size(0, 16);
             this.lblWaitingPlayers.TabIndex = 13;
             // 
+            // radTeam1
+            // 
+            this.radTeam1.AutoSize = true;
+            this.radTeam1.Checked = true;
+            this.radTeam1.Location = new System.Drawing.Point(3, 14);
+            this.radTeam1.Name = "radTeam1";
+            this.radTeam1.Size = new System.Drawing.Size(67, 17);
+            this.radTeam1.TabIndex = 14;
+            this.radTeam1.TabStop = true;
+            this.radTeam1.Text = "Equipo 1";
+            this.radTeam1.UseVisualStyleBackColor = true;
+            this.radTeam1.CheckedChanged += new System.EventHandler(this.radTeam1_CheckedChanged);
+            // 
+            // radTeam2
+            // 
+            this.radTeam2.AutoSize = true;
+            this.radTeam2.Location = new System.Drawing.Point(3, 37);
+            this.radTeam2.Name = "radTeam2";
+            this.radTeam2.Size = new System.Drawing.Size(67, 17);
+            this.radTeam2.TabIndex = 15;
+            this.radTeam2.Text = "Equipo 2";
+            this.radTeam2.UseVisualStyleBackColor = true;
+            this.radTeam2.CheckedChanged += new System.EventHandler(this.radTeam2_CheckedChanged);
+            // 
             // MakeTeamsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.radTeam2);
+            this.Controls.Add(this.radTeam1);
             this.Controls.Add(this.lblWaitingPlayers);
-            this.Controls.Add(this.cmbTeam);
             this.Controls.Add(this.btnOK);
             this.Name = "MakeTeamsControl";
             this.Size = new System.Drawing.Size(271, 93);
@@ -82,7 +96,8 @@
         #endregion
 
         private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.ComboBox cmbTeam;
         private System.Windows.Forms.Label lblWaitingPlayers;
+        private System.Windows.Forms.RadioButton radTeam1;
+        private System.Windows.Forms.RadioButton radTeam2;
     }
 }

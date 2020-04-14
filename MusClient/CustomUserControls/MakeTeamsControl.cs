@@ -29,7 +29,7 @@ namespace MusClient.CustomUserControls
         }
         private void btnOK_Click(object sender, EventArgs e)
         {
-            generalData.TeamName = cmbTeam.Text;
+            generalData.TeamName = radTeam1.Checked ? radTeam1.Text : radTeam2.Text;
             using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
             {
                 string result = c.CreateTeam(generalData.GameName, generalData.TeamName, new string[] { generalData.UserName });
@@ -82,5 +82,17 @@ namespace MusClient.CustomUserControls
         }
         MusData data;
         public event EventHandler TeamsCreated;
+
+        private void radTeam1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radTeam1.Checked)
+                radTeam2.Checked = false;
+        }
+
+        private void radTeam2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radTeam2.Checked)
+                radTeam1.Checked = false;
+        }
     }
 }

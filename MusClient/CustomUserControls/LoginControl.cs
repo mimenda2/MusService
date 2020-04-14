@@ -48,5 +48,12 @@ namespace MusClient.CustomUserControls
         public string UserName { get; set; } = "";
 
         public event EventHandler LoginFinished;
+
+
+        private void txtUserName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+                btnLogin_Click(this, EventArgs.Empty);
+        }
     }
 }
