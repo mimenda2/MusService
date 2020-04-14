@@ -4,6 +4,7 @@
   <xs:complexType name="MusData">
     <xs:sequence>
       <xs:element minOccurs="0" name="Error" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HandUser" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MusTeams" nillable="true" type="tns:ArrayOfMusTeamData" />
       <xs:element minOccurs="0" name="PointsToWin" type="xs:long" />
       <xs:element minOccurs="0" name="Round" type="xs:int" />

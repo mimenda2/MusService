@@ -26,6 +26,9 @@ namespace MusClient.ServiceMusReference {
         private string ErrorField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HandUserField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private MusClient.ServiceMusReference.MusTeamData[] MusTeamsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -53,6 +56,19 @@ namespace MusClient.ServiceMusReference {
                 if ((object.ReferenceEquals(this.ErrorField, value) != true)) {
                     this.ErrorField = value;
                     this.RaisePropertyChanged("Error");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string HandUser {
+            get {
+                return this.HandUserField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HandUserField, value) != true)) {
+                    this.HandUserField = value;
+                    this.RaisePropertyChanged("HandUser");
                 }
             }
         }

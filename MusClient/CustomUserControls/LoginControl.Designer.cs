@@ -108,7 +108,6 @@
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(121, 20);
             this.txtUserName.TabIndex = 5;
-            this.txtUserName.Text = "MiMenda1";
             // 
             // txtGameName
             // 

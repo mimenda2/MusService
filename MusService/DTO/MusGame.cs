@@ -20,6 +20,7 @@ namespace MusWinService.DTO
         }
         public long GameId { get; set; }
         public string GameName { get; set; }
+        public string HandUser { get; set; }
         public List<MusUser> Users { get; set; }
         public List<MusTeam> Teams { get; set; }
         public List<string> Traces { get; set; }

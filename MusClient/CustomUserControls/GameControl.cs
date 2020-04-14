@@ -17,6 +17,7 @@ namespace MusClient.CustomUserControls
     {
         IGeneralData generalData;
         MusData musData;
+        Image imgHand;
         public GameControl(IGeneralData generalData, MusData musData)
         {
             InitializeComponent();
@@ -26,9 +27,13 @@ namespace MusClient.CustomUserControls
             this.BackgroundImage = new Bitmap(stream);
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 
+            stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("MusClient.Res.mano.jpg");
+            imgHand = new Bitmap(stream);
+
             this.generalData = generalData;
             this.musData = musData;
-            playerControl1.UserNameAndTeam = generalData.UserName + $" ({generalData.TeamName})";
+            playerControl1.UserName = generalData.UserName;
+            playerControl1.TeamName = generalData.TeamName;
             lblTeam1.Text = musData.MusTeams[0].TeamName;
             lblTeam2.Text = musData.MusTeams[1].TeamName;
             nudTeam1Points.Value = nudTeam2Points.Value = 0;
@@ -39,22 +44,31 @@ namespace MusClient.CustomUserControls
                 if (t.UserName2 == generalData.UserName)
                     primero = false;
             }
+            if (musData.MusTeams[1].UserName1 == generalData.UserName || musData.MusTeams[1].UserName2 == generalData.UserName)
+                primero = !primero;
+
             foreach (var t in musData.MusTeams)
             {
                 if (t.UserName1 == generalData.UserName || t.UserName2 == generalData.UserName)
                 {
-                    playerControl3.UserNameAndTeam = t.UserName1 != generalData.UserName ? t.UserName1 : t.UserName2;
-                    playerControl3.UserNameAndTeam += $" ({t.TeamName})";
+                    playerControl3.UserName = t.UserName1 != generalData.UserName ? t.UserName1 : t.UserName2;
+                    playerControl3.TeamName = t.TeamName;
                 }
                 else if (!primero)
                 {
-                    playerControl2.UserNameAndTeam = t.UserName1 + $" ({t.TeamName})";
-                    playerControl4.UserNameAndTeam = t.UserName2 + $" ({t.TeamName})";
+                    playerControl2.UserName = t.UserName1;
+                    playerControl2.TeamName = t.TeamName;
+
+                    playerControl4.UserName = t.UserName2;
+                    playerControl4.TeamName = t.TeamName;
                 }
                 else
                 {
-                    playerControl2.UserNameAndTeam = t.UserName2 + $" ({t.TeamName})";
-                    playerControl4.UserNameAndTeam = t.UserName1 + $" ({t.TeamName})";
+                    playerControl2.UserName = t.UserName2;
+                    playerControl2.TeamName = t.TeamName;
+
+                    playerControl4.UserName = t.UserName1;
+                    playerControl4.TeamName = t.TeamName;
                 }
             }
             playerControl2.Cards = playerControl3.Cards = playerControl4.Cards =
@@ -104,17 +118,22 @@ namespace MusClient.CustomUserControls
                 {
                     using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
                     {
-                        var data = c.GetMusData(generalData.GameName, generalData.UserName);
-                        if (data != null && data.MusTeams?.Length == 2)
+                        musData = c.GetMusData(generalData.GameName, generalData.UserName);
+                        if (musData != null && musData.MusTeams?.Length == 2)
                         {
-                            nudTeam1Points.Value = data.MusTeams[0].Points;
-                            nudTeam2Points.Value = data.MusTeams[1].Points;
+                            nudTeam1Points.Value = musData.MusTeams[0].Points;
+                            nudTeam2Points.Value = musData.MusTeams[1].Points;
                             var traces = c.GetTraces(generalData.GameName);
                             txtTraces.Text = String.Join(Environment.NewLine, traces);
                             if (this.txtTraces.Text.Length > 1)
                             {
                                 this.txtTraces.SelectionStart = txtTraces.Text.Length - 1;
                                 txtTraces.ScrollToCaret();
+                            }
+
+                            if (!string.IsNullOrEmpty(musData.HandUser))
+                            {
+                                HandUser = musData.HandUser;
                             }
                         }
                     }
@@ -147,6 +166,7 @@ namespace MusClient.CustomUserControls
         }
         #endregion
 
+        #region Next round
         int round = 0;
         private void btnNextRound_Click(object sender, EventArgs e)
         {
@@ -171,11 +191,20 @@ namespace MusClient.CustomUserControls
                 var cards = c.GetCards(generalData.GameName, generalData.TeamName, generalData.UserName);
                 playerControl1.Cards = cards.ToList();
             }
+            playerControl2.Cards = playerControl3.Cards = playerControl4.Cards = new List<Common.Enums.MusCard>()
+            {
+                Common.Enums.MusCard.Back,
+                Common.Enums.MusCard.Back,
+                Common.Enums.MusCard.Back,
+                Common.Enums.MusCard.Back
+            };
             btnNextRound.Text = $"Siguiente ronda {(round+1)}";
             btnNextRound.Enabled = true;
         }
         public event EventHandler NextRoundRequest;
+        #endregion  
 
+        #region Cards
         private void btnDiscard_Click(object sender, EventArgs e)
         {
             var discards = playerControl1.Discards;
@@ -230,6 +259,51 @@ namespace MusClient.CustomUserControls
                     }
                 }
             }
+        }
+        #endregion
+
+        public string HandUser
+        {
+            set
+            {
+                if (handUser != value)
+                {
+                    handUser = value;
+                    this.Invalidate();
+                }
+            }
+        }
+        string handUser;
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(handUser))
+            {
+                foreach(var ctrl in this.Controls.OfType<PlayerControl>())
+                {
+                    if (ctrl.UserName == handUser)
+                    {
+                        int separation = 1;
+                        switch(ctrl.Position)
+                        {
+                            case Enum.CardPosition.Bottom:
+                                e.Graphics.DrawImage(imgHand, ctrl.Right + separation, ctrl.Top);
+                                break;
+                            case Enum.CardPosition.Top:
+                                e.Graphics.DrawImage(imgHand, ctrl.Right + separation, ctrl.Bottom - imgHand.Height);
+                                break;
+                            case Enum.CardPosition.Left:
+                                e.Graphics.DrawImage(imgHand, ctrl.Right - imgHand.Width, ctrl.Bottom + separation);
+                                break;
+                            case Enum.CardPosition.Right:
+                                e.Graphics.DrawImage(imgHand, ctrl.Left, ctrl.Bottom + separation);
+                                break;
+                        }
+                        break;
+                    }
+                }
+            }
+            base.OnPaint(e);
         }
     }
 }

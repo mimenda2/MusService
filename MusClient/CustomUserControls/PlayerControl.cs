@@ -17,21 +17,35 @@ namespace MusClient.CustomUserControls
         public PlayerControl()
         {
             InitializeComponent();
+
             this.Text = "PlayerControl";
         }
-        public string UserNameAndTeam
+        public string UserName
         {
-            get { return userNameAndTeam; }
+            get { return userName; }
             set
             {
-                if (userNameAndTeam != value)
+                if (userName != value)
                 {
-                    userNameAndTeam = value;
+                    userName = value;
                     this.Invalidate();
                 }
             }
         }
-        string userNameAndTeam;
+        string userName;
+        public string TeamName
+        {
+            get { return teamName; }
+            set
+            {
+                if (teamName != value)
+                {
+                    teamName = value;
+                    this.Invalidate();
+                }
+            }
+        }
+        string teamName;
         public CardPosition Position
         {
             get { return position; }
@@ -64,6 +78,7 @@ namespace MusClient.CustomUserControls
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
+            string userNameAndTeam = $"{UserName} ({TeamName})";
             int textWidth = (int)e.Graphics.MeasureString(userNameAndTeam, this.Font).Width + 1;
             e.Graphics.DrawString(userNameAndTeam, this.Font, Brushes.Black, (this.Width - textWidth) / 2, cardsControl1.Bottom + 8);
         }

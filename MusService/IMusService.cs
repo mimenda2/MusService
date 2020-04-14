@@ -51,6 +51,10 @@ namespace MusWinService
 
         [DataMember]
         public string Error { get; set; }
+
+        [DataMember]
+        public string HandUser { get; set; }
+        
     }
     [DataContract]
     public class MusTeamData

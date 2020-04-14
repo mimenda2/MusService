@@ -125,10 +125,11 @@ namespace MusWinService
                             RoundUserName2 = team.Users?.Count > 1 ? team.Users[1].CurrentRound : 0,
                             Points = team.Puntuacion,
                             CardsUser1 = getCards && team.Users?.Count > 0 ? team.Users[0].Cards : null,
-                            CardsUser2 = getCards && team.Users?.Count > 1 ? team.Users[1].Cards : null
+                            CardsUser2 = getCards && team.Users?.Count > 1 ? team.Users[1].Cards : null,
                         });
                     }
                     musData.PointsToWin = game.PointsToWin;
+                    musData.HandUser = game.HandUser;
                 }
             }
             catch (Exception ex)
@@ -196,7 +197,10 @@ namespace MusWinService
                 }
             }
             if (allInSameRound)
+            {
+                NextHand(game, round);
                 ResetRound(gameName);
+            }
         }
         public void FinishGame(string gameName)
         {
@@ -273,5 +277,24 @@ namespace MusWinService
             return retVal;
         }
         static Random rnd = new Random();
+        static int lastRound = -1;
+        static void NextHand(MusGame game, int round)
+        {
+            if (lastRound < round)
+            {
+                lastRound = round;
+                string names = $"{game.Teams[0].Users[0].UserName}, {game.Teams[0].Users[1].UserName}, {game.Teams[1].Users[0].UserName}, {game.Teams[1].Users[1].UserName}";
+                mySource.TraceMessage(TraceEventType.Warning, 58, $"antes de cambiar mano {game.HandUser} ({names})");
+                if (game.Teams[0].Users[0].UserName == game.HandUser)
+                    game.HandUser = game.Teams[1].Users[1].UserName;
+                else if (game.Teams[1].Users[1].UserName == game.HandUser)
+                    game.HandUser = game.Teams[0].Users[1].UserName;
+                else if (game.Teams[0].Users[1].UserName == game.HandUser)
+                    game.HandUser = game.Teams[1].Users[0].UserName;
+                else
+                    game.HandUser = game.Teams[0].Users[0].UserName;
+                mySource.TraceMessage(TraceEventType.Warning, 58, $"despues de cambiar mano {game.HandUser}");
+            }
+        }
     }
 }

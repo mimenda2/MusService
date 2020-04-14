@@ -20,19 +20,24 @@ namespace MusClient.CustomUserControls
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            ServerIP = txtServerIP.Text;
-            GameName = txtGameName.Text;
-            UserName = txtUserName.Text;
-            using (MyServiceClient c = new MyServiceClient(ServerIP))
+            if (!string.IsNullOrEmpty(UserName))
+                MessageBox.Show("Necesito un nombre de usuario");
+            else
             {
-                string result = c.Login(UserName, GameName, "");
-                if (result != "OK")
-                    MessageBox.Show("ERROR AL LOGGUEAR: " + result);
-                else
+                ServerIP = txtServerIP.Text;
+                GameName = txtGameName.Text;
+                UserName = txtUserName.Text;
+                using (MyServiceClient c = new MyServiceClient(ServerIP))
                 {
-                    grpLogin.Enabled = false;
-                    lblWaitingPlayers.Text = "Esperando al resto de jugadores";
-                    LoginFinished?.Invoke(this, EventArgs.Empty);
+                    string result = c.Login(UserName, GameName, "");
+                    if (result != "OK")
+                        MessageBox.Show("ERROR AL LOGGUEAR: " + result);
+                    else
+                    {
+                        grpLogin.Enabled = false;
+                        lblWaitingPlayers.Text = "Esperando al resto de jugadores";
+                        LoginFinished?.Invoke(this, EventArgs.Empty);
+                    }
                 }
             }
         }

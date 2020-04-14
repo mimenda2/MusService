@@ -175,7 +175,6 @@
             this.playerControl4.Position = MusClient.Enum.CardPosition.Left;
             this.playerControl4.Size = new System.Drawing.Size(170, 430);
             this.playerControl4.TabIndex = 3;
-            this.playerControl4.UserNameAndTeam = null;
             // 
             // playerControl2
             // 
@@ -186,7 +185,6 @@
             this.playerControl2.Position = MusClient.Enum.CardPosition.Right;
             this.playerControl2.Size = new System.Drawing.Size(170, 430);
             this.playerControl2.TabIndex = 2;
-            this.playerControl2.UserNameAndTeam = null;
             // 
             // playerControl3
             // 
@@ -197,7 +195,6 @@
             this.playerControl3.Position = MusClient.Enum.CardPosition.Top;
             this.playerControl3.Size = new System.Drawing.Size(430, 170);
             this.playerControl3.TabIndex = 1;
-            this.playerControl3.UserNameAndTeam = null;
             // 
             // playerControl1
             // 
@@ -208,7 +205,6 @@
             this.playerControl1.Position = MusClient.Enum.CardPosition.Bottom;
             this.playerControl1.Size = new System.Drawing.Size(430, 170);
             this.playerControl1.TabIndex = 0;
-            this.playerControl1.UserNameAndTeam = null;
             // 
             // GameControl
             // 
