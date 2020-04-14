@@ -54,7 +54,7 @@ namespace MusClient.CustomUserControls
                     playerControl3.UserName = t.UserName1 != generalData.UserName ? t.UserName1 : t.UserName2;
                     playerControl3.TeamName = t.TeamName;
                 }
-                else if (!primero)
+                else if (primero)
                 {
                     playerControl2.UserName = t.UserName1;
                     playerControl2.TeamName = t.TeamName;
@@ -241,13 +241,15 @@ namespace MusClient.CustomUserControls
                     if (t.UserName2 == generalData.UserName)
                         primero = false;
                 }
+                if (musData.MusTeams[1].UserName1 == generalData.UserName || musData.MusTeams[1].UserName2 == generalData.UserName)
+                    primero = !primero;
                 foreach (var t in musData.MusTeams)
                 {
                     if (t.UserName1 == generalData.UserName || t.UserName2 == generalData.UserName)
                     {
-                        playerControl3.Cards = t.CardsUser2.ToList(); 
+                        playerControl3.Cards = t.UserName1 == generalData.UserName ? t.CardsUser2.ToList() : t.CardsUser1.ToList(); 
                     }
-                    else if (!primero)
+                    else if (primero)
                     {
                         playerControl2.Cards = t.CardsUser1.ToList(); 
                         playerControl4.Cards = t.CardsUser2.ToList();

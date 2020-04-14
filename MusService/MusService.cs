@@ -286,11 +286,11 @@ namespace MusWinService
                 string names = $"{game.Teams[0].Users[0].UserName}, {game.Teams[0].Users[1].UserName}, {game.Teams[1].Users[0].UserName}, {game.Teams[1].Users[1].UserName}";
                 mySource.TraceMessage(TraceEventType.Warning, 58, $"antes de cambiar mano {game.HandUser} ({names})");
                 if (game.Teams[0].Users[0].UserName == game.HandUser)
-                    game.HandUser = game.Teams[1].Users[1].UserName;
-                else if (game.Teams[1].Users[1].UserName == game.HandUser)
+                    game.HandUser = game.Teams[1].Users[0].UserName;
+                else if (game.Teams[1].Users[0].UserName == game.HandUser)
                     game.HandUser = game.Teams[0].Users[1].UserName;
                 else if (game.Teams[0].Users[1].UserName == game.HandUser)
-                    game.HandUser = game.Teams[1].Users[0].UserName;
+                    game.HandUser = game.Teams[1].Users[1].UserName;
                 else
                     game.HandUser = game.Teams[0].Users[0].UserName;
                 mySource.TraceMessage(TraceEventType.Warning, 58, $"despues de cambiar mano {game.HandUser}");
