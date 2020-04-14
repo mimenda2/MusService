@@ -19,7 +19,7 @@ namespace MusCommon
             {
                 if (mainImage == null)
                 {
-                    Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Common.Res.BarajaEspañolaCompleta.png");
+                    Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("MusCommon.Res.BarajaEspañolaCompleta.png");
                     mainImage = new Bitmap(stream);
                 }
                 return mainImage;
