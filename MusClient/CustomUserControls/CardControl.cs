@@ -15,9 +15,13 @@ namespace MusClient.CustomUserControls
 {
     public partial class CardControl : UserControl
     {
+        Image imgCard = null;
         public CardControl()
         {
             InitializeComponent();
+
+            imgCard = Cards.GetCard(card);
+
             this.Text = "CardControl";
         }
         protected override void OnLoad(EventArgs e)
@@ -46,7 +50,10 @@ namespace MusClient.CustomUserControls
             {
                 if (card != value)
                 {
+                    if (imgCard != null)
+                        imgCard.Dispose();
                     card = value;
+                    imgCard = Cards.GetCard(card);
                     this.Invalidate();
                 }
             }
@@ -62,7 +69,6 @@ namespace MusClient.CustomUserControls
         {
             try
             {
-                Image img = Cards.GetCard(card);
                 Rectangle rect = DisplayRectangle;
                 switch (position)
                 {
@@ -70,16 +76,16 @@ namespace MusClient.CustomUserControls
                         rect = new Rectangle(0, 0, this.Width, chkDiscard.Top - 2);
                         break;
                     case CardPosition.Top:
-                        img.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                        imgCard.RotateFlip(RotateFlipType.Rotate180FlipNone);
                         break;
                     case CardPosition.Left:
-                        img.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                        imgCard.RotateFlip(RotateFlipType.Rotate90FlipNone);
                         break;
                     case CardPosition.Right:
-                        img.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                        imgCard.RotateFlip(RotateFlipType.Rotate270FlipNone);
                         break;
                 }
-                e.Graphics.DrawImage(img, rect);
+                e.Graphics.DrawImage(imgCard, rect);
             }
             catch { }
             base.OnPaint(e);
