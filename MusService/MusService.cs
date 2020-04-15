@@ -28,6 +28,9 @@ namespace MusWinService
 
                 if (!game.Users.Any(x => x.UserName == userName))
                 {
+                    if (game.Users.Count >= 4)
+                        return "YA HAY 4 JUGADORES CONECTADOS!, " + string.Join(", ", game.Users.Select(x => x.UserName));
+
                     mySource.TraceMessage(TraceEventType.Information, 58, $"Añado el user {userName} al game {gameName}");
                     game.Users.Add(new MusUser(userName));
                 }
@@ -212,6 +215,17 @@ namespace MusWinService
             {
                 NextHand(game, round);
                 ResetRound(gameName);
+                if (round % 2 == 0)
+                {
+                    mySource.TraceMessage(TraceEventType.Information, 57, "Limpiando trazas en ronda " + round);
+                    game.Traces.Clear();
+                }
+                else
+                {
+                    // poner dos lineas vacias entre mano y mano
+                    game.Traces.Add("");
+                    game.Traces.Add("");
+                }
             }
         }
         public void FinishGame(string gameName)

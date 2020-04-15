@@ -8,11 +8,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("MusCommon")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MusCommon")]
-[assembly: AssemblyCopyright("Copyright ©  2020")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 
 // Si establece ComVisible en false, los tipos de este ensamblado no estarán visibles 
 // para los componentes COM.  Si es necesario obtener acceso a un tipo en este ensamblado desde 
@@ -22,15 +17,3 @@ using System.Runtime.InteropServices;
 // El siguiente GUID sirve como id. de typelib si este proyecto se expone a COM.
 [assembly: Guid("4764d923-a4c9-46cb-8ecd-d5281dc8cefe")]
 
-// La información de versión de un ensamblado consta de los cuatro valores siguientes:
-//
-//      Versión principal
-//      Versión secundaria
-//      Número de compilación
-//      Revisión
-//
-// Puede especificar todos los valores o usar los números de compilación y de revisión predeterminados
-// mediante el carácter "*", como se muestra a continuación:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]

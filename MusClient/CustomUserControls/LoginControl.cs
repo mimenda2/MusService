@@ -19,7 +19,7 @@ namespace MusClient.CustomUserControls
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(UserName))
+            if (string.IsNullOrEmpty(txtUserName.Text))
                 MessageBox.Show("Necesito un nombre de usuario");
             else
             {

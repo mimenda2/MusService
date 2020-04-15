@@ -8,11 +8,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("PruebasServicioMus")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PruebasServicioMus")]
-[assembly: AssemblyCopyright("Copyright ©  2020")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 
 // Si establece ComVisible en false, los tipos de este ensamblado no estarán visibles 
 // para los componentes COM.  Si es necesario obtener acceso a un tipo en este ensamblado desde 
@@ -21,16 +16,3 @@ using System.Runtime.InteropServices;
 
 // El siguiente GUID sirve como id. de typelib si este proyecto se expone a COM.
 [assembly: Guid("324da7c0-bcf6-4861-b038-2cd9ca0ab312")]
-
-// La información de versión de un ensamblado consta de los cuatro valores siguientes:
-//
-//      Versión principal
-//      Versión secundaria
-//      Número de compilación
-//      Revisión
-//
-// Puede especificar todos los valores o utilizar los números de compilación y de revisión predeterminados
-// mediante el carácter '*', como se muestra a continuación:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]

@@ -33,6 +33,7 @@ namespace MusClient.CustomUserControls
             lblTeam1.Text = musData.MusTeams[0].TeamName;
             lblTeam2.Text = musData.MusTeams[1].TeamName;
             nudTeam1Points.Value = nudTeam2Points.Value = 0;
+            nudTeam1Points.Tag = nudTeam2Points.Tag = (int)0;
 
             bool primero = true;
             foreach (var t in musData.MusTeams)
@@ -102,8 +103,10 @@ namespace MusClient.CustomUserControls
             {
                 using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
                 {
-                    c.ChangePoints(generalData.GameName, lblTeam1.Text, generalData.UserName, (int)nudTeam1Points.Value);
-                    c.ChangePoints(generalData.GameName, lblTeam2.Text, generalData.UserName, (int)nudTeam2Points.Value);
+                    if ((int)nudTeam1Points.Value != (int)nudTeam1Points.Tag)
+                        c.ChangePoints(generalData.GameName, lblTeam1.Text, generalData.UserName, (int)nudTeam1Points.Value);
+                    if ((int)nudTeam2Points.Value != (int)nudTeam2Points.Tag)
+                        c.ChangePoints(generalData.GameName, lblTeam2.Text, generalData.UserName, (int)nudTeam2Points.Value);
                 }
             }
             catch (Exception ex)
@@ -116,7 +119,8 @@ namespace MusClient.CustomUserControls
         DateTime lastTimeTimer = DateTime.MinValue;
         private void timerRefresh_Tick(object sender, EventArgs e)
         {
-            if (DateTime.Now - lastTimeTimer >= TimeSpan.FromMilliseconds(timerRefresh.Interval - 10))
+            if (this.Visible && 
+                DateTime.Now - lastTimeTimer >= TimeSpan.FromMilliseconds(timerRefresh.Interval - 10))
             {
                 lastTimeTimer = DateTime.Now;
                 try
@@ -130,6 +134,9 @@ namespace MusClient.CustomUserControls
                             {
                                 nudTeam1Points.Value = musData.MusTeams[0].Points;
                                 nudTeam2Points.Value = musData.MusTeams[1].Points;
+                                nudTeam1Points.Tag = (int)nudTeam1Points.Value;
+                                nudTeam2Points.Tag = (int)nudTeam2Points.Value;
+
                                 var traces = c.GetTraces(generalData.GameName);
                                 txtTraces.Text = String.Join(Environment.NewLine, traces);
                                 if (this.txtTraces.Text.Length > 1)
@@ -138,6 +145,27 @@ namespace MusClient.CustomUserControls
                                     txtTraces.ScrollToCaret();
                                 }
 
+                                int remoteRound = -1;
+                                foreach(var t in musData.MusTeams)
+                                {
+                                    if (t.RoundUserName1 != t.RoundUserName2)
+                                    {
+                                        remoteRound = -1;
+                                        break;
+                                    }
+                                    else if (remoteRound == -1)
+                                        remoteRound = t.RoundUserName1;
+                                    else if (remoteRound != t.RoundUserName1)
+                                    {
+                                        remoteRound = -1;
+                                        break;
+                                    }
+                                }
+                                if (remoteRound != -1 && remoteRound != round)
+                                {
+                                    round = remoteRound;
+                                    btnNextRound.Text = $"Siguiente ronda {(round + 1)}";
+                                }
                                 if (!string.IsNullOrEmpty(musData.HandUser))
                                 {
                                     HandUser = musData.HandUser;

@@ -283,5 +283,12 @@ namespace PruebasServicioMus
                 using (MyServiceClient c = new MyServiceClient(serverIP))
                     c.FinishGame(txtGameName.Text);
         }
+
+        private void btnChangeround_Click(object sender, EventArgs e)
+        {
+            int round = (int)nudNewRound.Value;
+            using (MyServiceClient c = new MyServiceClient(serverIP))
+                c.NextRound(txtGameName.Text, txtTeamName1.Text, txtSelectedPlayer.Text, round);
+        }
     }
 }

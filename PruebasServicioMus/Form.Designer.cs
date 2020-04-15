@@ -90,6 +90,9 @@
             this.chkPlayer1BCard1 = new System.Windows.Forms.CheckBox();
             this.btnDiscardCards = new System.Windows.Forms.Button();
             this.btnEndGame = new System.Windows.Forms.Button();
+            this.btnChangeround = new System.Windows.Forms.Button();
+            this.nudNewRound = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.nudNewRound)).BeginInit();
             this.SuspendLayout();
             // 
             // txtUserName
@@ -609,11 +612,30 @@
             this.btnEndGame.UseVisualStyleBackColor = true;
             this.btnEndGame.Click += new System.EventHandler(this.btnEndGame_Click);
             // 
+            // btnChangeround
+            // 
+            this.btnChangeround.Location = new System.Drawing.Point(70, 293);
+            this.btnChangeround.Name = "btnChangeround";
+            this.btnChangeround.Size = new System.Drawing.Size(100, 23);
+            this.btnChangeround.TabIndex = 59;
+            this.btnChangeround.Text = "Cambiar ronda";
+            this.btnChangeround.UseVisualStyleBackColor = true;
+            this.btnChangeround.Click += new System.EventHandler(this.btnChangeround_Click);
+            // 
+            // nudNewRound
+            // 
+            this.nudNewRound.Location = new System.Drawing.Point(15, 296);
+            this.nudNewRound.Name = "nudNewRound";
+            this.nudNewRound.Size = new System.Drawing.Size(49, 20);
+            this.nudNewRound.TabIndex = 60;
+            // 
             // Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 500);
+            this.Controls.Add(this.nudNewRound);
+            this.Controls.Add(this.btnChangeround);
             this.Controls.Add(this.btnEndGame);
             this.Controls.Add(this.btnDiscardCards);
             this.Controls.Add(this.chkPlayer1BCard4);
@@ -678,6 +700,7 @@
             this.Controls.Add(this.txtUserName);
             this.Name = "Form";
             this.Text = "Pruebas servicio MUS";
+            ((System.ComponentModel.ISupportInitialize)(this.nudNewRound)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -747,6 +770,8 @@
         private System.Windows.Forms.CheckBox chkPlayer1BCard1;
         private System.Windows.Forms.Button btnDiscardCards;
         private System.Windows.Forms.Button btnEndGame;
+        private System.Windows.Forms.Button btnChangeround;
+        private System.Windows.Forms.NumericUpDown nudNewRound;
     }
 }
 
