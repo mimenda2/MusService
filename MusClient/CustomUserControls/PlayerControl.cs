@@ -79,6 +79,10 @@ namespace MusClient.CustomUserControls
         {
             cardsControl1.CleanDiscards();
         }
+        public void ChangeDiscards(MusCard[] cards)
+        {
+            cardsControl1.ChangeDiscards(cards);
+        }
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);

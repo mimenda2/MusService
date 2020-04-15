@@ -72,6 +72,14 @@ namespace MusClient.CustomUserControls
                 cardControl.Discard = false;
             }
         }
+        public void ChangeDiscards(MusCard[] cards)
+        {
+            var checkedList = this.Controls.OfType<CardControl>().Where(x => x.Discard).ToList();
+            for (int i = 0; i < cards.Length; i++)
+            {
+                checkedList[i].Card = cards[i];
+            }
+        }
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
@@ -96,6 +104,34 @@ namespace MusClient.CustomUserControls
                 }
             }
             catch { }
+        }
+
+        private void card1_MouseDown(object sender, MouseEventArgs e)
+        {
+            CardControl cardOrigin = sender as CardControl;
+            cardOrigin.DoDragDrop(cardOrigin.GetHashCode().ToString(), DragDropEffects.Copy | DragDropEffects.Move);
+        }
+
+        private void card1_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.Text))
+                e.Effect = DragDropEffects.Move;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void card1_DragDrop(object sender, DragEventArgs e)
+        {
+            CardControl cardDest = sender as CardControl;
+            string hashCodeOrigin = e.Data.GetData(DataFormats.Text).ToString();
+            if (cardDest.GetHashCode().ToString() != hashCodeOrigin)
+            {
+                CardControl cardOrigin = this.Controls.OfType<CardControl>().First(x => x.GetHashCode().ToString() == hashCodeOrigin);
+                MusCard musCardDest = cardDest.Card;
+                cardDest.Card = cardOrigin.Card;
+                cardOrigin.Card = musCardDest;
+
+            }
         }
     }
 }

@@ -273,17 +273,7 @@ namespace MusClient.CustomUserControls
             using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
             {
                 var newCards = c.ChangeCards(generalData.GameName, generalData.TeamName, generalData.UserName, discards.ToArray());
-                var cards = playerControl1.Cards;
-                int j = 0;
-                for (int i = 0; i < cards.Count; i++)
-                {
-                    if (discards.Contains(cards[i]))
-                    {
-                        cards[i] = newCards[j];
-                        j++;
-                    }
-                }
-                playerControl1.Cards = cards;
+                playerControl1.ChangeDiscards(newCards);
             }
             return true;
         }

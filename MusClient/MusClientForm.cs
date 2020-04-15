@@ -197,7 +197,8 @@ namespace MusClient
                             break;
                         case MusState.NextRoundRequest:
                             ExecuteMethod.ExecuteMethodNTimes(WaitForAllPlayersInNextRound, 3);
-                            State = MusState.NextRound;
+                            if (State != MusState.FinishGame)
+                                State = MusState.NextRound;
                             break;
                         case MusState.NextRound:
                             break;

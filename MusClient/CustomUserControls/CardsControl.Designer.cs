@@ -36,35 +36,59 @@
             // 
             // card4
             // 
+            this.card4.AllowDrop = true;
             this.card4.Card = MusCommon.Enums.MusCard.Empty;
+            this.card4.Discard = false;
             this.card4.Location = new System.Drawing.Point(389, 2);
             this.card4.Name = "card4";
+            this.card4.Position = MusClient.Enum.CardPosition.Bottom;
             this.card4.Size = new System.Drawing.Size(120, 140);
             this.card4.TabIndex = 3;
+            this.card4.DragDrop += new System.Windows.Forms.DragEventHandler(this.card1_DragDrop);
+            this.card4.DragEnter += new System.Windows.Forms.DragEventHandler(this.card1_DragEnter);
+            this.card4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.card1_MouseDown);
             // 
             // card3
             // 
+            this.card3.AllowDrop = true;
             this.card3.Card = MusCommon.Enums.MusCard.Empty;
+            this.card3.Discard = false;
             this.card3.Location = new System.Drawing.Point(260, 2);
             this.card3.Name = "card3";
+            this.card3.Position = MusClient.Enum.CardPosition.Bottom;
             this.card3.Size = new System.Drawing.Size(128, 141);
             this.card3.TabIndex = 2;
+            this.card3.DragDrop += new System.Windows.Forms.DragEventHandler(this.card1_DragDrop);
+            this.card3.DragEnter += new System.Windows.Forms.DragEventHandler(this.card1_DragEnter);
+            this.card3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.card1_MouseDown);
             // 
             // card2
             // 
+            this.card2.AllowDrop = true;
             this.card2.Card = MusCommon.Enums.MusCard.Empty;
+            this.card2.Discard = false;
             this.card2.Location = new System.Drawing.Point(131, 2);
             this.card2.Name = "card2";
+            this.card2.Position = MusClient.Enum.CardPosition.Bottom;
             this.card2.Size = new System.Drawing.Size(128, 141);
             this.card2.TabIndex = 1;
+            this.card2.DragDrop += new System.Windows.Forms.DragEventHandler(this.card1_DragDrop);
+            this.card2.DragEnter += new System.Windows.Forms.DragEventHandler(this.card1_DragEnter);
+            this.card2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.card1_MouseDown);
             // 
             // card1
             // 
+            this.card1.AllowDrop = true;
             this.card1.Card = MusCommon.Enums.MusCard.Empty;
+            this.card1.Discard = false;
             this.card1.Location = new System.Drawing.Point(2, 2);
             this.card1.Name = "card1";
+            this.card1.Position = MusClient.Enum.CardPosition.Bottom;
             this.card1.Size = new System.Drawing.Size(120, 140);
             this.card1.TabIndex = 0;
+            this.card1.DragDrop += new System.Windows.Forms.DragEventHandler(this.card1_DragDrop);
+            this.card1.DragEnter += new System.Windows.Forms.DragEventHandler(this.card1_DragEnter);
+            this.card1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.card1_MouseDown);
             // 
             // CardsControl
             // 
