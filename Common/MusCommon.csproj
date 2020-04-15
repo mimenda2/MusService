@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Cards.cs" />
     <Compile Include="Enums\MusCard.cs" />
+    <Compile Include="ExecuteMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

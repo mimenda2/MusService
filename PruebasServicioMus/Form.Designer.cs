@@ -89,6 +89,7 @@
             this.chkPlayer1BCard2 = new System.Windows.Forms.CheckBox();
             this.chkPlayer1BCard1 = new System.Windows.Forms.CheckBox();
             this.btnDiscardCards = new System.Windows.Forms.Button();
+            this.btnEndGame = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtUserName
@@ -598,11 +599,22 @@
             this.btnDiscardCards.UseVisualStyleBackColor = true;
             this.btnDiscardCards.Click += new System.EventHandler(this.btnDiscardCards_Click);
             // 
+            // btnEndGame
+            // 
+            this.btnEndGame.Location = new System.Drawing.Point(625, 288);
+            this.btnEndGame.Name = "btnEndGame";
+            this.btnEndGame.Size = new System.Drawing.Size(100, 23);
+            this.btnEndGame.TabIndex = 58;
+            this.btnEndGame.Text = "Terminar partida";
+            this.btnEndGame.UseVisualStyleBackColor = true;
+            this.btnEndGame.Click += new System.EventHandler(this.btnEndGame_Click);
+            // 
             // Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 500);
+            this.Controls.Add(this.btnEndGame);
             this.Controls.Add(this.btnDiscardCards);
             this.Controls.Add(this.chkPlayer1BCard4);
             this.Controls.Add(this.chkPlayer1BCard3);
@@ -734,6 +746,7 @@
         private System.Windows.Forms.CheckBox chkPlayer1BCard2;
         private System.Windows.Forms.CheckBox chkPlayer1BCard1;
         private System.Windows.Forms.Button btnDiscardCards;
+        private System.Windows.Forms.Button btnEndGame;
     }
 }
 

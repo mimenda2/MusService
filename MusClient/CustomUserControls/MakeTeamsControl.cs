@@ -23,56 +23,74 @@ namespace MusClient.CustomUserControls
         }
         protected override void OnLoad(EventArgs e)
         {
-            CheckTeamsCreated();
+            CheckTeamsCreated(true);
 
             base.OnLoad(e);
         }
         private void btnOK_Click(object sender, EventArgs e)
         {
-            generalData.TeamName = radTeam1.Checked ? radTeam1.Text : radTeam2.Text;
-            using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
+            try
             {
-                string result = c.CreateTeam(generalData.GameName, generalData.TeamName, new string[] { generalData.UserName });
-                if (result != "OK")
-                    MessageBox.Show("ERROR AL INTENTAR CREAR EL EQUIPO: " + result);
-                else
+                generalData.TeamName = radTeam1.Checked ? radTeam1.Text : radTeam2.Text;
+                using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
                 {
-                    btnOK.Enabled = false;
-                    lblWaitingPlayers.Text = "Esperando al resto de jugadores";
-                    CheckTeamsCreated();
-                }
-            }
-        }
-        void CheckTeamsCreated()
-        {
-            using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
-            {
-                while (true)
-                {
-                    data = c.GetMusData(generalData.GameName, generalData.UserName);
-                    if (data.MusTeams.Length == 2 &&
-                        !string.IsNullOrEmpty(data.MusTeams[0].UserName1) &&
-                        !string.IsNullOrEmpty(data.MusTeams[0].UserName2) &&
-                        !string.IsNullOrEmpty(data.MusTeams[1].UserName1) &&
-                        !string.IsNullOrEmpty(data.MusTeams[1].UserName2))
-                    {
-                        if (string.IsNullOrEmpty(generalData.TeamName))
-                        {
-                            if (data.MusTeams[0].UserName1 == generalData.UserName || data.MusTeams[0].UserName2 == generalData.UserName)
-                                generalData.TeamName = data.MusTeams[0].TeamName;
-                            else
-                                generalData.TeamName = data.MusTeams[1].TeamName;
-                        }
-                        TeamsCreated?.Invoke(this, EventArgs.Empty);
-                        break;
-                    }
+                    string result = c.CreateTeam(generalData.GameName, generalData.TeamName, new string[] { generalData.UserName });
+                    if (result != "OK")
+                        MessageBox.Show("ERROR AL INTENTAR CREAR EL EQUIPO: " + result);
                     else
                     {
-                        Application.DoEvents();
-                        Thread.Sleep(500);
-                        Application.DoEvents();
+                        btnOK.Enabled = false;
+                        lblWaitingPlayers.Text = "Esperando al resto de jugadores";
+                        CheckTeamsCreated(false);
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al hacer login: " + ex.Message);
+            }
+        }
+        void CheckTeamsCreated(bool onlyCheckOnce)
+        {
+            try
+            {
+                using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
+                {
+                    while (true)
+                    {
+                        if (IsDisposed || ParentForm.Disposing || ParentForm.IsDisposed)
+                            return;
+                        data = c.GetMusData(generalData.GameName, generalData.UserName);
+                        if (data.MusTeams.Length == 2 &&
+                            !string.IsNullOrEmpty(data.MusTeams[0].UserName1) &&
+                            !string.IsNullOrEmpty(data.MusTeams[0].UserName2) &&
+                            !string.IsNullOrEmpty(data.MusTeams[1].UserName1) &&
+                            !string.IsNullOrEmpty(data.MusTeams[1].UserName2))
+                        {
+                            if (string.IsNullOrEmpty(generalData.TeamName))
+                            {
+                                if (data.MusTeams[0].UserName1 == generalData.UserName || data.MusTeams[0].UserName2 == generalData.UserName)
+                                    generalData.TeamName = data.MusTeams[0].TeamName;
+                                else
+                                    generalData.TeamName = data.MusTeams[1].TeamName;
+                            }
+                            TeamsCreated?.Invoke(this, EventArgs.Empty);
+                            break;
+                        }
+                        else
+                        {
+                            if (onlyCheckOnce)
+                                return;
+                            Application.DoEvents();
+                            Thread.Sleep(1000);
+                            Application.DoEvents();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al chequear equipos: " + ex.Message);
             }
         }
 

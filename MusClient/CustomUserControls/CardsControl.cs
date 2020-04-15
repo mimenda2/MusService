@@ -65,6 +65,13 @@ namespace MusClient.CustomUserControls
                 return retVal;
             }
         }
+        public void CleanDiscards()
+        {
+            foreach (var cardControl in this.Controls.OfType<CardControl>())
+            {
+                cardControl.Discard = false;
+            }
+        }
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);

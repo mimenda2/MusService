@@ -104,6 +104,7 @@
             // 
             // txtUserName
             // 
+            this.txtUserName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtUserName.Location = new System.Drawing.Point(114, 50);
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(121, 20);

@@ -63,6 +63,13 @@ namespace MusClient.CustomUserControls
         public bool Discard
         {
             get { return chkDiscard.Visible && chkDiscard.Checked; }
+            set
+            {
+                if (chkDiscard.Visible)
+                {
+                    chkDiscard.Checked = value;
+                }
+            }
         }
 
         protected override void OnPaint(PaintEventArgs e)

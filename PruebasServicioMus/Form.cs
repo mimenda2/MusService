@@ -277,5 +277,11 @@ namespace PruebasServicioMus
         {
 
         }
+
+        private void btnEndGame_Click(object sender, EventArgs e)
+        {
+                using (MyServiceClient c = new MyServiceClient(serverIP))
+                    c.FinishGame(txtGameName.Text);
+        }
     }
 }

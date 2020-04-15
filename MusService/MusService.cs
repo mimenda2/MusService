@@ -25,6 +25,7 @@ namespace MusWinService
                     game = new MusGame(gameName);
                     MusDatabase.Games.Add(game);
                 }
+
                 if (!game.Users.Any(x => x.UserName == userName))
                 {
                     mySource.TraceMessage(TraceEventType.Information, 58, $"Añado el user {userName} al game {gameName}");
@@ -53,6 +54,14 @@ namespace MusWinService
                 var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
                 if (game != null)
                 {
+                    foreach(var t in game.Teams)
+                    {
+                        if (t.TeamName != teamName)
+                        {
+                            if (t.Users.Any(x => users.Contains(x.UserName)))
+                                return "YA ESTAS EN EL OTRO EQUIPO";
+                        }
+                    }
                     var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
                     if (team == null)
                     {
@@ -183,17 +192,20 @@ namespace MusWinService
         public void NextRound(string gameName, string teamName, string userName, int round)
         {
             var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
-            AddTrace(game, $"{userName} va a empezar siguiente ronda");
+            AddTrace(game, $"{userName} va a empezar siguiente ronda: " + round);
             var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
             var user = team.Users.FirstOrDefault(x => x.UserName == userName);
             user.CurrentRound = round;
             bool allInSameRound = true;
+
+            string usersInRound = "";
             foreach (var t in game.Teams)
             {
-                if (team.Users.Any(x => x.CurrentRound != round))
+                foreach (var u in t.Users)
                 {
-                    allInSameRound = false;
-                    break;
+                    usersInRound += $"{u.UserName} ({u.CurrentRound}), ";
+                    if (u.CurrentRound != round)
+                        allInSameRound = false;
                 }
             }
             if (allInSameRound)
@@ -267,7 +279,6 @@ namespace MusWinService
                         user.Cards.Add(card);
                         game.Cards.CardsToPlay.Remove(card);
                     }
-                    mySource.TraceMessage(TraceEventType.Information, 58, $"QUEDAN {game.Cards.CardsToPlay.Count} CARTAS");
                 }
             }
             catch (Exception ex)
@@ -277,24 +288,19 @@ namespace MusWinService
             return retVal;
         }
         static Random rnd = new Random();
-        static int lastRound = -1;
         static void NextHand(MusGame game, int round)
         {
-            if (lastRound < round)
-            {
-                lastRound = round;
-                string names = $"{game.Teams[0].Users[0].UserName}, {game.Teams[0].Users[1].UserName}, {game.Teams[1].Users[0].UserName}, {game.Teams[1].Users[1].UserName}";
-                mySource.TraceMessage(TraceEventType.Warning, 58, $"antes de cambiar mano {game.HandUser} ({names})");
-                if (game.Teams[0].Users[0].UserName == game.HandUser)
-                    game.HandUser = game.Teams[1].Users[0].UserName;
-                else if (game.Teams[1].Users[0].UserName == game.HandUser)
-                    game.HandUser = game.Teams[0].Users[1].UserName;
-                else if (game.Teams[0].Users[1].UserName == game.HandUser)
-                    game.HandUser = game.Teams[1].Users[1].UserName;
-                else
-                    game.HandUser = game.Teams[0].Users[0].UserName;
-                mySource.TraceMessage(TraceEventType.Warning, 58, $"despues de cambiar mano {game.HandUser}");
-            }
+            string names = $"{game.Teams[0].Users[0].UserName}, {game.Teams[0].Users[1].UserName}, {game.Teams[1].Users[0].UserName}, {game.Teams[1].Users[1].UserName}";
+            mySource.TraceMessage(TraceEventType.Warning, 58, $"antes de cambiar mano {game.HandUser} ({names})");
+            if (game.Teams[0].Users[0].UserName == game.HandUser)
+                game.HandUser = game.Teams[1].Users[0].UserName;
+            else if (game.Teams[1].Users[0].UserName == game.HandUser)
+                game.HandUser = game.Teams[0].Users[1].UserName;
+            else if (game.Teams[0].Users[1].UserName == game.HandUser)
+                game.HandUser = game.Teams[1].Users[1].UserName;
+            else
+                game.HandUser = game.Teams[0].Users[0].UserName;
+            mySource.TraceMessage(TraceEventType.Warning, 58, $"despues de cambiar mano {game.HandUser}");
         }
     }
 }

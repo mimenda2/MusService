@@ -13,9 +13,6 @@
         /// <param name="disposing">true si los recursos administrados se deben desechar; false en caso contrario.</param>
         protected override void Dispose(bool disposing)
         {
-            if (imgHand != null)
-                imgHand.Dispose();
-
             if (disposing && (components != null))
             {
                 components.Dispose();
@@ -43,6 +40,7 @@
             this.btnDiscard = new System.Windows.Forms.Button();
             this.txtTraces = new System.Windows.Forms.TextBox();
             this.btnShowCards = new System.Windows.Forms.Button();
+            this.lblError = new System.Windows.Forms.Label();
             this.playerControl4 = new MusClient.CustomUserControls.PlayerControl();
             this.playerControl2 = new MusClient.CustomUserControls.PlayerControl();
             this.playerControl3 = new MusClient.CustomUserControls.PlayerControl();
@@ -152,9 +150,11 @@
             // 
             // txtTraces
             // 
+            this.txtTraces.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtTraces.Location = new System.Drawing.Point(350, 240);
             this.txtTraces.Multiline = true;
             this.txtTraces.Name = "txtTraces";
+            this.txtTraces.ReadOnly = true;
             this.txtTraces.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtTraces.Size = new System.Drawing.Size(353, 265);
             this.txtTraces.TabIndex = 12;
@@ -169,6 +169,15 @@
             this.btnShowCards.UseVisualStyleBackColor = true;
             this.btnShowCards.Click += new System.EventHandler(this.btnShowCards_Click);
             // 
+            // lblError
+            // 
+            this.lblError.AutoSize = true;
+            this.lblError.ForeColor = System.Drawing.Color.Red;
+            this.lblError.Location = new System.Drawing.Point(27, 752);
+            this.lblError.Name = "lblError";
+            this.lblError.Size = new System.Drawing.Size(0, 13);
+            this.lblError.TabIndex = 14;
+            // 
             // playerControl4
             // 
             this.playerControl4.BackColor = System.Drawing.Color.Firebrick;
@@ -178,6 +187,8 @@
             this.playerControl4.Position = MusClient.Enum.CardPosition.Left;
             this.playerControl4.Size = new System.Drawing.Size(170, 430);
             this.playerControl4.TabIndex = 3;
+            this.playerControl4.TeamName = null;
+            this.playerControl4.UserName = null;
             // 
             // playerControl2
             // 
@@ -188,6 +199,8 @@
             this.playerControl2.Position = MusClient.Enum.CardPosition.Right;
             this.playerControl2.Size = new System.Drawing.Size(170, 430);
             this.playerControl2.TabIndex = 2;
+            this.playerControl2.TeamName = null;
+            this.playerControl2.UserName = null;
             // 
             // playerControl3
             // 
@@ -198,6 +211,8 @@
             this.playerControl3.Position = MusClient.Enum.CardPosition.Top;
             this.playerControl3.Size = new System.Drawing.Size(430, 170);
             this.playerControl3.TabIndex = 1;
+            this.playerControl3.TeamName = null;
+            this.playerControl3.UserName = null;
             // 
             // playerControl1
             // 
@@ -208,12 +223,15 @@
             this.playerControl1.Position = MusClient.Enum.CardPosition.Bottom;
             this.playerControl1.Size = new System.Drawing.Size(430, 170);
             this.playerControl1.TabIndex = 0;
+            this.playerControl1.TeamName = null;
+            this.playerControl1.UserName = null;
             // 
             // GameControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Green;
+            this.Controls.Add(this.lblError);
             this.Controls.Add(this.btnShowCards);
             this.Controls.Add(this.txtTraces);
             this.Controls.Add(this.btnDiscard);
@@ -251,5 +269,6 @@
         private System.Windows.Forms.Button btnDiscard;
         private System.Windows.Forms.TextBox txtTraces;
         private System.Windows.Forms.Button btnShowCards;
+        private System.Windows.Forms.Label lblError;
     }
 }

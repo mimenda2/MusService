@@ -17,7 +17,6 @@ namespace MusClient.CustomUserControls
     {
         IGeneralData generalData;
         MusData musData;
-        Image imgHand;
         public GameControl(IGeneralData generalData, MusData musData)
         {
             InitializeComponent();
@@ -26,9 +25,6 @@ namespace MusClient.CustomUserControls
             Stream stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("MusClient.Res.tapeteverde.jpg");
             this.BackgroundImage = new Bitmap(stream);
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-
-            stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("MusClient.Res.mano.jpg");
-            imgHand = new Bitmap(stream);
 
             this.generalData = generalData;
             this.musData = musData;
@@ -102,46 +98,58 @@ namespace MusClient.CustomUserControls
         #region Puntuacion
         private void btnChangePoints_Click(object sender, EventArgs e)
         {
-            using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
-            {
-                c.ChangePoints(generalData.GameName, lblTeam1.Text, generalData.UserName, (int)nudTeam1Points.Value);
-                c.ChangePoints(generalData.GameName, lblTeam2.Text, generalData.UserName, (int)nudTeam2Points.Value);
-            }
-            changingPoints = false;
-        }
-
-        private void timerRefresh_Tick(object sender, EventArgs e)
-        {
             try
             {
-                if (!changingPoints)
+                using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
                 {
-                    using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
-                    {
-                        musData = c.GetMusData(generalData.GameName, generalData.UserName);
-                        if (musData != null && musData.MusTeams?.Length == 2)
-                        {
-                            nudTeam1Points.Value = musData.MusTeams[0].Points;
-                            nudTeam2Points.Value = musData.MusTeams[1].Points;
-                            var traces = c.GetTraces(generalData.GameName);
-                            txtTraces.Text = String.Join(Environment.NewLine, traces);
-                            if (this.txtTraces.Text.Length > 1)
-                            {
-                                this.txtTraces.SelectionStart = txtTraces.Text.Length - 1;
-                                txtTraces.ScrollToCaret();
-                            }
-
-                            if (!string.IsNullOrEmpty(musData.HandUser))
-                            {
-                                HandUser = musData.HandUser;
-                            }
-                        }
-                    }
+                    c.ChangePoints(generalData.GameName, lblTeam1.Text, generalData.UserName, (int)nudTeam1Points.Value);
+                    c.ChangePoints(generalData.GameName, lblTeam2.Text, generalData.UserName, (int)nudTeam2Points.Value);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("ERROR EN EL TIMER: " + ex.ToString());
+                lblError.Text = "Error al cambiar puntos: " + ex.Message;
+            }
+            changingPoints = false;
+        }
+
+        DateTime lastTimeTimer = DateTime.MinValue;
+        private void timerRefresh_Tick(object sender, EventArgs e)
+        {
+            if (DateTime.Now - lastTimeTimer >= TimeSpan.FromMilliseconds(timerRefresh.Interval - 10))
+            {
+                lastTimeTimer = DateTime.Now;
+                try
+                {
+                    if (!changingPoints)
+                    {
+                        using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
+                        {
+                            musData = c.GetMusData(generalData.GameName, generalData.UserName);
+                            if (musData != null && musData.MusTeams?.Length == 2)
+                            {
+                                nudTeam1Points.Value = musData.MusTeams[0].Points;
+                                nudTeam2Points.Value = musData.MusTeams[1].Points;
+                                var traces = c.GetTraces(generalData.GameName);
+                                txtTraces.Text = String.Join(Environment.NewLine, traces);
+                                if (this.txtTraces.Text.Length > 1)
+                                {
+                                    this.txtTraces.SelectionStart = txtTraces.Text.Length - 1;
+                                    txtTraces.ScrollToCaret();
+                                }
+
+                                if (!string.IsNullOrEmpty(musData.HandUser))
+                                {
+                                    HandUser = musData.HandUser;
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    lblError.Text = "ERROR EN EL TIMER: " + ex.Message;
+                }
             }
         }
         bool changingPoints = false;
@@ -181,16 +189,12 @@ namespace MusClient.CustomUserControls
                 MusCommon.Enums.MusCard.Empty
             };
             round++;
-            using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
-            {
-                c.NextRound(generalData.GameName, generalData.TeamName, generalData.UserName, round);
-            }
+            MusCommon.ExecuteMethod.ExecuteMethodNTimes(GoToNextround, 3);
+
             NextRoundRequest?.Invoke(this, EventArgs.Empty);
-            using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
-            {
-                var cards = c.GetCards(generalData.GameName, generalData.TeamName, generalData.UserName);
-                playerControl1.Cards = cards.ToList();
-            }
+
+            MusCommon.ExecuteMethod.ExecuteMethodNTimes(GetCards, 3);
+
             playerControl2.Cards = playerControl3.Cards = playerControl4.Cards = new List<MusCommon.Enums.MusCard>()
             {
                 MusCommon.Enums.MusCard.Back,
@@ -200,6 +204,25 @@ namespace MusClient.CustomUserControls
             };
             btnNextRound.Text = $"Siguiente ronda {(round+1)}";
             btnNextRound.Enabled = true;
+
+            txtTraces.Select();
+        }
+        bool GoToNextround()
+        {
+            using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
+            {
+                c.NextRound(generalData.GameName, generalData.TeamName, generalData.UserName, round);
+            }
+            return true;
+        }
+        bool GetCards()
+        {
+            using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
+            {
+                var cards = c.GetCards(generalData.GameName, generalData.TeamName, generalData.UserName);
+                playerControl1.Cards = cards.ToList();
+            }
+            return true;
         }
         public event EventHandler NextRoundRequest;
         #endregion  
@@ -207,29 +230,35 @@ namespace MusClient.CustomUserControls
         #region Cards
         private void btnDiscard_Click(object sender, EventArgs e)
         {
-            var discards = playerControl1.Discards;
-            if (discards?.Count == 0)
+            if (playerControl1.Discards?.Count == 0)
                 MessageBox.Show("Selecciona cartas para descartar!");
             else
             {
-                using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
-                {
-                    var newCards = c.ChangeCards(generalData.GameName, generalData.TeamName, generalData.UserName, discards.ToArray());
-                    var cards = playerControl1.Cards;
-                    int j = 0;
-                    for(int i = 0; i < cards.Count; i++)
-                    {
-                        if (discards.Contains(cards[i]))
-                        {
-                            cards[i] = newCards[j];
-                            j++;
-                        }
-                    }
-                    playerControl1.Cards = cards;
-                }
+                MusCommon.ExecuteMethod.ExecuteMethodNTimes(Discard, 3);
             }
+            playerControl1.CleanDiscards();
+            txtTraces.Select();
         }
-
+        bool Discard()
+        {
+            var discards = playerControl1.Discards;
+            using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
+            {
+                var newCards = c.ChangeCards(generalData.GameName, generalData.TeamName, generalData.UserName, discards.ToArray());
+                var cards = playerControl1.Cards;
+                int j = 0;
+                for (int i = 0; i < cards.Count; i++)
+                {
+                    if (discards.Contains(cards[i]))
+                    {
+                        cards[i] = newCards[j];
+                        j++;
+                    }
+                }
+                playerControl1.Cards = cards;
+            }
+            return true;
+        }
         private void btnShowCards_Click(object sender, EventArgs e)
         {
             using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
@@ -261,6 +290,7 @@ namespace MusClient.CustomUserControls
                     }
                 }
             }
+            txtTraces.Select();
         }
         #endregion
 
@@ -271,41 +301,11 @@ namespace MusClient.CustomUserControls
                 if (handUser != value)
                 {
                     handUser = value;
-                    this.Invalidate();
+                    foreach (var ctrl in this.Controls.OfType<PlayerControl>())
+                        ctrl.BackColor = (ctrl.UserName == handUser) ? Color.DarkMagenta : Color.Firebrick;
                 }
             }
         }
         string handUser;
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            if (!string.IsNullOrEmpty(handUser))
-            {
-                foreach(var ctrl in this.Controls.OfType<PlayerControl>())
-                {
-                    if (ctrl.UserName == handUser)
-                    {
-                        int separation = 1;
-                        switch(ctrl.Position)
-                        {
-                            case Enum.CardPosition.Bottom:
-                                e.Graphics.DrawImage(imgHand, ctrl.Right + separation, ctrl.Top);
-                                break;
-                            case Enum.CardPosition.Top:
-                                e.Graphics.DrawImage(imgHand, ctrl.Right + separation, ctrl.Bottom - imgHand.Height);
-                                break;
-                            case Enum.CardPosition.Left:
-                                e.Graphics.DrawImage(imgHand, ctrl.Right - imgHand.Width, ctrl.Bottom + separation);
-                                break;
-                            case Enum.CardPosition.Right:
-                                e.Graphics.DrawImage(imgHand, ctrl.Left, ctrl.Bottom + separation);
-                                break;
-                        }
-                        break;
-                    }
-                }
-            }
-            base.OnPaint(e);
-        }
     }
 }

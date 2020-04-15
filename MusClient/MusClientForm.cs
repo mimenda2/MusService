@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MusCommon;
 
 namespace MusClient
 {
@@ -46,12 +47,14 @@ namespace MusClient
         }
         
         #region Wait for players
-        void WaitForPlayers()
+        bool WaitForPlayers()
         {
             string[] players = null;
 
             using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
             {
+                if (State == MusState.FinishGame)
+                    return true;
                 players = null;
                 while (players?.Length != 4)
                 {
@@ -61,22 +64,25 @@ namespace MusClient
                     else
                     {
                         Application.DoEvents();
-                        Thread.Sleep(500);
+                        Thread.Sleep(1000);
                         Application.DoEvents();
                     }
                 }
             }
+            return true;
         }
         #endregion
 
         #region Make teams
-        void WaitForAllPlayersInNextRound()
+        bool WaitForAllPlayersInNextRound()
         {
             while (true)
             {
                 int round = -1;
                 using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
                 {
+                    if (State == MusState.FinishGame)
+                        return true;
                     var musData = c.GetMusData(generalData.GameName, generalData.UserName);
                     foreach (var t in musData.MusTeams)
                     {
@@ -98,10 +104,11 @@ namespace MusClient
                 else
                 {
                     Application.DoEvents();
-                    Thread.Sleep(500);
+                    Thread.Sleep(1000);
                     Application.DoEvents();
                 }
             }
+            return true;
         }
         #endregion
 
@@ -159,11 +166,11 @@ namespace MusClient
 
         void FinishGame()
         {
-            if (generalData != null)
-            {
-                using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
-                    c.FinishGame(generalData.GameName);
-            }
+            //if (generalData != null)
+            //{
+            //    using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
+            //        c.FinishGame(generalData.GameName);
+            //}
         }
 
         MusState State
@@ -180,7 +187,7 @@ namespace MusClient
                             DoLogin();
                             break;
                         case MusState.WaitingPlayers:
-                            WaitForPlayers();
+                            ExecuteMethod.ExecuteMethodNTimes(WaitForPlayers, 3);
                             break;
                         case MusState.MakeTeams:
                             MakeTeams();
@@ -189,7 +196,7 @@ namespace MusClient
                             StartGame();
                             break;
                         case MusState.NextRoundRequest:
-                            WaitForAllPlayersInNextRound();
+                            ExecuteMethod.ExecuteMethodNTimes(WaitForAllPlayersInNextRound, 3);
                             State = MusState.NextRound;
                             break;
                         case MusState.NextRound:

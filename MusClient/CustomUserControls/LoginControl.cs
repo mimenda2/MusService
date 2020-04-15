@@ -17,7 +17,6 @@ namespace MusClient.CustomUserControls
         {
             InitializeComponent();
         }
-
         private void btnLogin_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(UserName))
@@ -27,17 +26,24 @@ namespace MusClient.CustomUserControls
                 ServerIP = txtServerIP.Text;
                 GameName = txtGameName.Text;
                 UserName = txtUserName.Text;
-                using (MyServiceClient c = new MyServiceClient(ServerIP))
+                try
                 {
-                    string result = c.Login(UserName, GameName, "");
-                    if (result != "OK")
-                        MessageBox.Show("ERROR AL LOGGUEAR: " + result);
-                    else
+                    using (MyServiceClient c = new MyServiceClient(ServerIP))
                     {
-                        grpLogin.Enabled = false;
-                        lblWaitingPlayers.Text = "Esperando al resto de jugadores";
-                        LoginFinished?.Invoke(this, EventArgs.Empty);
+                        string result = c.Login(UserName, GameName, "");
+                        if (result != "OK")
+                            MessageBox.Show("ERROR AL LOGGUEAR: " + result);
+                        else
+                        {
+                            grpLogin.Enabled = false;
+                            lblWaitingPlayers.Text = "Esperando al resto de jugadores";
+                            LoginFinished?.Invoke(this, EventArgs.Empty);
+                        }
                     }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Error al hacer login: " + ex.Message);
                 }
             }
         }

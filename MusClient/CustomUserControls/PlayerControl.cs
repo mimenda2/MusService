@@ -75,6 +75,10 @@ namespace MusClient.CustomUserControls
                 return cardsControl1.Discards;
             }
         }
+        public void CleanDiscards()
+        {
+            cardsControl1.CleanDiscards();
+        }
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
