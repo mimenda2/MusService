@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MusClient.Interface;
+using System.Diagnostics;
 
 namespace MusClient.CustomUserControls
 {
@@ -19,6 +20,7 @@ namespace MusClient.CustomUserControls
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            TraceClientExtensions.TraceMessage(TraceEventType.Information, 1, $"Intentando hacer login con el usuario {txtUserName.Text}");
             if (string.IsNullOrEmpty(txtUserName.Text))
                 MessageBox.Show("Necesito un nombre de usuario");
             else
@@ -32,7 +34,11 @@ namespace MusClient.CustomUserControls
                     {
                         string result = c.Login(UserName, GameName, "");
                         if (result != "OK")
+                        {
+                            TraceClientExtensions.TraceMessage(TraceEventType.Error, 1, 
+                                $"Error al hacer login con el usuario {txtUserName.Text}: {result}");
                             MessageBox.Show("ERROR AL LOGGUEAR: " + result);
+                        }
                         else
                         {
                             grpLogin.Enabled = false;
@@ -43,7 +49,9 @@ namespace MusClient.CustomUserControls
                 }
                 catch(Exception ex)
                 {
+                    TraceClientExtensions.TraceMessage(TraceEventType.Error, 1, $"Error al hacer login con el usuario {txtUserName.Text}: {ex.ToString()}");
                     MessageBox.Show("Error al hacer login: " + ex.Message);
+
                 }
             }
         }

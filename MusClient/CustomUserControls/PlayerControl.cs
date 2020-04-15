@@ -77,10 +77,12 @@ namespace MusClient.CustomUserControls
         }
         public void CleanDiscards()
         {
+            TraceClientExtensions.TraceMessage(System.Diagnostics.TraceEventType.Information, 1, $"Limpiar descartes");
             cardsControl1.CleanDiscards();
         }
         public void ChangeDiscards(MusCard[] cards)
         {
+            TraceClientExtensions.TraceMessage(System.Diagnostics.TraceEventType.Information, 1, $"Cambiar descartes");
             cardsControl1.ChangeDiscards(cards);
         }
         protected override void OnPaint(PaintEventArgs e)

@@ -31,6 +31,9 @@ namespace MusClient.CustomUserControls
         {
             try
             {
+                TraceClientExtensions.TraceMessage(System.Diagnostics.TraceEventType.Information, 1,
+                    $"Uniendose a equipo {generalData.TeamName} con el usuario {generalData.UserName}");
+
                 generalData.TeamName = radTeam1.Checked ? radTeam1.Text : radTeam2.Text;
                 using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
                 {
@@ -47,6 +50,8 @@ namespace MusClient.CustomUserControls
             }
             catch (Exception ex)
             {
+                TraceClientExtensions.TraceMessage(System.Diagnostics.TraceEventType.Error, 1, 
+                    $"Error al entrar en el equipo {generalData.TeamName} con el usuario {generalData.UserName}: {ex.ToString()}");
                 MessageBox.Show("Error al hacer login: " + ex.Message);
             }
         }
@@ -54,6 +59,9 @@ namespace MusClient.CustomUserControls
         {
             try
             {
+                TraceClientExtensions.TraceMessage(System.Diagnostics.TraceEventType.Information, 1,
+                    $"CheckTeamsCreated {generalData.TeamName} con el usuario {generalData.UserName}");
+
                 using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
                 {
                     while (true)
@@ -90,6 +98,8 @@ namespace MusClient.CustomUserControls
             }
             catch (Exception ex)
             {
+                TraceClientExtensions.TraceMessage(System.Diagnostics.TraceEventType.Error, 1,
+                    $"Error al chequear equipos {generalData.TeamName} con el usuario {generalData.UserName}");
                 MessageBox.Show("Error al chequear equipos: " + ex.Message);
             }
         }

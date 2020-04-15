@@ -105,6 +105,7 @@
     <Compile Include="CustomUserControls\PlayerControl.Designer.cs">
       <DependentUpon>PlayerControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="SizeTraceListener.cs" />
     <EmbeddedResource Include="CustomUserControls\CardControl.resx">
       <DependentUpon>CardControl.cs</DependentUpon>
     </EmbeddedResource>

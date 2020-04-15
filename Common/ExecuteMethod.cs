@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MusClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -18,9 +19,10 @@ namespace MusCommon
                     _func.DynamicInvoke();
                     break;
                 }
-                catch
+                catch (Exception ex)
                 {
-
+                    TraceClientExtensions.TraceMessage(System.Diagnostics.TraceEventType.Error, 1, 
+                        $"Error al ejecutar {_func.Method.Name}: {ex.ToString()}");
                 }
             }
         }

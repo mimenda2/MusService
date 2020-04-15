@@ -19,7 +19,9 @@ namespace MusClient
             Application.ThreadException += Application_ThreadException;
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            TraceClientExtensions.StartTraces("TraceMusClientApp");
             Application.Run(new MusClientForm());
+            TraceClientExtensions.StopTraces();
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
