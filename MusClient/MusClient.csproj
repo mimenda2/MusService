@@ -57,6 +57,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="CustomUserControls\GamePointControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomUserControls\GamePointControl.Designer.cs">
+      <DependentUpon>GamePointControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomUserControls\GamePointsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomUserControls\GamePointsControl.Designer.cs">
+      <DependentUpon>GamePointsControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Enum\CardPosition.cs" />
     <Compile Include="Interface\IGeneralData.cs" />
     <Compile Include="MusClientForm.cs">
@@ -108,6 +120,12 @@
     <Compile Include="SizeTraceListener.cs" />
     <EmbeddedResource Include="CustomUserControls\CardControl.resx">
       <DependentUpon>CardControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomUserControls\GamePointControl.resx">
+      <DependentUpon>GamePointControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomUserControls\GamePointsControl.resx">
+      <DependentUpon>GamePointsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MusClientForm.resx">
       <DependentUpon>MusClientForm.cs</DependentUpon>
@@ -204,6 +222,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="asdeoros.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Res\tick.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

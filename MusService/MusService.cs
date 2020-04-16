@@ -149,6 +149,16 @@ namespace MusWinService
                 team.Puntuacion = points;
             }
         }
+        public void ChangeGamePoints(string gameName, string teamName, string userName, int gamePoints)
+        {
+            var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
+            var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
+            if (team.GamePoints != gamePoints)
+            {
+                AddTrace(game, $"{userName} va a cambiar los juegos ganados del equipo {teamName}: {gamePoints}");
+                team.GamePoints = gamePoints;
+            }
+        }
         public void ResetRound(string gameName)
         {
             var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
@@ -264,6 +274,7 @@ namespace MusWinService
                             RoundUserName1 = team.Users?.Count > 0 ? team.Users[0].CurrentRound : 0,
                             RoundUserName2 = team.Users?.Count > 1 ? team.Users[1].CurrentRound : 0,
                             Points = team.Puntuacion,
+                            GamePoints = team.GamePoints,
                             CardsUser1 = getCards && team.Users?.Count > 0 ? team.Users[0].Cards : null,
                             CardsUser2 = getCards && team.Users?.Count > 1 ? team.Users[1].Cards : null,
                         });

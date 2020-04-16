@@ -138,6 +138,9 @@ namespace MusClient.ServiceMusReference {
         private MusCommon.Enums.MusCard[] CardsUser2Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int GamePointsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int PointsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -187,6 +190,19 @@ namespace MusClient.ServiceMusReference {
                 if ((object.ReferenceEquals(this.CardsUser2Field, value) != true)) {
                     this.CardsUser2Field = value;
                     this.RaisePropertyChanged("CardsUser2");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int GamePoints {
+            get {
+                return this.GamePointsField;
+            }
+            set {
+                if ((this.GamePointsField.Equals(value) != true)) {
+                    this.GamePointsField = value;
+                    this.RaisePropertyChanged("GamePoints");
                 }
             }
         }
@@ -331,6 +347,12 @@ namespace MusClient.ServiceMusReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/ChangePoints", ReplyAction="http://tempuri.org/IMusService/ChangePointsResponse")]
         System.Threading.Tasks.Task ChangePointsAsync(string gameName, string teamName, string userName, int points);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/ChangeGamePoints", ReplyAction="http://tempuri.org/IMusService/ChangeGamePointsResponse")]
+        void ChangeGamePoints(string gameName, string teamName, string userName, int gamePoints);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/ChangeGamePoints", ReplyAction="http://tempuri.org/IMusService/ChangeGamePointsResponse")]
+        System.Threading.Tasks.Task ChangeGamePointsAsync(string gameName, string teamName, string userName, int gamePoints);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/ResetRound", ReplyAction="http://tempuri.org/IMusService/ResetRoundResponse")]
         void ResetRound(string gameName);
         
@@ -457,6 +479,14 @@ namespace MusClient.ServiceMusReference {
         
         public System.Threading.Tasks.Task ChangePointsAsync(string gameName, string teamName, string userName, int points) {
             return base.Channel.ChangePointsAsync(gameName, teamName, userName, points);
+        }
+        
+        public void ChangeGamePoints(string gameName, string teamName, string userName, int gamePoints) {
+            base.Channel.ChangeGamePoints(gameName, teamName, userName, gamePoints);
+        }
+        
+        public System.Threading.Tasks.Task ChangeGamePointsAsync(string gameName, string teamName, string userName, int gamePoints) {
+            return base.Channel.ChangeGamePointsAsync(gameName, teamName, userName, gamePoints);
         }
         
         public void ResetRound(string gameName) {

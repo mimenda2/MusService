@@ -34,6 +34,9 @@ namespace MusClient.CustomUserControls
             lblTeam2.Text = musData.MusTeams[1].TeamName;
             nudTeam1Points.Value = nudTeam2Points.Value = 0;
             nudTeam1Points.Tag = nudTeam2Points.Tag = (int)0;
+            gamePointsTeam1.GamesWin = gamePointsTeam2.GamesWin = 0;
+            gamePointsTeam1.Tag = gamePointsTeam2.Tag = 0;
+
 
             cmbHandUser.Items.Clear();
             bool primero = true;
@@ -110,6 +113,10 @@ namespace MusClient.CustomUserControls
                         c.ChangePoints(generalData.GameName, lblTeam1.Text, generalData.UserName, (int)nudTeam1Points.Value);
                     if ((int)nudTeam2Points.Value != (int)nudTeam2Points.Tag)
                         c.ChangePoints(generalData.GameName, lblTeam2.Text, generalData.UserName, (int)nudTeam2Points.Value);
+                    if (gamePointsTeam1.GamesWin != (int?)gamePointsTeam1.Tag)
+                        c.ChangeGamePoints(generalData.GameName, lblTeam1.Text, generalData.UserName, gamePointsTeam1.GamesWin ?? 0);
+                    if (gamePointsTeam2.GamesWin != (int?)gamePointsTeam2.Tag)
+                        c.ChangeGamePoints(generalData.GameName, lblTeam2.Text, generalData.UserName, gamePointsTeam2.GamesWin ?? 0);
                 }
             }
             catch (Exception ex)
@@ -128,6 +135,12 @@ namespace MusClient.CustomUserControls
                 lastTimeTimer = DateTime.Now;
                 try
                 {
+                    if ((DateTime.Now - changePointsDate).TotalMilliseconds > 1000)
+                    {
+                        changePointsDate = DateTime.MaxValue;
+                        btnChangePoints_Click(this, EventArgs.Empty);
+                        return;
+                    }
                     if (!changingPoints)
                     {
                         using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
@@ -139,6 +152,11 @@ namespace MusClient.CustomUserControls
                                 nudTeam2Points.Value = musData.MusTeams[1].Points;
                                 nudTeam1Points.Tag = (int)nudTeam1Points.Value;
                                 nudTeam2Points.Tag = (int)nudTeam2Points.Value;
+
+                                gamePointsTeam1.GamesWin = musData.MusTeams[0].GamePoints;
+                                gamePointsTeam2.GamesWin = musData.MusTeams[1].GamePoints;
+                                gamePointsTeam1.Tag = gamePointsTeam1.GamesWin;
+                                gamePointsTeam2.Tag = gamePointsTeam2.GamesWin;
 
                                 var traces = c.GetTraces(generalData.GameName);
                                 txtTraces.Text = String.Join(Environment.NewLine, traces);
@@ -345,6 +363,23 @@ namespace MusClient.CustomUserControls
                     HandUser = newHand;
                 }
             }
+        }
+
+        private void nudTeam2Points_ValueChanged(object sender, EventArgs e)
+        {
+            changePointsDate = DateTime.Now;
+        }
+
+        private void nudTeam1Points_ValueChanged(object sender, EventArgs e)
+        {
+            changePointsDate = DateTime.Now;
+        }
+
+        DateTime changePointsDate = DateTime.MaxValue;
+
+        private void gamePointsTeam1_GamesWinChanged(object sender, EventArgs e)
+        {
+            btnChangePoints_Click(this, EventArgs.Empty);
         }
     }
 }

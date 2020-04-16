@@ -26,6 +26,8 @@ namespace MusWinService
         [OperationContract]
         void ChangePoints(string gameName, string teamName, string userName, int points);
         [OperationContract]
+        void ChangeGamePoints(string gameName, string teamName, string userName, int gamePoints);
+        [OperationContract]
         void ResetRound(string gameName);
         [OperationContract]
         void NextRound(string gameName, string teamName, string userName, int round);
@@ -78,6 +80,9 @@ namespace MusWinService
 
         [DataMember]
         public int Points { get; set; }
+
+        [DataMember]
+        public int GamePoints { get; set; }
 
         [DataMember]
         public List<MusCard> CardsUser1 { get; set; }

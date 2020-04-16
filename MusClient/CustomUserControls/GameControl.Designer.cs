@@ -32,7 +32,6 @@
             this.grpPoints = new System.Windows.Forms.GroupBox();
             this.nudTeam2Points = new System.Windows.Forms.NumericUpDown();
             this.nudTeam1Points = new System.Windows.Forms.NumericUpDown();
-            this.btnChangePoints = new System.Windows.Forms.Button();
             this.lblTeam2 = new System.Windows.Forms.Label();
             this.lblTeam1 = new System.Windows.Forms.Label();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
@@ -47,6 +46,8 @@
             this.playerControl2 = new MusClient.CustomUserControls.PlayerControl();
             this.playerControl3 = new MusClient.CustomUserControls.PlayerControl();
             this.playerControl1 = new MusClient.CustomUserControls.PlayerControl();
+            this.gamePointsTeam1 = new MusClient.CustomUserControls.GamePointsControl();
+            this.gamePointsTeam2 = new MusClient.CustomUserControls.GamePointsControl();
             this.grpPoints.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudTeam2Points)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudTeam1Points)).BeginInit();
@@ -55,21 +56,22 @@
             // grpPoints
             // 
             this.grpPoints.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpPoints.Controls.Add(this.gamePointsTeam2);
+            this.grpPoints.Controls.Add(this.gamePointsTeam1);
             this.grpPoints.Controls.Add(this.nudTeam2Points);
             this.grpPoints.Controls.Add(this.nudTeam1Points);
-            this.grpPoints.Controls.Add(this.btnChangePoints);
             this.grpPoints.Controls.Add(this.lblTeam2);
             this.grpPoints.Controls.Add(this.lblTeam1);
-            this.grpPoints.Location = new System.Drawing.Point(878, 9);
+            this.grpPoints.Location = new System.Drawing.Point(830, 9);
             this.grpPoints.Name = "grpPoints";
-            this.grpPoints.Size = new System.Drawing.Size(128, 84);
+            this.grpPoints.Size = new System.Drawing.Size(176, 84);
             this.grpPoints.TabIndex = 9;
             this.grpPoints.TabStop = false;
             this.grpPoints.Text = "Puntuación";
             // 
             // nudTeam2Points
             // 
-            this.nudTeam2Points.Location = new System.Drawing.Point(15, 40);
+            this.nudTeam2Points.Location = new System.Drawing.Point(92, 35);
             this.nudTeam2Points.Maximum = new decimal(new int[] {
             40,
             0,
@@ -78,12 +80,13 @@
             this.nudTeam2Points.Name = "nudTeam2Points";
             this.nudTeam2Points.Size = new System.Drawing.Size(41, 20);
             this.nudTeam2Points.TabIndex = 14;
+            this.nudTeam2Points.ValueChanged += new System.EventHandler(this.nudTeam2Points_ValueChanged);
             this.nudTeam2Points.Enter += new System.EventHandler(this.nudTeam2Points_Enter);
             this.nudTeam2Points.Leave += new System.EventHandler(this.nudTeam2Points_Leave);
             // 
             // nudTeam1Points
             // 
-            this.nudTeam1Points.Location = new System.Drawing.Point(15, 18);
+            this.nudTeam1Points.Location = new System.Drawing.Point(10, 35);
             this.nudTeam1Points.Maximum = new decimal(new int[] {
             40,
             0,
@@ -92,23 +95,14 @@
             this.nudTeam1Points.Name = "nudTeam1Points";
             this.nudTeam1Points.Size = new System.Drawing.Size(41, 20);
             this.nudTeam1Points.TabIndex = 14;
+            this.nudTeam1Points.ValueChanged += new System.EventHandler(this.nudTeam1Points_ValueChanged);
             this.nudTeam1Points.Enter += new System.EventHandler(this.nudTeam1Points_Enter);
             this.nudTeam1Points.Leave += new System.EventHandler(this.nudTeam1Points_Leave);
-            // 
-            // btnChangePoints
-            // 
-            this.btnChangePoints.Location = new System.Drawing.Point(15, 62);
-            this.btnChangePoints.Name = "btnChangePoints";
-            this.btnChangePoints.Size = new System.Drawing.Size(61, 19);
-            this.btnChangePoints.TabIndex = 13;
-            this.btnChangePoints.Text = "Cambiar";
-            this.btnChangePoints.UseVisualStyleBackColor = true;
-            this.btnChangePoints.Click += new System.EventHandler(this.btnChangePoints_Click);
             // 
             // lblTeam2
             // 
             this.lblTeam2.AutoSize = true;
-            this.lblTeam2.Location = new System.Drawing.Point(62, 42);
+            this.lblTeam2.Location = new System.Drawing.Point(89, 17);
             this.lblTeam2.Name = "lblTeam2";
             this.lblTeam2.Size = new System.Drawing.Size(49, 13);
             this.lblTeam2.TabIndex = 12;
@@ -117,7 +111,7 @@
             // lblTeam1
             // 
             this.lblTeam1.AutoSize = true;
-            this.lblTeam1.Location = new System.Drawing.Point(62, 20);
+            this.lblTeam1.Location = new System.Drawing.Point(7, 17);
             this.lblTeam1.Name = "lblTeam1";
             this.lblTeam1.Size = new System.Drawing.Size(49, 13);
             this.lblTeam1.TabIndex = 10;
@@ -247,6 +241,26 @@
             this.playerControl1.TeamName = null;
             this.playerControl1.UserName = null;
             // 
+            // gamePointsTeam1
+            // 
+            this.gamePointsTeam1.BackColor = System.Drawing.Color.Red;
+            this.gamePointsTeam1.GamesWin = 0;
+            this.gamePointsTeam1.Location = new System.Drawing.Point(10, 60);
+            this.gamePointsTeam1.Name = "gamePointsTeam1";
+            this.gamePointsTeam1.Size = new System.Drawing.Size(56, 18);
+            this.gamePointsTeam1.TabIndex = 15;
+            this.gamePointsTeam1.GamesWinChanged += gamePointsTeam1_GamesWinChanged;
+            // 
+            // gamePointsTeam2
+            // 
+            this.gamePointsTeam2.BackColor = System.Drawing.Color.Red;
+            this.gamePointsTeam2.GamesWin = 0;
+            this.gamePointsTeam2.Location = new System.Drawing.Point(92, 60);
+            this.gamePointsTeam2.Name = "gamePointsTeam2";
+            this.gamePointsTeam2.Size = new System.Drawing.Size(56, 18);
+            this.gamePointsTeam2.TabIndex = 15;
+            this.gamePointsTeam2.GamesWinChanged += gamePointsTeam1_GamesWinChanged;
+            // 
             // GameControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -282,7 +296,6 @@
         private PlayerControl playerControl2;
         private PlayerControl playerControl4;
         private System.Windows.Forms.GroupBox grpPoints;
-        private System.Windows.Forms.Button btnChangePoints;
         private System.Windows.Forms.Label lblTeam2;
         private System.Windows.Forms.Label lblTeam1;
         private System.Windows.Forms.NumericUpDown nudTeam2Points;
@@ -295,5 +308,7 @@
         private System.Windows.Forms.Label lblError;
         private System.Windows.Forms.ComboBox cmbHandUser;
         private System.Windows.Forms.Label lblHand;
+        private GamePointsControl gamePointsTeam2;
+        private GamePointsControl gamePointsTeam1;
     }
 }
