@@ -117,39 +117,6 @@ namespace MusWinService
         {
             return GetMusData(gameName, userName, false);
         }
-        MusData GetMusData(string gameName, string userName, bool getCards)
-        {
-            MusData musData = new MusData();
-            try
-            {
-                var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
-                if (game != null)
-                {
-                    musData.MusTeams = new List<MusTeamData>();
-                    foreach (var team in game.Teams)
-                    {
-                        musData.MusTeams.Add(new MusTeamData()
-                        {
-                            TeamName = team.TeamName,
-                            UserName1 = team.Users?.Count > 0 ? team.Users[0].UserName : null,
-                            UserName2 = team.Users?.Count > 1 ? team.Users[1].UserName : null,
-                            RoundUserName1 = team.Users?.Count > 0 ? team.Users[0].CurrentRound : 0,
-                            RoundUserName2 = team.Users?.Count > 1 ? team.Users[1].CurrentRound : 0,
-                            Points = team.Puntuacion,
-                            CardsUser1 = getCards && team.Users?.Count > 0 ? team.Users[0].Cards : null,
-                            CardsUser2 = getCards && team.Users?.Count > 1 ? team.Users[1].Cards : null,
-                        });
-                    }
-                    musData.PointsToWin = game.PointsToWin;
-                    musData.HandUser = game.HandUser;
-                }
-            }
-            catch (Exception ex)
-            {
-                musData.Error = ex.ToString();
-            }
-            return musData;
-        }
 
         public MusData GetAllUserCards(string gameName, string userName)
         {
@@ -239,7 +206,17 @@ namespace MusWinService
             var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
             return game.Traces;
         }
-
+        public string ChangeHand(string gameName, string userName, string newHandUser)
+        {
+            var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
+            if (game != null)
+            {
+                AddTrace(game, $"{userName} cambia la mano a {newHandUser}");
+                game.HandUser = newHandUser;
+                return "OK";
+            }
+            return "MESA NO ENCONTRADA";
+        }
         #endregion
 
         #region Traces
@@ -268,6 +245,39 @@ namespace MusWinService
             game.Traces.Add($"{DateTime.Now.ToString("HH:mm:ss")} {trace}");
         }
         #endregion  
+        MusData GetMusData(string gameName, string userName, bool getCards)
+        {
+            MusData musData = new MusData();
+            try
+            {
+                var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
+                if (game != null)
+                {
+                    musData.MusTeams = new List<MusTeamData>();
+                    foreach (var team in game.Teams)
+                    {
+                        musData.MusTeams.Add(new MusTeamData()
+                        {
+                            TeamName = team.TeamName,
+                            UserName1 = team.Users?.Count > 0 ? team.Users[0].UserName : null,
+                            UserName2 = team.Users?.Count > 1 ? team.Users[1].UserName : null,
+                            RoundUserName1 = team.Users?.Count > 0 ? team.Users[0].CurrentRound : 0,
+                            RoundUserName2 = team.Users?.Count > 1 ? team.Users[1].CurrentRound : 0,
+                            Points = team.Puntuacion,
+                            CardsUser1 = getCards && team.Users?.Count > 0 ? team.Users[0].Cards : null,
+                            CardsUser2 = getCards && team.Users?.Count > 1 ? team.Users[1].Cards : null,
+                        });
+                    }
+                    musData.PointsToWin = game.PointsToWin;
+                    musData.HandUser = game.HandUser;
+                }
+            }
+            catch (Exception ex)
+            {
+                musData.Error = ex.ToString();
+            }
+            return musData;
+        }
 
         static List<MusCard> GetCards(string gameName, string teamName, string userName, int numCards)
         {

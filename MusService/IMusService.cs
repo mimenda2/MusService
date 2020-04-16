@@ -35,6 +35,8 @@ namespace MusWinService
         List<string> GetTraces(string gameName);
         [OperationContract]
         MusData GetAllUserCards(string gameName, string userName);
+        [OperationContract]
+        string ChangeHand(string gameName, string userName, string newHandUser);
     }
 
     [DataContract]

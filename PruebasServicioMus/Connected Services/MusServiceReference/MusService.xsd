@@ -195,4 +195,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ChangeHand">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="gameName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="newHandUser" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangeHandResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ChangeHandResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

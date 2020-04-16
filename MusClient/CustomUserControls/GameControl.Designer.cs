@@ -41,6 +41,8 @@
             this.txtTraces = new System.Windows.Forms.TextBox();
             this.btnShowCards = new System.Windows.Forms.Button();
             this.lblError = new System.Windows.Forms.Label();
+            this.cmbHandUser = new System.Windows.Forms.ComboBox();
+            this.lblHand = new System.Windows.Forms.Label();
             this.playerControl4 = new MusClient.CustomUserControls.PlayerControl();
             this.playerControl2 = new MusClient.CustomUserControls.PlayerControl();
             this.playerControl3 = new MusClient.CustomUserControls.PlayerControl();
@@ -58,9 +60,9 @@
             this.grpPoints.Controls.Add(this.btnChangePoints);
             this.grpPoints.Controls.Add(this.lblTeam2);
             this.grpPoints.Controls.Add(this.lblTeam1);
-            this.grpPoints.Location = new System.Drawing.Point(827, 3);
+            this.grpPoints.Location = new System.Drawing.Point(878, 9);
             this.grpPoints.Name = "grpPoints";
-            this.grpPoints.Size = new System.Drawing.Size(155, 84);
+            this.grpPoints.Size = new System.Drawing.Size(128, 84);
             this.grpPoints.TabIndex = 9;
             this.grpPoints.TabStop = false;
             this.grpPoints.Text = "Puntuación";
@@ -129,9 +131,9 @@
             // 
             // btnNextRound
             // 
-            this.btnNextRound.Location = new System.Drawing.Point(64, 9);
+            this.btnNextRound.Location = new System.Drawing.Point(30, 10);
             this.btnNextRound.Name = "btnNextRound";
-            this.btnNextRound.Size = new System.Drawing.Size(104, 54);
+            this.btnNextRound.Size = new System.Drawing.Size(104, 45);
             this.btnNextRound.TabIndex = 10;
             this.btnNextRound.Text = "EMPEZAR!";
             this.btnNextRound.UseVisualStyleBackColor = true;
@@ -177,6 +179,25 @@
             this.lblError.Name = "lblError";
             this.lblError.Size = new System.Drawing.Size(0, 13);
             this.lblError.TabIndex = 14;
+            // 
+            // cmbHandUser
+            // 
+            this.cmbHandUser.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbHandUser.FormattingEnabled = true;
+            this.cmbHandUser.Location = new System.Drawing.Point(66, 57);
+            this.cmbHandUser.Name = "cmbHandUser";
+            this.cmbHandUser.Size = new System.Drawing.Size(129, 21);
+            this.cmbHandUser.TabIndex = 15;
+            this.cmbHandUser.SelectedIndexChanged += new System.EventHandler(this.cmbHandUser_SelectedIndexChanged);
+            // 
+            // lblHand
+            // 
+            this.lblHand.AutoSize = true;
+            this.lblHand.Location = new System.Drawing.Point(30, 62);
+            this.lblHand.Name = "lblHand";
+            this.lblHand.Size = new System.Drawing.Size(34, 13);
+            this.lblHand.TabIndex = 16;
+            this.lblHand.Text = "Mano";
             // 
             // playerControl4
             // 
@@ -231,6 +252,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Green;
+            this.Controls.Add(this.lblHand);
+            this.Controls.Add(this.cmbHandUser);
             this.Controls.Add(this.lblError);
             this.Controls.Add(this.btnShowCards);
             this.Controls.Add(this.txtTraces);
@@ -270,5 +293,7 @@
         private System.Windows.Forms.TextBox txtTraces;
         private System.Windows.Forms.Button btnShowCards;
         private System.Windows.Forms.Label lblError;
+        private System.Windows.Forms.ComboBox cmbHandUser;
+        private System.Windows.Forms.Label lblHand;
     }
 }

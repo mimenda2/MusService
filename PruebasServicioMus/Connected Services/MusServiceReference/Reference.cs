@@ -360,6 +360,12 @@ namespace PruebasServicioMus.MusServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/GetAllUserCards", ReplyAction="http://tempuri.org/IMusService/GetAllUserCardsResponse")]
         System.Threading.Tasks.Task<PruebasServicioMus.MusServiceReference.MusData> GetAllUserCardsAsync(string gameName, string userName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/ChangeHand", ReplyAction="http://tempuri.org/IMusService/ChangeHandResponse")]
+        string ChangeHand(string gameName, string userName, string newHandUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/ChangeHand", ReplyAction="http://tempuri.org/IMusService/ChangeHandResponse")]
+        System.Threading.Tasks.Task<string> ChangeHandAsync(string gameName, string userName, string newHandUser);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -491,6 +497,14 @@ namespace PruebasServicioMus.MusServiceReference {
         
         public System.Threading.Tasks.Task<PruebasServicioMus.MusServiceReference.MusData> GetAllUserCardsAsync(string gameName, string userName) {
             return base.Channel.GetAllUserCardsAsync(gameName, userName);
+        }
+        
+        public string ChangeHand(string gameName, string userName, string newHandUser) {
+            return base.Channel.ChangeHand(gameName, userName, newHandUser);
+        }
+        
+        public System.Threading.Tasks.Task<string> ChangeHandAsync(string gameName, string userName, string newHandUser) {
+            return base.Channel.ChangeHandAsync(gameName, userName, newHandUser);
         }
     }
 }

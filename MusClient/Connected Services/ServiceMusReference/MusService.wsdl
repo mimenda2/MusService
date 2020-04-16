@@ -87,6 +87,12 @@
   <wsdl:message name="IMusService_GetAllUserCards_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAllUserCardsResponse" />
   </wsdl:message>
+  <wsdl:message name="IMusService_ChangeHand_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeHand" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_ChangeHand_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeHandResponse" />
+  </wsdl:message>
   <wsdl:portType name="IMusService">
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IMusService/Login" message="tns:IMusService_Login_InputMessage" />
@@ -139,6 +145,10 @@
     <wsdl:operation name="GetAllUserCards">
       <wsdl:input wsaw:Action="http://tempuri.org/IMusService/GetAllUserCards" message="tns:IMusService_GetAllUserCards_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMusService/GetAllUserCardsResponse" message="tns:IMusService_GetAllUserCards_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeHand">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMusService/ChangeHand" message="tns:IMusService_ChangeHand_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMusService/ChangeHandResponse" message="tns:IMusService_ChangeHand_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IMusService" type="tns:IMusService">
@@ -253,6 +263,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetAllUserCards">
       <soap:operation soapAction="http://tempuri.org/IMusService/GetAllUserCards" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeHand">
+      <soap:operation soapAction="http://tempuri.org/IMusService/ChangeHand" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

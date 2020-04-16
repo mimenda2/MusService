@@ -35,11 +35,14 @@ namespace MusClient.CustomUserControls
             nudTeam1Points.Value = nudTeam2Points.Value = 0;
             nudTeam1Points.Tag = nudTeam2Points.Tag = (int)0;
 
+            cmbHandUser.Items.Clear();
             bool primero = true;
             foreach (var t in musData.MusTeams)
             {
                 if (t.UserName2 == generalData.UserName)
                     primero = false;
+                cmbHandUser.Items.Add(t.UserName1);
+                cmbHandUser.Items.Add(t.UserName2);
             }
             if (musData.MusTeams[1].UserName1 == generalData.UserName || musData.MusTeams[1].UserName2 == generalData.UserName)
                 primero = !primero;
@@ -321,9 +324,27 @@ namespace MusClient.CustomUserControls
                     handUser = value;
                     foreach (var ctrl in this.Controls.OfType<PlayerControl>())
                         ctrl.BackColor = (ctrl.UserName == handUser) ? Color.DarkMagenta : Color.Firebrick;
+
+                    changeUser = false;
+                    cmbHandUser.SelectedItem = handUser;
+                    changeUser = true;
                 }
             }
         }
         string handUser;
+
+        bool changeUser = true;
+        private void cmbHandUser_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (changeUser)
+            {
+                using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
+                {
+                    string newHand = cmbHandUser.SelectedItem.ToString();
+                    c.ChangeHand(generalData.GameName, generalData.UserName, newHand);
+                    HandUser = newHand;
+                }
+            }
+        }
     }
 }
