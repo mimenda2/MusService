@@ -3,41 +3,57 @@ using System.Runtime.Serialization;
 using System;
 using System.Collections.Generic;
 using MusCommon.Enums;
+using System.ServiceModel.Web;
 
 namespace MusWinService
 {
     [ServiceContract]
     public interface IMusService
     {
-        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract, WebGet]
         string Login(string userName, string gameName, string password);
-        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract, WebGet]
         List<string> GetConnectedUsers(string gameName);
-        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract, WebGet]
         string CreateTeam(string gameName, string teamName, string[] users);
-        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract, WebGet]
         string StartGame(string gameName, int pointsToWin);
-        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract, WebGet]
         MusData GetMusData(string gameName, string userName);
-        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract, WebGet]
         List<MusCard> GetCards(string gameName, string teamName, string userName);
-        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract, WebGet]
         List<MusCard> ChangeCards(string gameName, string teamName, string userName, List<MusCard> discarded);
-        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract, WebGet]
         void ChangePoints(string gameName, string teamName, string userName, int points);
-        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract, WebGet]
         void ChangeGamePoints(string gameName, string teamName, string userName, int gamePoints);
-        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract, WebGet]
         void ResetRound(string gameName);
-        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract, WebGet]
         void NextRound(string gameName, string teamName, string userName, int round);
-        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract, WebGet]
         void FinishGame(string gameName);
-        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract, WebGet]
         List<string> GetTraces(string gameName);
-        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract, WebGet]
         MusData GetAllUserCards(string gameName, string userName);
-        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract, WebGet]
         string ChangeHand(string gameName, string userName, string newHandUser);
     }
 

@@ -21,6 +21,7 @@
     <xs:sequence>
       <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/MusCommon.Enums" minOccurs="0" name="CardsUser1" nillable="true" type="q1:ArrayOfMusCard" />
       <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/MusCommon.Enums" minOccurs="0" name="CardsUser2" nillable="true" type="q2:ArrayOfMusCard" />
+      <xs:element minOccurs="0" name="GamePoints" type="xs:int" />
       <xs:element minOccurs="0" name="Points" type="xs:int" />
       <xs:element minOccurs="0" name="RoundUserName1" type="xs:int" />
       <xs:element minOccurs="0" name="RoundUserName2" type="xs:int" />
