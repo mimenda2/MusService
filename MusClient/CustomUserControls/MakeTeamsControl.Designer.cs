@@ -32,6 +32,7 @@
             this.lblWaitingPlayers = new System.Windows.Forms.Label();
             this.radTeam1 = new System.Windows.Forms.RadioButton();
             this.radTeam2 = new System.Windows.Forms.RadioButton();
+            this.radRandom = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // btnOK
@@ -49,7 +50,7 @@
             this.lblWaitingPlayers.AutoSize = true;
             this.lblWaitingPlayers.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWaitingPlayers.ForeColor = System.Drawing.Color.Blue;
-            this.lblWaitingPlayers.Location = new System.Drawing.Point(13, 56);
+            this.lblWaitingPlayers.Location = new System.Drawing.Point(9, 94);
             this.lblWaitingPlayers.Name = "lblWaitingPlayers";
             this.lblWaitingPlayers.Size = new System.Drawing.Size(0, 16);
             this.lblWaitingPlayers.TabIndex = 13;
@@ -65,7 +66,7 @@
             this.radTeam1.TabStop = true;
             this.radTeam1.Text = "Equipo 1";
             this.radTeam1.UseVisualStyleBackColor = true;
-            this.radTeam1.CheckedChanged += new System.EventHandler(this.radTeam1_CheckedChanged);
+            this.radTeam1.CheckedChanged += new System.EventHandler(this.radTeam_CheckedChanged);
             // 
             // radTeam2
             // 
@@ -76,18 +77,30 @@
             this.radTeam2.TabIndex = 15;
             this.radTeam2.Text = "Equipo 2";
             this.radTeam2.UseVisualStyleBackColor = true;
-            this.radTeam2.CheckedChanged += new System.EventHandler(this.radTeam2_CheckedChanged);
+            this.radTeam2.CheckedChanged += new System.EventHandler(this.radTeam_CheckedChanged);
+            // 
+            // radRandom
+            // 
+            this.radRandom.AutoSize = true;
+            this.radRandom.Location = new System.Drawing.Point(3, 60);
+            this.radRandom.Name = "radRandom";
+            this.radRandom.Size = new System.Drawing.Size(66, 17);
+            this.radRandom.TabIndex = 16;
+            this.radRandom.Text = "Aleatorio";
+            this.radRandom.UseVisualStyleBackColor = true;
+            this.radRandom.CheckedChanged += new System.EventHandler(this.radTeam_CheckedChanged);
             // 
             // MakeTeamsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.radRandom);
             this.Controls.Add(this.radTeam2);
             this.Controls.Add(this.radTeam1);
             this.Controls.Add(this.lblWaitingPlayers);
             this.Controls.Add(this.btnOK);
             this.Name = "MakeTeamsControl";
-            this.Size = new System.Drawing.Size(271, 93);
+            this.Size = new System.Drawing.Size(291, 130);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -99,5 +112,6 @@
         private System.Windows.Forms.Label lblWaitingPlayers;
         private System.Windows.Forms.RadioButton radTeam1;
         private System.Windows.Forms.RadioButton radTeam2;
+        private System.Windows.Forms.RadioButton radRandom;
     }
 }

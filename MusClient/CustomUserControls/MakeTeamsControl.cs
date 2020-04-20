@@ -24,22 +24,36 @@ namespace MusClient.CustomUserControls
         protected override void OnLoad(EventArgs e)
         {
             CheckTeamsCreated(true);
-
+            btnOK.Select();
             base.OnLoad(e);
         }
+        int tries = 0;
         private void btnOK_Click(object sender, EventArgs e)
         {
+            generalData.TeamName = radTeam1.Checked ? radTeam1.Text : radTeam2.Checked ? radTeam2.Text : GetRandomTeam();
+            ConnectToTeam();
+        }
+        void ConnectToTeam()
+        { 
             try
             {
+                tries++;
                 TraceClientExtensions.TraceMessage(System.Diagnostics.TraceEventType.Information, 1,
                     $"Uniendose a equipo {generalData.TeamName} con el usuario {generalData.UserName}");
 
-                generalData.TeamName = radTeam1.Checked ? radTeam1.Text : radTeam2.Text;
                 using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
                 {
                     string result = c.CreateTeam(generalData.GameName, generalData.TeamName, new string[] { generalData.UserName });
                     if (result != "OK")
-                        MessageBox.Show("ERROR AL INTENTAR CREAR EL EQUIPO: " + result);
+                    {
+                        if (radRandom.Checked && tries < 2)
+                        {
+                            generalData.TeamName = generalData.TeamName == radTeam1.Text ? radTeam2.Text : radTeam1.Text;
+                            ConnectToTeam();
+                        }
+                        else
+                            MessageBox.Show("ERROR AL INTENTAR CREAR EL EQUIPO: " + result);
+                    }
                     else
                     {
                         btnOK.Enabled = false;
@@ -54,6 +68,10 @@ namespace MusClient.CustomUserControls
                     $"Error al entrar en el equipo {generalData.TeamName} con el usuario {generalData.UserName}: {ex.ToString()}");
                 MessageBox.Show("Error al hacer login: " + ex.Message);
             }
+        }
+        string GetRandomTeam()
+        {
+            return (DateTime.Now.Second % 2 == 0) ? radTeam1.Text: radTeam2.Text;
         }
         void CheckTeamsCreated(bool onlyCheckOnce)
         {
@@ -88,7 +106,21 @@ namespace MusClient.CustomUserControls
                         else
                         {
                             if (onlyCheckOnce)
+                            {
+                                if (data.MusTeams.Length > 0)
+                                {
+                                    foreach(var t in data.MusTeams)
+                                    {
+                                        if (t.UserName1 == generalData.UserName || t.UserName2 == generalData.UserName)
+                                        {
+                                            radTeam1.Checked = t.TeamName == radTeam1.Text ? true : false;
+                                            radTeam2.Checked = t.TeamName == radTeam2.Text ? true : false;
+                                            break;
+                                        }
+                                    }
+                                }
                                 return;
+                            }
                             Application.DoEvents();
                             Thread.Sleep(1000);
                             Application.DoEvents();
@@ -111,16 +143,25 @@ namespace MusClient.CustomUserControls
         MusData data;
         public event EventHandler TeamsCreated;
 
-        private void radTeam1_CheckedChanged(object sender, EventArgs e)
+        bool changing = false;
+        private void radTeam_CheckedChanged(object sender, EventArgs e)
         {
-            if (radTeam1.Checked)
-                radTeam2.Checked = false;
+            if (!changing)
+            {
+                changing = true;
+                radTeam1.Checked = sender == radTeam1;
+                radTeam2.Checked = sender == radTeam2;
+                radRandom.Checked = sender == radRandom;
+                changing = false;
+            }
         }
-
-        private void radTeam2_CheckedChanged(object sender, EventArgs e)
+        protected override void OnKeyDown(KeyEventArgs e)
         {
-            if (radTeam2.Checked)
-                radTeam1.Checked = false;
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnOK_Click(this, EventArgs.Empty);
+            }
+            base.OnKeyDown(e);
         }
     }
 }
