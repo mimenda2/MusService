@@ -82,8 +82,25 @@ namespace MusClient.CustomUserControls
                     MusCommon.Enums.MusCard.Back,
                     MusCommon.Enums.MusCard.Back,
                 };
-        }
 
+            EngageEvents();
+        }
+        void EngageEvents()
+        {
+            this.gamePointsTeam2.GamesWinChanged += gamePointsTeam1_GamesWinChanged;
+            this.gamePointsTeam1.GamesWinChanged += gamePointsTeam1_GamesWinChanged;
+            this.nudTeam2Points.ValueChanged += nudTeamPoints_ValueChanged;
+            this.nudTeam1Points.ValueChanged += nudTeamPoints_ValueChanged;
+
+            this.timerRefresh.Enabled = true;
+            this.timerRefresh.Interval = 2000;
+            this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
+
+            this.btnNextRound.Click += new System.EventHandler(this.btnNextRound_Click);
+            this.btnDiscard.Click += new System.EventHandler(this.btnDiscard_Click);
+            this.btnShowCards.Click += new System.EventHandler(this.btnShowCards_Click);
+            this.cmbHandUser.SelectedIndexChanged += new System.EventHandler(this.cmbHandUser_SelectedIndexChanged);
+        }
         protected override void OnResize(EventArgs e)
         {
             int border = 20;
@@ -103,33 +120,114 @@ namespace MusClient.CustomUserControls
         }
 
         #region Puntuacion
-        private void btnChangePoints_Click(object sender, EventArgs e)
+        delegate void RefreshMusTracesDelegate(string[] traces);
+        delegate void RefreshMusPointsDataDelegate(MusData musData);
+        DateTime changePointsDate = DateTime.MaxValue;
+        DateTime lastTimeTimer = DateTime.MinValue;
+        bool ignoreChangePoints = false;
+
+        void FinishChangePoints()
+        {
+            changePointsDate = DateTime.MaxValue;
+        }
+        private void ChangePointsNow()
         {
             try
             {
                 using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
                 {
+                    changePointsDate = DateTime.MaxValue;
+
                     if ((int)nudTeam1Points.Value != (int)nudTeam1Points.Tag)
-                        c.ChangePoints(generalData.GameName, lblTeam1.Text, generalData.UserName, (int)nudTeam1Points.Value);
+                        c.ChangePointsAsync(generalData.GameName, lblTeam1.Text, generalData.UserName, (int)nudTeam1Points.Value).
+                            ContinueWith(x => FinishChangePoints());
                     if ((int)nudTeam2Points.Value != (int)nudTeam2Points.Tag)
-                        c.ChangePoints(generalData.GameName, lblTeam2.Text, generalData.UserName, (int)nudTeam2Points.Value);
+                        c.ChangePointsAsync(generalData.GameName, lblTeam2.Text, generalData.UserName, (int)nudTeam2Points.Value).
+                            ContinueWith(x => FinishChangePoints());
                     if (gamePointsTeam1.GamesWin != (int?)gamePointsTeam1.Tag)
-                        c.ChangeGamePoints(generalData.GameName, lblTeam1.Text, generalData.UserName, gamePointsTeam1.GamesWin ?? 0);
+                        c.ChangeGamePointsAsync(generalData.GameName, lblTeam1.Text, generalData.UserName, gamePointsTeam1.GamesWin ?? 0).
+                            ContinueWith(x => FinishChangePoints());
                     if (gamePointsTeam2.GamesWin != (int?)gamePointsTeam2.Tag)
-                        c.ChangeGamePoints(generalData.GameName, lblTeam2.Text, generalData.UserName, gamePointsTeam2.GamesWin ?? 0);
+                        c.ChangeGamePointsAsync(generalData.GameName, lblTeam2.Text, generalData.UserName, gamePointsTeam2.GamesWin ?? 0).
+                            ContinueWith(x => FinishChangePoints());
                 }
             }
             catch (Exception ex)
             {
                 lblError.Text = "Error al cambiar puntos: " + ex.Message;
             }
-            changingPoints = false;
         }
+        void RefreshMusPointsData(MusData musData)
+        {
+            if (musData != null)
+            {
+                if (txtTraces.InvokeRequired)
+                    txtTraces.BeginInvoke(new RefreshMusPointsDataDelegate(RefreshMusPointsData), new object[] { musData });
+                else
+                {
+                    if (musData != null && musData.MusTeams?.Length == 2)
+                    {
+                        if (changePointsDate == DateTime.MaxValue)
+                        {
+                            ignoreChangePoints = true;
+                            nudTeam1Points.Value = musData.MusTeams[0].Points;
+                            nudTeam2Points.Value = musData.MusTeams[1].Points;
+                            nudTeam1Points.Tag = (int)nudTeam1Points.Value;
+                            nudTeam2Points.Tag = (int)nudTeam2Points.Value;
 
-        DateTime lastTimeTimer = DateTime.MinValue;
+                            gamePointsTeam1.GamesWin = musData.MusTeams[0].GamePoints;
+                            gamePointsTeam2.GamesWin = musData.MusTeams[1].GamePoints;
+                            gamePointsTeam1.Tag = gamePointsTeam1.GamesWin;
+                            gamePointsTeam2.Tag = gamePointsTeam2.GamesWin;
+                            ignoreChangePoints = false;
+                        }
+                    }
+                }
+            }
+        }
+        void RefreshMusTraces(string[] traces)
+        {
+            if (txtTraces.InvokeRequired)
+                txtTraces.BeginInvoke(new RefreshMusTracesDelegate(RefreshMusTraces), new object[] { traces });
+            else
+            {
+                txtTraces.Text = String.Join(Environment.NewLine, traces);
+                if (this.txtTraces.Text.Length > 1)
+                {
+                    this.txtTraces.SelectionStart = txtTraces.Text.Length - 1;
+                    txtTraces.ScrollToCaret();
+                }
+
+                int remoteRound = -1;
+                foreach (var t in musData.MusTeams)
+                {
+                    if (t.RoundUserName1 != t.RoundUserName2)
+                    {
+                        remoteRound = -1;
+                        break;
+                    }
+                    else if (remoteRound == -1)
+                        remoteRound = t.RoundUserName1;
+                    else if (remoteRound != t.RoundUserName1)
+                    {
+                        remoteRound = -1;
+                        break;
+                    }
+                }
+                if (remoteRound != -1 && remoteRound != round)
+                {
+                    round = remoteRound;
+                    btnNextRound.Text = $"Siguiente ronda {(round + 1)}";
+                }
+                if (!string.IsNullOrEmpty(musData.HandUser))
+                {
+                    HandUser = musData.HandUser;
+                }
+            }
+        }
         private void timerRefresh_Tick(object sender, EventArgs e)
         {
-            if (this.Visible && 
+            if (this.Visible &&
                 DateTime.Now - lastTimeTimer >= TimeSpan.FromMilliseconds(timerRefresh.Interval - 10))
             {
                 lastTimeTimer = DateTime.Now;
@@ -137,62 +235,15 @@ namespace MusClient.CustomUserControls
                 {
                     if ((DateTime.Now - changePointsDate).TotalMilliseconds > 1000)
                     {
-                        changePointsDate = DateTime.MaxValue;
-                        btnChangePoints_Click(this, EventArgs.Empty);
-                        return;
+                        ChangePointsNow();
                     }
-                    if (!changingPoints)
+
+                    using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
                     {
-                        using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
-                        {
-                            musData = c.GetMusData(generalData.GameName, generalData.UserName);
-                            if (musData != null && musData.MusTeams?.Length == 2)
-                            {
-                                nudTeam1Points.Value = musData.MusTeams[0].Points;
-                                nudTeam2Points.Value = musData.MusTeams[1].Points;
-                                nudTeam1Points.Tag = (int)nudTeam1Points.Value;
-                                nudTeam2Points.Tag = (int)nudTeam2Points.Value;
-
-                                gamePointsTeam1.GamesWin = musData.MusTeams[0].GamePoints;
-                                gamePointsTeam2.GamesWin = musData.MusTeams[1].GamePoints;
-                                gamePointsTeam1.Tag = gamePointsTeam1.GamesWin;
-                                gamePointsTeam2.Tag = gamePointsTeam2.GamesWin;
-
-                                var traces = c.GetTraces(generalData.GameName);
-                                txtTraces.Text = String.Join(Environment.NewLine, traces);
-                                if (this.txtTraces.Text.Length > 1)
-                                {
-                                    this.txtTraces.SelectionStart = txtTraces.Text.Length - 1;
-                                    txtTraces.ScrollToCaret();
-                                }
-
-                                int remoteRound = -1;
-                                foreach(var t in musData.MusTeams)
-                                {
-                                    if (t.RoundUserName1 != t.RoundUserName2)
-                                    {
-                                        remoteRound = -1;
-                                        break;
-                                    }
-                                    else if (remoteRound == -1)
-                                        remoteRound = t.RoundUserName1;
-                                    else if (remoteRound != t.RoundUserName1)
-                                    {
-                                        remoteRound = -1;
-                                        break;
-                                    }
-                                }
-                                if (remoteRound != -1 && remoteRound != round)
-                                {
-                                    round = remoteRound;
-                                    btnNextRound.Text = $"Siguiente ronda {(round + 1)}";
-                                }
-                                if (!string.IsNullOrEmpty(musData.HandUser))
-                                {
-                                    HandUser = musData.HandUser;
-                                }
-                            }
-                        }
+                        c.GetMusDataAsync(generalData.GameName, generalData.UserName).
+                                ContinueWith(req => RefreshMusPointsData(req.Result as MusData));
+                        c.GetTracesAsync(generalData.GameName).
+                            ContinueWith(req => RefreshMusTraces(req.Result as string[]));
                     }
                 }
                 catch (Exception ex)
@@ -201,25 +252,15 @@ namespace MusClient.CustomUserControls
                 }
             }
         }
-        bool changingPoints = false;
-        private void nudTeam1Points_Enter(object sender, EventArgs e)
+        private void nudTeamPoints_ValueChanged(object sender, EventArgs e)
         {
-            changingPoints = true;
+            if (!ignoreChangePoints)
+                changePointsDate = DateTime.Now;
         }
-
-        private void nudTeam2Points_Enter(object sender, EventArgs e)
+        private void gamePointsTeam1_GamesWinChanged(object sender, EventArgs e)
         {
-            changingPoints = true;
-        }
-
-        private void nudTeam2Points_Leave(object sender, EventArgs e)
-        {
-            changingPoints = false;
-        }
-
-        private void nudTeam1Points_Leave(object sender, EventArgs e)
-        {
-            changingPoints = false;
+            if (!ignoreChangePoints)
+                changePointsDate = DateTime.Now;
         }
         #endregion
 
@@ -333,6 +374,7 @@ namespace MusClient.CustomUserControls
         }
         #endregion
 
+        #region Hand
         public string HandUser
         {
             set
@@ -350,7 +392,6 @@ namespace MusClient.CustomUserControls
             }
         }
         string handUser;
-
         bool changeUser = true;
         private void cmbHandUser_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -364,22 +405,6 @@ namespace MusClient.CustomUserControls
                 }
             }
         }
-
-        private void nudTeam2Points_ValueChanged(object sender, EventArgs e)
-        {
-            changePointsDate = DateTime.Now;
-        }
-
-        private void nudTeam1Points_ValueChanged(object sender, EventArgs e)
-        {
-            changePointsDate = DateTime.Now;
-        }
-
-        DateTime changePointsDate = DateTime.MaxValue;
-
-        private void gamePointsTeam1_GamesWinChanged(object sender, EventArgs e)
-        {
-            btnChangePoints_Click(this, EventArgs.Empty);
-        }
+        #endregion
     }
 }
