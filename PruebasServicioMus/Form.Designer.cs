@@ -141,7 +141,7 @@
             this.txtGameName.Name = "txtGameName";
             this.txtGameName.Size = new System.Drawing.Size(121, 20);
             this.txtGameName.TabIndex = 3;
-            this.txtGameName.Text = "LAS MESAS";
+            this.txtGameName.Text = "LAS MESAS 1";
             this.txtGameName.TextChanged += new System.EventHandler(this.txtGameName_TextChanged);
             // 
             // btngetConnectedUsers

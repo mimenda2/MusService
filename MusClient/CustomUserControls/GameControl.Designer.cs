@@ -43,7 +43,6 @@
             this.btnShowCards = new MusClient.CustomUserControls.ButtonWithImage();
             this.lblError = new System.Windows.Forms.Label();
             this.cmbHandUser = new System.Windows.Forms.ComboBox();
-            this.lblHand = new System.Windows.Forms.Label();
             this.playerControl4 = new MusClient.CustomUserControls.PlayerControl();
             this.playerControl2 = new MusClient.CustomUserControls.PlayerControl();
             this.playerControl3 = new MusClient.CustomUserControls.PlayerControl();
@@ -71,7 +70,6 @@
             // 
             // gamePointsTeam2
             // 
-            this.gamePointsTeam2.BackColor = System.Drawing.Color.Red;
             this.gamePointsTeam2.ChangePointsDate = new System.DateTime(9999, 12, 31, 23, 59, 59, 999);
             this.gamePointsTeam2.GamesWin = 0;
             this.gamePointsTeam2.Location = new System.Drawing.Point(92, 60);
@@ -85,7 +83,6 @@
             // 
             // gamePointsTeam1
             // 
-            this.gamePointsTeam1.BackColor = System.Drawing.Color.Red;
             this.gamePointsTeam1.ChangePointsDate = new System.DateTime(9999, 12, 31, 23, 59, 59, 999);
             this.gamePointsTeam1.GamesWin = 0;
             this.gamePointsTeam1.Location = new System.Drawing.Point(10, 60);
@@ -216,15 +213,6 @@
             this.cmbHandUser.Size = new System.Drawing.Size(129, 21);
             this.cmbHandUser.TabIndex = 15;
             // 
-            // lblHand
-            // 
-            this.lblHand.AutoSize = true;
-            this.lblHand.Location = new System.Drawing.Point(30, 62);
-            this.lblHand.Name = "lblHand";
-            this.lblHand.Size = new System.Drawing.Size(34, 13);
-            this.lblHand.TabIndex = 16;
-            this.lblHand.Text = "Mano";
-            // 
             // playerControl4
             // 
             this.playerControl4.BackColor = System.Drawing.Color.Firebrick;
@@ -278,7 +266,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Green;
-            this.Controls.Add(this.lblHand);
             this.Controls.Add(this.cmbHandUser);
             this.Controls.Add(this.lblError);
             this.Controls.Add(this.btnShowCards);
@@ -324,7 +311,6 @@
         private ButtonWithImage btnShowCards;
         private System.Windows.Forms.Label lblError;
         private System.Windows.Forms.ComboBox cmbHandUser;
-        private System.Windows.Forms.Label lblHand;
         private GamePointsControl gamePointsTeam2;
         private GamePointsControl gamePointsTeam1;
     }

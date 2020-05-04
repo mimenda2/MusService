@@ -38,6 +38,7 @@ namespace MusClient.CustomUserControls
             this.btnDiscard.ImgButton = new Bitmap(stream);
             this.btnDiscard.TooltipText = "Descartar cartas seleccionadas";
 
+            cmbHandUser.BackColor = Color.FromArgb(8, 104, 66);
             this.generalData = generalData;
             this.musData = musData;
             playerControl1.UserName = generalData.UserName;
@@ -129,6 +130,11 @@ namespace MusClient.CustomUserControls
             btnShowCards.Location = new Point(border, this.Height - btnShowCards.Height - border);
 
             base.OnResize(e);
+        }
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            e.Graphics.DrawImage(HandImage, cmbHandUser.Left - HandImage.Width - 2, cmbHandUser.Top);
+            base.OnPaint(e);
         }
 
         #region Puntuacion
@@ -398,6 +404,19 @@ namespace MusClient.CustomUserControls
         #endregion
 
         #region Hand
+        Image HandImage
+        {
+            get
+            {
+                if (handImage == null)
+                {
+                    Stream stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("MusClient.Res.mano.png");
+                    handImage = new Bitmap(stream);
+                }
+                return handImage;
+            }
+        }
+        Image handImage = null;
         public string HandUser
         {
             set

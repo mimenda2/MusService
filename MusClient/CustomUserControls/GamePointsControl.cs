@@ -16,6 +16,7 @@ namespace MusClient.CustomUserControls
         public GamePointsControl()
         {
             InitializeComponent();
+            BackColor = Color.Transparent;
         }
 
         public int? GamesWin

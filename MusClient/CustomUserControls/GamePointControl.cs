@@ -16,6 +16,8 @@ namespace MusClient.CustomUserControls
         public GamePointControl()
         {
             InitializeComponent();
+
+            BackColor = Color.Transparent;
         }
         protected override void OnMouseDown(MouseEventArgs e)
         {
@@ -50,6 +52,20 @@ namespace MusClient.CustomUserControls
             }
         }
         Image tickImage = null;
+
+        Image UnTickImage
+        {
+            get
+            {
+                if (unTickImage == null)
+                {
+                    Stream stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("MusClient.Res.untick.png");
+                    unTickImage = new Bitmap(stream);
+                }
+                return unTickImage;
+            }
+        }
+        Image unTickImage = null;
         protected override void OnMouseEnter(EventArgs e)
         {
             Cursor = Cursors.Hand;
@@ -70,7 +86,7 @@ namespace MusClient.CustomUserControls
                 }
                 else
                 {
-                    e.Graphics.FillRectangle(Brushes.Black, DisplayRectangle);
+                    e.Graphics.DrawImage(UnTickImage, DisplayRectangle);
                 }
             }
             base.OnPaint(e);

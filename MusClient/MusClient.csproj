@@ -223,9 +223,6 @@
     <EmbeddedResource Include="Res\tapeteverde.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Res\mano.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Common\MusCommon.csproj">
       <Project>{4764d923-a4c9-46cb-8ecd-d5281dc8cefe}</Project>
       <Name>MusCommon</Name>
@@ -249,6 +246,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Res\Esperando.png" />
     <EmbeddedResource Include="Res\NextRound.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Res\untick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Res\mano.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
