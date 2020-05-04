@@ -238,8 +238,7 @@ namespace MusClient.CustomUserControls
                 lastTimeTimer = DateTime.Now;
                 try
                 {
-                    if (ChangePointsNow())
-                        return;
+                    ChangePointsNow();
 
                     using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
                     {

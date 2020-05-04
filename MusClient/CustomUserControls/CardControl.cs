@@ -20,9 +20,26 @@ namespace MusClient.CustomUserControls
         {
             InitializeComponent();
 
-            imgCard = Cards.GetCard(card);
+            GetCard();
 
             this.Text = "CardControl";
+        }
+
+        void GetCard()
+        {
+            imgCard = Cards.GetCard(card);
+            switch (position)
+            {
+                case CardPosition.Top:
+                    imgCard.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                    break;
+                case CardPosition.Left:
+                    imgCard.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                    break;
+                case CardPosition.Right:
+                    imgCard.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                    break;
+            }
         }
         protected override void OnLoad(EventArgs e)
         {
@@ -53,7 +70,7 @@ namespace MusClient.CustomUserControls
                     if (imgCard != null)
                         imgCard.Dispose();
                     card = value;
-                    imgCard = Cards.GetCard(card);
+                    GetCard();
                     this.Invalidate();
                 }
             }
@@ -68,30 +85,17 @@ namespace MusClient.CustomUserControls
                 if (chkDiscard.Visible)
                 {
                     chkDiscard.Checked = value;
+                    this.Invalidate();
                 }
             }
         }
-
         protected override void OnPaint(PaintEventArgs e)
         {
             try
             {
                 Rectangle rect = DisplayRectangle;
-                switch (position)
-                {
-                    case CardPosition.Bottom:
-                        rect = new Rectangle(0, 0, this.Width, chkDiscard.Top - 2);
-                        break;
-                    case CardPosition.Top:
-                        imgCard.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                        break;
-                    case CardPosition.Left:
-                        imgCard.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                        break;
-                    case CardPosition.Right:
-                        imgCard.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                        break;
-                }
+                if (position == CardPosition.Bottom)
+                    rect = new Rectangle(0, 0, this.Width, chkDiscard.Top - 2);
                 e.Graphics.DrawImage(imgCard, rect);
             }
             catch { }
