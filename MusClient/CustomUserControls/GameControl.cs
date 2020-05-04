@@ -25,6 +25,18 @@ namespace MusClient.CustomUserControls
             Stream stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("MusClient.Res.tapeteverde.jpg");
             this.BackgroundImage = new Bitmap(stream);
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            
+            stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("MusClient.Res.StartButton.png");
+            this.btnNextRound.ImgButton = new Bitmap(stream);
+            this.btnNextRound.TooltipText = "EMPEZAR!";
+
+            stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("MusClient.Res.MostrarCartas.png");
+            this.btnShowCards.ImgButton = new Bitmap(stream);
+            this.btnShowCards.TooltipText = "Mostrar cartas de todos";
+
+            stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("MusClient.Res.CambiarCartas.png");
+            this.btnDiscard.ImgButton = new Bitmap(stream);
+            this.btnDiscard.TooltipText = "Descartar cartas seleccionadas";
 
             this.generalData = generalData;
             this.musData = musData;
@@ -224,7 +236,9 @@ namespace MusClient.CustomUserControls
                     if (remoteRound != -1 && remoteRound != round)
                     {
                         round = remoteRound;
-                        btnNextRound.Text = $"Siguiente ronda {(round + 1)}";
+                        var stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("MusClient.Res.NextRound.png");
+                        this.btnNextRound.ImgButton = new Bitmap(stream);
+                        btnNextRound.TooltipText = $"Siguiente ronda {(round + 1)}";
                     }
                 }
                 if (!string.IsNullOrEmpty(musData.HandUser))
@@ -274,7 +288,9 @@ namespace MusClient.CustomUserControls
         private void btnNextRound_Click(object sender, EventArgs e)
         {
             btnNextRound.Enabled = false;
-            btnNextRound.Text = "Esperando al resto...";
+            var stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("MusClient.Res.Esperando.png");
+            this.btnNextRound.ImgButton = new Bitmap(stream);
+            btnNextRound.TooltipText = "Esperando al resto...";
             Application.DoEvents();
             playerControl1.Cards = new List<MusCommon.Enums.MusCard>()
             {
@@ -297,7 +313,9 @@ namespace MusClient.CustomUserControls
                 MusCommon.Enums.MusCard.Back,
                 MusCommon.Enums.MusCard.Back
             };
-            btnNextRound.Text = $"Siguiente ronda {(round+1)}";
+            stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("MusClient.Res.NextRound.png");
+            this.btnNextRound.ImgButton = new Bitmap(stream);
+            btnNextRound.TooltipText = $"Siguiente ronda {(round+1)}";
             btnNextRound.Enabled = true;
 
             txtTraces.Select();

@@ -57,6 +57,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="CustomUserControls\ButtonWithImage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomUserControls\ButtonWithImage.Designer.cs">
+      <DependentUpon>ButtonWithImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomUserControls\GamePointControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -72,6 +78,7 @@
     <Compile Include="CustomUserControls\MusNumericUpDown.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Enum\MusButtonState.cs" />
     <Compile Include="Enum\CardPosition.cs" />
     <Compile Include="Interface\IMusChangePoints.cs" />
     <Compile Include="Interface\IMusGeneralData.cs" />
@@ -229,6 +236,19 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Res\tick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Res\StartButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Res\MostrarCartas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Res\CambiarCartas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Res\Esperando.png" />
+    <EmbeddedResource Include="Res\NextRound.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
