@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MusClient.Interface;
 
 namespace MusClient.CustomUserControls
 {
-    public partial class GamePointsControl : UserControl
+    public partial class GamePointsControl : UserControl, IMusChangePoints
     {
         public GamePointsControl()
         {
@@ -45,6 +46,23 @@ namespace MusClient.CustomUserControls
         private void gamePointControl2_GameCheckedChanged(object sender, EventArgs e)
         {
             GamesWinChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public int UserPointsChanged { get; set; }
+        public DateTime ChangePointsDate { get; set; } = DateTime.MaxValue;
+        public int MusValor
+        {
+            get { return GamesWin.HasValue ? GamesWin.Value : 0; }
+            set
+            {
+                this.GamesWin = value;
+                this.Tag = value;
+            }
+        }
+        public bool MusEnabled
+        {
+            get { return this.Enabled; }
+            set { this.Enabled = value; }
         }
     }
 }

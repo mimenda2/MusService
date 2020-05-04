@@ -26,12 +26,12 @@ namespace PruebasServicioMus
             {
                 string result = c.Login(txtUserName.Text, txtGameName.Text, "");
             }
-            if (txtUserName.Text == "MiMenda1")
-                txtUserName.Text = "MiMenda2";
-            else if (txtUserName.Text == "MiMenda2")
-                txtUserName.Text = "MiMenda3";
-            else if (txtUserName.Text == "MiMenda3")
-                txtUserName.Text = "MiMenda4";
+            if (txtUserName.Text == "MIMENDA1")
+                txtUserName.Text = "MIMENDA2";
+            else if (txtUserName.Text == "MIMENDA2")
+                txtUserName.Text = "MIMENDA3";
+            else if (txtUserName.Text == "MIMENDA3")
+                txtUserName.Text = "MIMENDA4";
         }
 
         private void btngetConnectedUsers_Click(object sender, EventArgs e)

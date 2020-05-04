@@ -15,8 +15,8 @@ namespace MusClient.CustomUserControls
 {
     public partial class MakeTeamsControl : UserControl
     {
-        IGeneralData generalData;
-        public MakeTeamsControl(IGeneralData generalData)
+        IMusGeneralData generalData;
+        public MakeTeamsControl(IMusGeneralData generalData)
         {
             InitializeComponent();
             this.generalData = generalData;

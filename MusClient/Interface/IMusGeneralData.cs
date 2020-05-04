@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MusClient.Interface
 {
-    public interface IGeneralData
+    public interface IMusGeneralData
     {
         string ServerIP { get; set; }
         string GameName { get; set; }

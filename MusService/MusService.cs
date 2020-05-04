@@ -299,7 +299,12 @@ namespace MusWinService
                 if (game != null)
                 {
                     var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
+                    if (team == null)
+                        mySource.TraceMessage(TraceEventType.Error, 58, $"ERROR No leo el Team {teamName} del user {userName} en GetCards");
+
                     var user = team.Users.FirstOrDefault(x => x.UserName == userName);
+                    if (user == null)
+                        mySource.TraceMessage(TraceEventType.Error, 58, $"ERROR No leo el User {userName} del equipo {teamName} en GetCards");
                     for (int i = 0; i < numCards; i++)
                     {
                         if (game.Cards.CardsToPlay.Count == 0)

@@ -69,8 +69,12 @@
     <Compile Include="CustomUserControls\GamePointsControl.Designer.cs">
       <DependentUpon>GamePointsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomUserControls\MusNumericUpDown.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Enum\CardPosition.cs" />
-    <Compile Include="Interface\IGeneralData.cs" />
+    <Compile Include="Interface\IMusChangePoints.cs" />
+    <Compile Include="Interface\IMusGeneralData.cs" />
     <Compile Include="MusClientForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -32,8 +32,8 @@
             this.grpPoints = new System.Windows.Forms.GroupBox();
             this.gamePointsTeam2 = new MusClient.CustomUserControls.GamePointsControl();
             this.gamePointsTeam1 = new MusClient.CustomUserControls.GamePointsControl();
-            this.nudTeam2Points = new System.Windows.Forms.NumericUpDown();
-            this.nudTeam1Points = new System.Windows.Forms.NumericUpDown();
+            this.nudTeam2Points = new MusNumericUpDown();
+            this.nudTeam1Points = new MusNumericUpDown();
             this.lblTeam2 = new System.Windows.Forms.Label();
             this.lblTeam1 = new System.Windows.Forms.Label();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
@@ -290,8 +290,8 @@
         private System.Windows.Forms.GroupBox grpPoints;
         private System.Windows.Forms.Label lblTeam2;
         private System.Windows.Forms.Label lblTeam1;
-        private System.Windows.Forms.NumericUpDown nudTeam2Points;
-        private System.Windows.Forms.NumericUpDown nudTeam1Points;
+        private MusNumericUpDown nudTeam2Points;
+        private MusNumericUpDown nudTeam1Points;
         private System.Windows.Forms.Timer timerRefresh;
         private System.Windows.Forms.Button btnNextRound;
         private System.Windows.Forms.Button btnDiscard;

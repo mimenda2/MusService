@@ -97,11 +97,12 @@
             // 
             // txtUserName
             // 
+            this.txtUserName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtUserName.Location = new System.Drawing.Point(114, 20);
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(121, 20);
             this.txtUserName.TabIndex = 0;
-            this.txtUserName.Text = "MiMenda1";
+            this.txtUserName.Text = "MIMENDA1";
             this.txtUserName.TextChanged += new System.EventHandler(this.txtUserName_TextChanged);
             // 
             // lblName
@@ -162,11 +163,12 @@
             // 
             // txtTeamUserA1
             // 
+            this.txtTeamUserA1.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtTeamUserA1.Location = new System.Drawing.Point(360, 90);
             this.txtTeamUserA1.Name = "txtTeamUserA1";
             this.txtTeamUserA1.Size = new System.Drawing.Size(121, 20);
             this.txtTeamUserA1.TabIndex = 7;
-            this.txtTeamUserA1.Text = "MiMenda1";
+            this.txtTeamUserA1.Text = "MIMENDA1";
             // 
             // txtTeamName1
             // 
@@ -187,11 +189,12 @@
             // 
             // txtTeamUserA2
             // 
+            this.txtTeamUserA2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtTeamUserA2.Location = new System.Drawing.Point(360, 116);
             this.txtTeamUserA2.Name = "txtTeamUserA2";
             this.txtTeamUserA2.Size = new System.Drawing.Size(121, 20);
             this.txtTeamUserA2.TabIndex = 10;
-            this.txtTeamUserA2.Text = "MiMenda3";
+            this.txtTeamUserA2.Text = "MIMENDA3";
             // 
             // label2
             // 
@@ -231,11 +234,12 @@
             // 
             // txtTeamUserB2
             // 
+            this.txtTeamUserB2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtTeamUserB2.Location = new System.Drawing.Point(604, 116);
             this.txtTeamUserB2.Name = "txtTeamUserB2";
             this.txtTeamUserB2.Size = new System.Drawing.Size(121, 20);
             this.txtTeamUserB2.TabIndex = 16;
-            this.txtTeamUserB2.Text = "MiMenda4";
+            this.txtTeamUserB2.Text = "MIMENDA4";
             // 
             // label6
             // 
@@ -256,11 +260,12 @@
             // 
             // txtTeamUserB1
             // 
+            this.txtTeamUserB1.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtTeamUserB1.Location = new System.Drawing.Point(604, 90);
             this.txtTeamUserB1.Name = "txtTeamUserB1";
             this.txtTeamUserB1.Size = new System.Drawing.Size(121, 20);
             this.txtTeamUserB1.TabIndex = 13;
-            this.txtTeamUserB1.Text = "MiMenda2";
+            this.txtTeamUserB1.Text = "MIMENDA2";
             // 
             // btnCreateTeam1
             // 
@@ -348,11 +353,12 @@
             // 
             // txtSelectedPlayer
             // 
+            this.txtSelectedPlayer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtSelectedPlayer.Location = new System.Drawing.Point(123, 222);
             this.txtSelectedPlayer.Name = "txtSelectedPlayer";
             this.txtSelectedPlayer.Size = new System.Drawing.Size(121, 20);
             this.txtSelectedPlayer.TabIndex = 29;
-            this.txtSelectedPlayer.Text = "MiMenda1";
+            this.txtSelectedPlayer.Text = "MIMENDA1";
             // 
             // txtPlayer1BCard1
             // 

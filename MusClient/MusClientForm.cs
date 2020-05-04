@@ -16,7 +16,7 @@ namespace MusClient
 {
     public partial class MusClientForm : Form
     {
-        IGeneralData generalData;
+        IMusGeneralData generalData;
         LoginControl loginControl;
         MakeTeamsControl makeTeamsControl;
         GameControl gameControl;
@@ -140,7 +140,7 @@ namespace MusClient
         }
         private void LoginControl_LoginFinished(object sender, EventArgs e)
         {
-            generalData = loginControl as IGeneralData;
+            generalData = loginControl as IMusGeneralData;
             State = MusState.WaitingPlayers;
         }
         #endregion

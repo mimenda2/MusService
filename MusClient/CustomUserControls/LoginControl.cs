@@ -12,7 +12,7 @@ using System.Diagnostics;
 
 namespace MusClient.CustomUserControls
 {
-    public partial class LoginControl : UserControl, IGeneralData
+    public partial class LoginControl : UserControl, IMusGeneralData
     {
         public LoginControl()
         {
