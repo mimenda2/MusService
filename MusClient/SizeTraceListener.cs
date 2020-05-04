@@ -31,7 +31,7 @@ namespace MusClient
             // if use an exist file read its length
             if (File.Exists(logFileName))
                 curLogLen = new FileInfo(logFileName).Length;
-            for (int i = 1; i < 5; i++)
+            for (int i = 1; i < 15; i++)
             {
                 try
                 {

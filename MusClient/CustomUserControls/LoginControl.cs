@@ -17,6 +17,8 @@ namespace MusClient.CustomUserControls
         public LoginControl()
         {
             InitializeComponent();
+
+            cmbGameName.SelectedIndex = 0;
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {
@@ -26,7 +28,7 @@ namespace MusClient.CustomUserControls
             else
             {
                 ServerIP = txtServerIP.Text;
-                GameName = txtGameName.Text;
+                GameName = cmbGameName.Text;
                 UserName = txtUserName.Text;
                 try
                 {

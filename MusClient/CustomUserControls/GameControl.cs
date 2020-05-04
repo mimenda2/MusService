@@ -177,13 +177,16 @@ namespace MusClient.CustomUserControls
         }
         void ChangePointsInControl(IMusChangePoints musCtrl, int valor)
         {
-            if (musCtrl != null && musCtrl.ChangePointsDate == DateTime.MaxValue && 
+            if (musCtrl != null && musCtrl.ChangePointsDate == DateTime.MaxValue &&
                 musCtrl.MusValor != valor)
             {
                 musCtrl.MusEnabled = false;
-                ignoreChangePoints = true;
-                musCtrl.MusValor = valor;
-                ignoreChangePoints = false;
+                if (musCtrl != null && musCtrl.ChangePointsDate == DateTime.MaxValue && musCtrl.MusValor != valor)
+                {
+                    ignoreChangePoints = true;
+                    musCtrl.MusValor = valor;
+                    ignoreChangePoints = false;
+                }
                 musCtrl.MusEnabled = true;
             }
         }

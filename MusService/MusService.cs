@@ -17,6 +17,7 @@ namespace MusWinService
         {
             try
             {
+                mySource.TraceMessage(TraceEventType.Information, 58, $"Login {gameName} -> {userName}");
                 var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
                 if (game == null)
                 {
@@ -29,11 +30,17 @@ namespace MusWinService
                 if (!game.Users.Any(x => x.UserName == userName))
                 {
                     if (game.Users.Count >= 4)
+                    {
+                        mySource.TraceMessage(TraceEventType.Error, 58, $"Ya hay 4 jugadores conectados {gameName} -> {userName}");
                         return "YA HAY 4 JUGADORES CONECTADOS!, " + string.Join(", ", game.Users.Select(x => x.UserName));
+                    }
 
                     mySource.TraceMessage(TraceEventType.Information, 58, $"Añado el user {userName} al game {gameName}");
                     game.Users.Add(new MusUser(userName));
                 }
+                else
+                    mySource.TraceMessage(TraceEventType.Information, 58, $"El user ya estaba añadido {userName} al game {gameName}");
+
             }
             catch (Exception ex)
             {

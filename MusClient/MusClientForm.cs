@@ -63,6 +63,8 @@ namespace MusClient
                         State = MusState.MakeTeams;
                     else
                     {
+                        if (Disposing || IsDisposed || State == MusState.FinishGame)
+                            return false;
                         Application.DoEvents();
                         Thread.Sleep(1000);
                         Application.DoEvents();
@@ -103,6 +105,9 @@ namespace MusClient
                     break;
                 else
                 {
+                    if (Disposing || IsDisposed || State == MusState.FinishGame)
+                        return false;
+
                     Application.DoEvents();
                     Thread.Sleep(1000);
                     Application.DoEvents();
@@ -141,6 +146,7 @@ namespace MusClient
         private void LoginControl_LoginFinished(object sender, EventArgs e)
         {
             generalData = loginControl as IMusGeneralData;
+            this.Text = $"{generalData.GameName} - {generalData.UserName}"; 
             State = MusState.WaitingPlayers;
         }
         #endregion

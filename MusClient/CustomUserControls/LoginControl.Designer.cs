@@ -35,20 +35,20 @@
             this.lblName = new System.Windows.Forms.Label();
             this.lblGameName = new System.Windows.Forms.Label();
             this.txtUserName = new System.Windows.Forms.TextBox();
-            this.txtGameName = new System.Windows.Forms.TextBox();
             this.btnLogin = new System.Windows.Forms.Button();
+            this.cmbGameName = new System.Windows.Forms.ComboBox();
             this.grpLogin.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpLogin
             // 
+            this.grpLogin.Controls.Add(this.cmbGameName);
             this.grpLogin.Controls.Add(this.lblWaitingPlayers);
             this.grpLogin.Controls.Add(this.lblIpAddr);
             this.grpLogin.Controls.Add(this.txtServerIP);
             this.grpLogin.Controls.Add(this.lblName);
             this.grpLogin.Controls.Add(this.lblGameName);
             this.grpLogin.Controls.Add(this.txtUserName);
-            this.grpLogin.Controls.Add(this.txtGameName);
             this.grpLogin.Controls.Add(this.btnLogin);
             this.grpLogin.Location = new System.Drawing.Point(3, 3);
             this.grpLogin.Name = "grpLogin";
@@ -111,15 +111,6 @@
             this.txtUserName.TabIndex = 5;
             this.txtUserName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtUserName_KeyDown);
             // 
-            // txtGameName
-            // 
-            this.txtGameName.Enabled = false;
-            this.txtGameName.Location = new System.Drawing.Point(114, 82);
-            this.txtGameName.Name = "txtGameName";
-            this.txtGameName.Size = new System.Drawing.Size(121, 20);
-            this.txtGameName.TabIndex = 8;
-            this.txtGameName.Text = "LAS MESAS";
-            // 
             // btnLogin
             // 
             this.btnLogin.Location = new System.Drawing.Point(15, 117);
@@ -129,6 +120,18 @@
             this.btnLogin.Text = "Login";
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
+            // 
+            // cmbGameName
+            // 
+            this.cmbGameName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbGameName.FormattingEnabled = true;
+            this.cmbGameName.Items.AddRange(new object[] {
+            "LAS MESAS 1",
+            "LAS MESAS 2"});
+            this.cmbGameName.Location = new System.Drawing.Point(114, 82);
+            this.cmbGameName.Name = "cmbGameName";
+            this.cmbGameName.Size = new System.Drawing.Size(121, 21);
+            this.cmbGameName.TabIndex = 13;
             // 
             // LoginControl
             // 
@@ -152,7 +155,7 @@
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.Label lblGameName;
         private System.Windows.Forms.TextBox txtUserName;
-        private System.Windows.Forms.TextBox txtGameName;
         private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.ComboBox cmbGameName;
     }
 }
