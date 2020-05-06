@@ -140,10 +140,14 @@ namespace MusWinService
             var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
             var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
             var user = team.Users.FirstOrDefault(x => x.UserName == userName);
-            foreach(MusCard discard in discarded)
-                user.Cards.Remove(discard);
-            AddTrace(game, $"{userName} se descarta {discarded?.Count} cartas");
-            game.Cards.CardsDiscarded.AddRange(discarded);
+            //foreach(MusCard discard in discarded)
+            //    user.Cards.Remove(discard);
+            AddTrace(game, $"{userName} se descarta {discarded?.Count} cartas: {string.Join(", ", discarded)}");
+            foreach(MusCard mC in discarded)
+            {
+                if (mC != MusCard.Empty && mC != MusCard.Back)
+                    game.Cards.CardsDiscarded.Add(mC);
+            }
             return GetCards(gameName, teamName, userName, discarded.Count);
         }
         public void ChangePoints(string gameName, string teamName, string userName, int points)
@@ -300,11 +304,15 @@ namespace MusWinService
         static List<MusCard> GetCards(string gameName, string teamName, string userName, int numCards)
         {
             List<MusCard> retVal = new List<MusCard>();
+
+
             try
             {
                 var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
                 if (game != null)
                 {
+                    AddTrace(game, $"GetCards: {userName} {numCards}");
+
                     var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
                     if (team == null)
                         mySource.TraceMessage(TraceEventType.Error, 58, $"ERROR No leo el Team {teamName} del user {userName} en GetCards");

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MusCommon.Enums;
 using MusCommon;
 using MusClient.Enum;
+using System.Diagnostics;
 
 namespace MusClient.CustomUserControls
 {
@@ -71,12 +72,22 @@ namespace MusClient.CustomUserControls
                         imgCard.Dispose();
                     card = value;
                     GetCard();
+                    if (position == CardPosition.Bottom)
+                        xCoord = -imgCard.Width;
                     this.Invalidate();
                 }
             }
         }
         MusCard card = MusCard.Empty;
-
+        public bool CheckCard
+        {
+            get { return chkDiscard.Visible && chkDiscard.Checked; }
+            set
+            {
+                if (chkDiscard.Visible)
+                    chkDiscard.Checked = value;
+            }
+        }
         public bool Discard
         {
             get { return chkDiscard.Visible && chkDiscard.Checked; }
@@ -89,14 +100,22 @@ namespace MusClient.CustomUserControls
                 }
             }
         }
+        int xCoord = 0;
         protected override void OnPaint(PaintEventArgs e)
         {
             try
             {
                 Rectangle rect = DisplayRectangle;
                 if (position == CardPosition.Bottom)
-                    rect = new Rectangle(0, 0, this.Width, chkDiscard.Top - 2);
+                    rect = new Rectangle(xCoord, 0, this.Width, chkDiscard.Top - 2);
                 e.Graphics.DrawImage(imgCard, rect);
+                if (xCoord < 0)
+                {
+                    xCoord = Math.Min(0, xCoord + 2);
+                    System.Threading.Thread.Sleep(0);
+                    Application.DoEvents();
+                    this.Invalidate();
+                }
             }
             catch { }
             base.OnPaint(e);

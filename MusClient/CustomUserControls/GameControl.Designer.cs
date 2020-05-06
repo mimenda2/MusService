@@ -70,7 +70,6 @@
             // 
             // gamePointsTeam2
             // 
-            this.gamePointsTeam2.ChangePointsDate = new System.DateTime(9999, 12, 31, 23, 59, 59, 999);
             this.gamePointsTeam2.GamesWin = 0;
             this.gamePointsTeam2.Location = new System.Drawing.Point(92, 60);
             this.gamePointsTeam2.MusEnabled = true;
@@ -83,7 +82,6 @@
             // 
             // gamePointsTeam1
             // 
-            this.gamePointsTeam1.ChangePointsDate = new System.DateTime(9999, 12, 31, 23, 59, 59, 999);
             this.gamePointsTeam1.GamesWin = 0;
             this.gamePointsTeam1.Location = new System.Drawing.Point(10, 60);
             this.gamePointsTeam1.MusEnabled = true;
@@ -96,7 +94,6 @@
             // 
             // nudTeam2Points
             // 
-            this.nudTeam2Points.ChangePointsDate = new System.DateTime(9999, 12, 31, 23, 59, 59, 999);
             this.nudTeam2Points.Location = new System.Drawing.Point(92, 35);
             this.nudTeam2Points.Maximum = new decimal(new int[] {
             40,
@@ -113,7 +110,6 @@
             // 
             // nudTeam1Points
             // 
-            this.nudTeam1Points.ChangePointsDate = new System.DateTime(9999, 12, 31, 23, 59, 59, 999);
             this.nudTeam1Points.Location = new System.Drawing.Point(10, 35);
             this.nudTeam1Points.Maximum = new decimal(new int[] {
             40,

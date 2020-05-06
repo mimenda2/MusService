@@ -49,8 +49,11 @@ namespace MusClient.CustomUserControls
             GamesWinChanged?.Invoke(this, EventArgs.Empty);
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public int UserPointsChanged { get; set; }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public DateTime ChangePointsDate { get; set; } = DateTime.MaxValue;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public int MusValor
         {
             get { return GamesWin.HasValue ? GamesWin.Value : 0; }
@@ -60,6 +63,7 @@ namespace MusClient.CustomUserControls
                 this.Tag = value;
             }
         }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public bool MusEnabled
         {
             get { return this.Enabled; }

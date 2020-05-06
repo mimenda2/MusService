@@ -322,7 +322,10 @@ namespace MusClient.CustomUserControls
             stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("MusClient.Res.NextRound.png");
             this.btnNextRound.ImgButton = new Bitmap(stream);
             btnNextRound.TooltipText = $"Siguiente ronda {(round+1)}";
-            btnNextRound.Enabled = true;
+
+            //habilitar dentro de 10 segundos
+            Task.Delay(10000).ContinueWith(t => btnNextRound.Enabled = true, 
+                TaskScheduler.FromCurrentSynchronizationContext());
 
             txtTraces.Select();
         }

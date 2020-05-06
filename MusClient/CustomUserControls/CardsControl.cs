@@ -105,9 +105,10 @@ namespace MusClient.CustomUserControls
             }
             catch { }
         }
-
+        DateTime lastTimeDown = DateTime.MinValue;
         private void card1_MouseDown(object sender, MouseEventArgs e)
         {
+            lastTimeDown = DateTime.Now;
             CardControl cardOrigin = sender as CardControl;
             cardOrigin.DoDragDrop(cardOrigin.GetHashCode().ToString(), DragDropEffects.Copy | DragDropEffects.Move);
         }
@@ -130,7 +131,15 @@ namespace MusClient.CustomUserControls
                 MusCard musCardDest = cardDest.Card;
                 cardDest.Card = cardOrigin.Card;
                 cardOrigin.Card = musCardDest;
-
+            }
+            else
+            {
+                if ((DateTime.Now - lastTimeDown).TotalMilliseconds < 600)
+                {
+                    lastTimeDown = DateTime.MinValue;
+                    CardControl card = sender as CardControl;
+                    card.CheckCard = !card.CheckCard;
+                }
             }
         }
     }

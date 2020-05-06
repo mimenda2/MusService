@@ -31,16 +31,17 @@ namespace MusClient
             // if use an exist file read its length
             if (File.Exists(logFileName))
                 curLogLen = new FileInfo(logFileName).Length;
+            string fileNameToUse = logFileName;
             for (int i = 1; i < 15; i++)
             {
                 try
                 {
-                    traceWriter = new StreamWriter(logFileName, true);
+                    traceWriter = new StreamWriter(fileNameToUse, true);
                     break;
                 }
                 catch (System.IO.IOException)
                 {
-                    logFileName = Path.Combine(Path.GetDirectoryName(logFileName),  i.ToString() + Path.GetFileName(logFileName));
+                    fileNameToUse = Path.Combine(Path.GetDirectoryName(logFileName),  i.ToString() + Path.GetFileName(logFileName));
                 }
             }
         }
