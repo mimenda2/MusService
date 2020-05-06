@@ -128,7 +128,7 @@ namespace MusClient.CustomUserControls
                 playerControl1.Top - playerControl3.Bottom - (2 * border));
 
             btnShowCards.Location = new Point(border, this.Height - btnShowCards.Height - border);
-
+            lblWaitDiscard.Location = new Point(btnShowCards.Right + 2, btnShowCards.Top + ((btnShowCards.Height - lblWaitDiscard.Height) / 2));
             base.OnResize(e);
         }
         protected override void OnPaint(PaintEventArgs e)
@@ -324,7 +324,11 @@ namespace MusClient.CustomUserControls
             btnNextRound.TooltipText = $"Siguiente ronda {(round+1)}";
 
             //habilitar dentro de 10 segundos
-            Task.Delay(10000).ContinueWith(t => btnNextRound.Enabled = true, 
+            Task.Delay(5000).ContinueWith(t => 
+                {
+                    btnNextRound.Enabled = true;
+                    btnDiscard.Enabled = true;
+                }, 
                 TaskScheduler.FromCurrentSynchronizationContext());
 
             txtTraces.Select();
@@ -373,6 +377,31 @@ namespace MusClient.CustomUserControls
         }
         private void btnShowCards_Click(object sender, EventArgs e)
         {
+            btnShowCards.Enabled = false;
+            btnDiscard.Enabled = false;
+            lblWaitDiscard.Visible = true;
+            Application.DoEvents();
+
+            MusCommon.ExecuteMethod.ExecuteMethodNTimes(RequestShowCards, 3);
+
+            ShowCardsRequested?.Invoke(this, EventArgs.Empty);
+
+            lblWaitDiscard.Visible = false;
+            MusCommon.ExecuteMethod.ExecuteMethodNTimes(ShowAllCards, 3);
+
+            Task.Delay(10000).ContinueWith(t => btnShowCards.Enabled = true,
+                TaskScheduler.FromCurrentSynchronizationContext());
+        }
+        bool RequestShowCards()
+        {
+            using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
+            {
+                c.RequestShowCards(generalData.GameName, generalData.TeamName, generalData.UserName, round);
+            }
+            return true;
+        }
+        bool ShowAllCards()
+        { 
             using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
             {
                 var musData = c.GetAllUserCards(generalData.GameName, generalData.UserName);
@@ -403,7 +432,9 @@ namespace MusClient.CustomUserControls
                 }
             }
             txtTraces.Select();
+            return true;
         }
+        public event EventHandler ShowCardsRequested;
         #endregion
 
         #region Hand

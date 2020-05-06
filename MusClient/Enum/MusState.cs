@@ -15,6 +15,8 @@ namespace MusClient
         StartGame,
         NextRoundRequest,
         NextRound,
+        ShowCardsRequest,
+        ShowCards,
         FinishGame
     }
 }

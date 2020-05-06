@@ -75,7 +75,7 @@ namespace MusClient
         }
         #endregion
 
-        #region Make teams
+        #region Next round
         bool WaitForAllPlayersInNextRound()
         {
             while (true)
@@ -95,6 +95,48 @@ namespace MusClient
                             round = t.RoundUserName1;
                         }
                         if (t.RoundUserName1 != round || t.RoundUserName2 != round)
+                        {
+                            round = -1;
+                            break;
+                        }
+                    }
+                }
+                if (round > 0)
+                    break;
+                else
+                {
+                    if (Disposing || IsDisposed || State == MusState.FinishGame)
+                        return false;
+
+                    Application.DoEvents();
+                    Thread.Sleep(1000);
+                    Application.DoEvents();
+                }
+            }
+            return true;
+        }
+        #endregion
+
+        #region Show cards
+        bool WaitForAllPlayersShowCards()
+        {
+            while (true)
+            {
+                int round = -1;
+                using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
+                {
+                    if (State == MusState.FinishGame)
+                        return true;
+                    var musData = c.GetMusData(generalData.GameName, generalData.UserName);
+                    foreach (var t in musData.MusTeams)
+                    {
+                        if (round < 0)
+                        {
+                            if (t.ShowCardsName1 != t.ShowCardsName2)
+                                break;
+                            round = t.ShowCardsName1;
+                        }
+                        if (t.ShowCardsName1 != round || t.ShowCardsName2 != round)
                         {
                             round = -1;
                             break;
@@ -161,7 +203,13 @@ namespace MusClient
             gameControl.Location = new Point(10, 10);
             gameControl.Dock = DockStyle.Fill;
             gameControl.NextRoundRequest += GameControl_NextRoundRequest;
+            gameControl.ShowCardsRequested += GameControl_ShowCardsRequested;
             this.Controls.Add(gameControl);
+        }
+
+        private void GameControl_ShowCardsRequested(object sender, EventArgs e)
+        {
+            State = MusState.ShowCardsRequest;
         }
 
         private void GameControl_NextRoundRequest(object sender, EventArgs e)
@@ -207,6 +255,13 @@ namespace MusClient
                                 State = MusState.NextRound;
                             break;
                         case MusState.NextRound:
+                            break;
+                        case MusState.ShowCardsRequest:
+                            ExecuteMethod.ExecuteMethodNTimes(WaitForAllPlayersShowCards, 3);
+                            if (State != MusState.FinishGame)
+                                State = MusState.ShowCards;
+                            break;
+                        case MusState.ShowCards:
                             break;
                         case MusState.FinishGame:
                             FinishGame();

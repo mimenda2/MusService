@@ -150,6 +150,12 @@ namespace MusClient.ServiceMusReference {
         private int RoundUserName2Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ShowCardsName1Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ShowCardsName2Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TeamNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -242,6 +248,32 @@ namespace MusClient.ServiceMusReference {
                 if ((this.RoundUserName2Field.Equals(value) != true)) {
                     this.RoundUserName2Field = value;
                     this.RaisePropertyChanged("RoundUserName2");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ShowCardsName1 {
+            get {
+                return this.ShowCardsName1Field;
+            }
+            set {
+                if ((this.ShowCardsName1Field.Equals(value) != true)) {
+                    this.ShowCardsName1Field = value;
+                    this.RaisePropertyChanged("ShowCardsName1");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ShowCardsName2 {
+            get {
+                return this.ShowCardsName2Field;
+            }
+            set {
+                if ((this.ShowCardsName2Field.Equals(value) != true)) {
+                    this.ShowCardsName2Field = value;
+                    this.RaisePropertyChanged("ShowCardsName2");
                 }
             }
         }
@@ -388,6 +420,12 @@ namespace MusClient.ServiceMusReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/ChangeHand", ReplyAction="http://tempuri.org/IMusService/ChangeHandResponse")]
         System.Threading.Tasks.Task<string> ChangeHandAsync(string gameName, string userName, string newHandUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/RequestShowCards", ReplyAction="http://tempuri.org/IMusService/RequestShowCardsResponse")]
+        void RequestShowCards(string gameName, string teamName, string userName, int round);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMusService/RequestShowCards", ReplyAction="http://tempuri.org/IMusService/RequestShowCardsResponse")]
+        System.Threading.Tasks.Task RequestShowCardsAsync(string gameName, string teamName, string userName, int round);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -535,6 +573,14 @@ namespace MusClient.ServiceMusReference {
         
         public System.Threading.Tasks.Task<string> ChangeHandAsync(string gameName, string userName, string newHandUser) {
             return base.Channel.ChangeHandAsync(gameName, userName, newHandUser);
+        }
+        
+        public void RequestShowCards(string gameName, string teamName, string userName, int round) {
+            base.Channel.RequestShowCards(gameName, teamName, userName, round);
+        }
+        
+        public System.Threading.Tasks.Task RequestShowCardsAsync(string gameName, string teamName, string userName, int round) {
+            return base.Channel.RequestShowCardsAsync(gameName, teamName, userName, round);
         }
     }
 }

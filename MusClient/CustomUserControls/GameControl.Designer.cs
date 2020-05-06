@@ -30,23 +30,24 @@
         {
             this.components = new System.ComponentModel.Container();
             this.grpPoints = new System.Windows.Forms.GroupBox();
+            this.lblTeam2 = new System.Windows.Forms.Label();
+            this.lblTeam1 = new System.Windows.Forms.Label();
+            this.timerRefresh = new System.Windows.Forms.Timer(this.components);
+            this.txtTraces = new System.Windows.Forms.TextBox();
+            this.lblError = new System.Windows.Forms.Label();
+            this.cmbHandUser = new System.Windows.Forms.ComboBox();
+            this.btnShowCards = new MusClient.CustomUserControls.ButtonWithImage();
+            this.btnDiscard = new MusClient.CustomUserControls.ButtonWithImage();
+            this.btnNextRound = new MusClient.CustomUserControls.ButtonWithImage();
             this.gamePointsTeam2 = new MusClient.CustomUserControls.GamePointsControl();
             this.gamePointsTeam1 = new MusClient.CustomUserControls.GamePointsControl();
             this.nudTeam2Points = new MusClient.CustomUserControls.MusNumericUpDown();
             this.nudTeam1Points = new MusClient.CustomUserControls.MusNumericUpDown();
-            this.lblTeam2 = new System.Windows.Forms.Label();
-            this.lblTeam1 = new System.Windows.Forms.Label();
-            this.timerRefresh = new System.Windows.Forms.Timer(this.components);
-            this.btnNextRound = new MusClient.CustomUserControls.ButtonWithImage();
-            this.btnDiscard = new MusClient.CustomUserControls.ButtonWithImage();
-            this.txtTraces = new System.Windows.Forms.TextBox();
-            this.btnShowCards = new MusClient.CustomUserControls.ButtonWithImage();
-            this.lblError = new System.Windows.Forms.Label();
-            this.cmbHandUser = new System.Windows.Forms.ComboBox();
             this.playerControl4 = new MusClient.CustomUserControls.PlayerControl();
             this.playerControl2 = new MusClient.CustomUserControls.PlayerControl();
             this.playerControl3 = new MusClient.CustomUserControls.PlayerControl();
             this.playerControl1 = new MusClient.CustomUserControls.PlayerControl();
+            this.lblWaitDiscard = new System.Windows.Forms.Label();
             this.grpPoints.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudTeam2Points)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudTeam1Points)).BeginInit();
@@ -67,62 +68,6 @@
             this.grpPoints.TabIndex = 9;
             this.grpPoints.TabStop = false;
             this.grpPoints.Text = "Puntuación";
-            // 
-            // gamePointsTeam2
-            // 
-            this.gamePointsTeam2.GamesWin = 0;
-            this.gamePointsTeam2.Location = new System.Drawing.Point(92, 60);
-            this.gamePointsTeam2.MusEnabled = true;
-            this.gamePointsTeam2.MusValor = 0;
-            this.gamePointsTeam2.Name = "gamePointsTeam2";
-            this.gamePointsTeam2.Size = new System.Drawing.Size(56, 18);
-            this.gamePointsTeam2.TabIndex = 15;
-            this.gamePointsTeam2.Tag = 0;
-            this.gamePointsTeam2.UserPointsChanged = 0;
-            // 
-            // gamePointsTeam1
-            // 
-            this.gamePointsTeam1.GamesWin = 0;
-            this.gamePointsTeam1.Location = new System.Drawing.Point(10, 60);
-            this.gamePointsTeam1.MusEnabled = true;
-            this.gamePointsTeam1.MusValor = 0;
-            this.gamePointsTeam1.Name = "gamePointsTeam1";
-            this.gamePointsTeam1.Size = new System.Drawing.Size(56, 18);
-            this.gamePointsTeam1.TabIndex = 15;
-            this.gamePointsTeam1.Tag = 0;
-            this.gamePointsTeam1.UserPointsChanged = 0;
-            // 
-            // nudTeam2Points
-            // 
-            this.nudTeam2Points.Location = new System.Drawing.Point(92, 35);
-            this.nudTeam2Points.Maximum = new decimal(new int[] {
-            40,
-            0,
-            0,
-            0});
-            this.nudTeam2Points.MusEnabled = true;
-            this.nudTeam2Points.MusValor = 0;
-            this.nudTeam2Points.Name = "nudTeam2Points";
-            this.nudTeam2Points.Size = new System.Drawing.Size(41, 20);
-            this.nudTeam2Points.TabIndex = 14;
-            this.nudTeam2Points.Tag = 0;
-            this.nudTeam2Points.UserPointsChanged = 0;
-            // 
-            // nudTeam1Points
-            // 
-            this.nudTeam1Points.Location = new System.Drawing.Point(10, 35);
-            this.nudTeam1Points.Maximum = new decimal(new int[] {
-            40,
-            0,
-            0,
-            0});
-            this.nudTeam1Points.MusEnabled = true;
-            this.nudTeam1Points.MusValor = 0;
-            this.nudTeam1Points.Name = "nudTeam1Points";
-            this.nudTeam1Points.Size = new System.Drawing.Size(41, 20);
-            this.nudTeam1Points.TabIndex = 14;
-            this.nudTeam1Points.Tag = 0;
-            this.nudTeam1Points.UserPointsChanged = 0;
             // 
             // lblTeam2
             // 
@@ -147,28 +92,6 @@
             this.timerRefresh.Enabled = true;
             this.timerRefresh.Interval = 2000;
             // 
-            // btnNextRound
-            // 
-            this.btnNextRound.BackColor = System.Drawing.Color.Transparent;
-            this.btnNextRound.ImgButton = null;
-            this.btnNextRound.Location = new System.Drawing.Point(30, 10);
-            this.btnNextRound.Name = "btnNextRound";
-            this.btnNextRound.Size = new System.Drawing.Size(128, 33);
-            this.btnNextRound.TabIndex = 10;
-            this.btnNextRound.TooltipText = null;
-            // 
-            // btnDiscard
-            // 
-            this.btnDiscard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDiscard.BackColor = System.Drawing.Color.Transparent;
-            this.btnDiscard.ButtonState = MusClient.Enum.MusButtonState.Normal;
-            this.btnDiscard.ImgButton = null;
-            this.btnDiscard.Location = new System.Drawing.Point(894, 684);
-            this.btnDiscard.Name = "btnDiscard";
-            this.btnDiscard.Size = new System.Drawing.Size(84, 74);
-            this.btnDiscard.TabIndex = 11;
-            this.btnDiscard.TooltipText = null;
-            // 
             // txtTraces
             // 
             this.txtTraces.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -179,17 +102,6 @@
             this.txtTraces.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtTraces.Size = new System.Drawing.Size(353, 265);
             this.txtTraces.TabIndex = 12;
-            // 
-            // btnShowCards
-            // 
-            this.btnShowCards.BackColor = System.Drawing.Color.Transparent;
-            this.btnShowCards.ButtonState = MusClient.Enum.MusButtonState.Normal;
-            this.btnShowCards.ImgButton = null;
-            this.btnShowCards.Location = new System.Drawing.Point(26, 684);
-            this.btnShowCards.Name = "btnShowCards";
-            this.btnShowCards.Size = new System.Drawing.Size(75, 56);
-            this.btnShowCards.TabIndex = 13;
-            this.btnShowCards.TooltipText = null;
             // 
             // lblError
             // 
@@ -208,6 +120,86 @@
             this.cmbHandUser.Name = "cmbHandUser";
             this.cmbHandUser.Size = new System.Drawing.Size(129, 21);
             this.cmbHandUser.TabIndex = 15;
+            // 
+            // btnShowCards
+            // 
+            this.btnShowCards.BackColor = System.Drawing.Color.Transparent;
+            this.btnShowCards.ButtonState = MusClient.Enum.MusButtonState.Normal;
+            this.btnShowCards.ImgButton = null;
+            this.btnShowCards.Location = new System.Drawing.Point(26, 684);
+            this.btnShowCards.Name = "btnShowCards";
+            this.btnShowCards.Size = new System.Drawing.Size(75, 56);
+            this.btnShowCards.TabIndex = 13;
+            this.btnShowCards.TooltipText = null;
+            // 
+            // btnDiscard
+            // 
+            this.btnDiscard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDiscard.BackColor = System.Drawing.Color.Transparent;
+            this.btnDiscard.ButtonState = MusClient.Enum.MusButtonState.Normal;
+            this.btnDiscard.ImgButton = null;
+            this.btnDiscard.Location = new System.Drawing.Point(894, 684);
+            this.btnDiscard.Name = "btnDiscard";
+            this.btnDiscard.Size = new System.Drawing.Size(84, 74);
+            this.btnDiscard.TabIndex = 11;
+            this.btnDiscard.TooltipText = null;
+            // 
+            // btnNextRound
+            // 
+            this.btnNextRound.BackColor = System.Drawing.Color.Transparent;
+            this.btnNextRound.ButtonState = MusClient.Enum.MusButtonState.Normal;
+            this.btnNextRound.ImgButton = null;
+            this.btnNextRound.Location = new System.Drawing.Point(30, 10);
+            this.btnNextRound.Name = "btnNextRound";
+            this.btnNextRound.Size = new System.Drawing.Size(128, 33);
+            this.btnNextRound.TabIndex = 10;
+            this.btnNextRound.TooltipText = null;
+            // 
+            // gamePointsTeam2
+            // 
+            this.gamePointsTeam2.BackColor = System.Drawing.Color.Transparent;
+            this.gamePointsTeam2.GamesWin = 0;
+            this.gamePointsTeam2.Location = new System.Drawing.Point(92, 60);
+            this.gamePointsTeam2.Name = "gamePointsTeam2";
+            this.gamePointsTeam2.Size = new System.Drawing.Size(56, 18);
+            this.gamePointsTeam2.TabIndex = 15;
+            this.gamePointsTeam2.Tag = 0;
+            // 
+            // gamePointsTeam1
+            // 
+            this.gamePointsTeam1.BackColor = System.Drawing.Color.Transparent;
+            this.gamePointsTeam1.GamesWin = 0;
+            this.gamePointsTeam1.Location = new System.Drawing.Point(10, 60);
+            this.gamePointsTeam1.Name = "gamePointsTeam1";
+            this.gamePointsTeam1.Size = new System.Drawing.Size(56, 18);
+            this.gamePointsTeam1.TabIndex = 15;
+            this.gamePointsTeam1.Tag = 0;
+            // 
+            // nudTeam2Points
+            // 
+            this.nudTeam2Points.Location = new System.Drawing.Point(92, 35);
+            this.nudTeam2Points.Maximum = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            this.nudTeam2Points.Name = "nudTeam2Points";
+            this.nudTeam2Points.Size = new System.Drawing.Size(41, 20);
+            this.nudTeam2Points.TabIndex = 14;
+            this.nudTeam2Points.Tag = 0;
+            // 
+            // nudTeam1Points
+            // 
+            this.nudTeam1Points.Location = new System.Drawing.Point(10, 35);
+            this.nudTeam1Points.Maximum = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            this.nudTeam1Points.Name = "nudTeam1Points";
+            this.nudTeam1Points.Size = new System.Drawing.Size(41, 20);
+            this.nudTeam1Points.TabIndex = 14;
+            this.nudTeam1Points.Tag = 0;
             // 
             // playerControl4
             // 
@@ -257,11 +249,22 @@
             this.playerControl1.TeamName = null;
             this.playerControl1.UserName = null;
             // 
+            // lblWaitDiscard
+            // 
+            this.lblWaitDiscard.AutoSize = true;
+            this.lblWaitDiscard.Location = new System.Drawing.Point(123, 709);
+            this.lblWaitDiscard.Name = "lblWaitDiscard";
+            this.lblWaitDiscard.Size = new System.Drawing.Size(104, 13);
+            this.lblWaitDiscard.TabIndex = 16;
+            this.lblWaitDiscard.Text = "Esperando al resto...";
+            this.lblWaitDiscard.Visible = false;
+            // 
             // GameControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Green;
+            this.Controls.Add(this.lblWaitDiscard);
             this.Controls.Add(this.cmbHandUser);
             this.Controls.Add(this.lblError);
             this.Controls.Add(this.btnShowCards);
@@ -309,5 +312,6 @@
         private System.Windows.Forms.ComboBox cmbHandUser;
         private GamePointsControl gamePointsTeam2;
         private GamePointsControl gamePointsTeam1;
+        private System.Windows.Forms.Label lblWaitDiscard;
     }
 }

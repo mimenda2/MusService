@@ -25,6 +25,8 @@
       <xs:element minOccurs="0" name="Points" type="xs:int" />
       <xs:element minOccurs="0" name="RoundUserName1" type="xs:int" />
       <xs:element minOccurs="0" name="RoundUserName2" type="xs:int" />
+      <xs:element minOccurs="0" name="ShowCardsName1" type="xs:int" />
+      <xs:element minOccurs="0" name="ShowCardsName2" type="xs:int" />
       <xs:element minOccurs="0" name="TeamName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UserName1" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UserName2" nillable="true" type="xs:string" />

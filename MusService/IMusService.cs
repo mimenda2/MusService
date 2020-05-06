@@ -55,6 +55,9 @@ namespace MusWinService
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         [OperationContract, WebGet]
         string ChangeHand(string gameName, string userName, string newHandUser);
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract, WebGet]
+        void RequestShowCards(string gameName, string teamName, string userName, int round);
     }
 
     [DataContract]
@@ -94,6 +97,12 @@ namespace MusWinService
         [DataMember]
         public int RoundUserName2 { get; set; }
 
+        [DataMember]
+        public int ShowCardsName1 { get; set; }
+
+        [DataMember]
+        public int ShowCardsName2 { get; set; }
+        
         [DataMember]
         public int Points { get; set; }
 

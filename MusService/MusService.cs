@@ -238,9 +238,17 @@ namespace MusWinService
             }
             return "MESA NO ENCONTRADA";
         }
+        public void RequestShowCards(string gameName, string teamName, string userName, int round)
+        {
+            var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
+            AddTrace(game, $"{userName} pide enseñar cartas en ronda: " + round);
+            var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
+            var user = team.Users.FirstOrDefault(x => x.UserName == userName);
+            user.ShowCardsRound = round;
+        }
         #endregion
 
-        #region Traces
+            #region Traces
         private static TraceSource mySource = new TraceSource("TraceMusService");
         public static void StartTraces()
         {
@@ -284,6 +292,8 @@ namespace MusWinService
                             UserName2 = team.Users?.Count > 1 ? team.Users[1].UserName : null,
                             RoundUserName1 = team.Users?.Count > 0 ? team.Users[0].CurrentRound : 0,
                             RoundUserName2 = team.Users?.Count > 1 ? team.Users[1].CurrentRound : 0,
+                            ShowCardsName1 = team.Users?.Count > 0 ? team.Users[0].ShowCardsRound : 0,
+                            ShowCardsName2 = team.Users?.Count > 1 ? team.Users[1].ShowCardsRound : 0,
                             Points = team.Puntuacion,
                             GamePoints = team.GamePoints,
                             CardsUser1 = getCards && team.Users?.Count > 0 ? team.Users[0].Cards : null,
@@ -311,8 +321,6 @@ namespace MusWinService
                 var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
                 if (game != null)
                 {
-                    AddTrace(game, $"GetCards: {userName} {numCards}");
-
                     var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
                     if (team == null)
                         mySource.TraceMessage(TraceEventType.Error, 58, $"ERROR No leo el Team {teamName} del user {userName} en GetCards");

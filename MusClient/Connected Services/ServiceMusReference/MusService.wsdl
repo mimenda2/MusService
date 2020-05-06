@@ -99,6 +99,12 @@
   <wsdl:message name="IMusService_ChangeHand_OutputMessage">
     <wsdl:part name="parameters" element="tns:ChangeHandResponse" />
   </wsdl:message>
+  <wsdl:message name="IMusService_RequestShowCards_InputMessage">
+    <wsdl:part name="parameters" element="tns:RequestShowCards" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_RequestShowCards_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RequestShowCardsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IMusService">
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IMusService/Login" message="tns:IMusService_Login_InputMessage" />
@@ -159,6 +165,10 @@
     <wsdl:operation name="ChangeHand">
       <wsdl:input wsaw:Action="http://tempuri.org/IMusService/ChangeHand" message="tns:IMusService_ChangeHand_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMusService/ChangeHandResponse" message="tns:IMusService_ChangeHand_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RequestShowCards">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMusService/RequestShowCards" message="tns:IMusService_RequestShowCards_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMusService/RequestShowCardsResponse" message="tns:IMusService_RequestShowCards_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IMusService" type="tns:IMusService">
@@ -291,6 +301,15 @@
     </wsdl:operation>
     <wsdl:operation name="ChangeHand">
       <soap:operation soapAction="http://tempuri.org/IMusService/ChangeHand" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RequestShowCards">
+      <soap:operation soapAction="http://tempuri.org/IMusService/RequestShowCards" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

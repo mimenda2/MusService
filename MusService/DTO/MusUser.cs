@@ -19,6 +19,7 @@ namespace MusWinService.DTO
         public string UserName { get; set; }
         public string Password { get; set; }
         public int CurrentRound { get; set; } = 0;
+        public int ShowCardsRound { get; set; } = 0;
         public DateTime CreationDate { get; set; }
         public List<MusCard> Cards { get; set; }
     }
