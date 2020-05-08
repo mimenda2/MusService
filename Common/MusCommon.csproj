@@ -35,6 +35,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,8 +49,10 @@
     </Compile>
     <Compile Include="Cards.cs" />
     <Compile Include="Enums\MusCard.cs" />
+    <Compile Include="Enums\MusSpecialMessages.cs" />
     <Compile Include="ExecuteMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpecialMessages.cs" />
     <Compile Include="TraceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

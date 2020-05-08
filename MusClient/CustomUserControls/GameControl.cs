@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using MusClient.Interface;
 using MusClient.ServiceMusReference;
 using System.IO;
+using MusCommon;
+using MusCommon.Enums;
 
 namespace MusClient.CustomUserControls
 {
@@ -126,6 +128,8 @@ namespace MusClient.CustomUserControls
             txtTraces.Bounds = new Rectangle(playerControl4.Right + border, playerControl3.Bottom + border,
                 playerControl2.Left - playerControl4.Right - (2 * border),
                 playerControl1.Top - playerControl3.Bottom - (2 * border));
+
+            picMessageImages.Bounds = txtTraces.Bounds;
 
             btnShowCards.Location = new Point(border, this.Height - btnShowCards.Height - border);
             lblWaitDiscard.Location = new Point(btnShowCards.Right + 2, btnShowCards.Top + ((btnShowCards.Height - lblWaitDiscard.Height) / 2));
@@ -265,8 +269,15 @@ namespace MusClient.CustomUserControls
 
                     using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
                     {
-                        c.GetMusDataAsync(generalData.GameName, generalData.UserName).
-                                ContinueWith(req => RefreshMusPointsData(req.Result as MusData));
+                        c.GetMusDataAsync(generalData.GameName, generalData.TeamName, generalData.UserName).
+                                ContinueWith(req => 
+                                {
+                                    RefreshMusPointsData(req.Result as MusData);
+                                    if (musData.SpecialMessage != MusSpecialMessages.None)
+                                    {
+                                        PlayMessage(musData.SpecialMessage);
+                                    }
+                                });
                         c.GetTracesAsync(generalData.GameName).
                             ContinueWith(req => RefreshMusTraces(req.Result as string[]));
                     }
@@ -404,7 +415,7 @@ namespace MusClient.CustomUserControls
         { 
             using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
             {
-                var musData = c.GetAllUserCards(generalData.GameName, generalData.UserName);
+                var musData = c.GetAllUserCards(generalData.GameName, generalData.TeamName, generalData.UserName);
                 bool primero = true;
                 foreach (var t in musData.MusTeams)
                 {
@@ -482,5 +493,53 @@ namespace MusClient.CustomUserControls
             }
         }
         #endregion
-    }
+
+        DateTime lastTimeSpecialMessage = DateTime.MinValue;
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if ((DateTime.Now - lastTimeSpecialMessage).TotalSeconds > 15)
+            {
+                MusSpecialMessages m = SpecialMessages.GetSpecialMessage(keyData);
+                if (m != MusSpecialMessages.None)
+                {
+                    lastTimeSpecialMessage = DateTime.Now;
+                    using (MyServiceClient c = new MyServiceClient(generalData.ServerIP))
+                    {
+                        c.SendSpecialMessageAsync(generalData.GameName, generalData.TeamName, generalData.UserName, m);
+                    }
+                }
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        delegate void PlayMessageDelegate(MusSpecialMessages msg);
+        void PlayMessage(MusSpecialMessages msg)
+        {
+            if (txtTraces.InvokeRequired)
+                txtTraces.BeginInvoke(new PlayMessageDelegate(PlayMessage), new object[] { msg });
+            else
+            {
+                switch (msg)
+                {
+                    case MusSpecialMessages.Gallina:
+                    case MusSpecialMessages.Quejica:
+                        Stream stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream($"MusClient.Res.{msg}.wav");
+                        using (System.Media.SoundPlayer player = new System.Media.SoundPlayer(stream))
+                            player.Play();
+                        break;
+                    case MusSpecialMessages.Loser:
+                        Stream imgStream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream($"MusClient.Res.{msg}.png");
+                        picMessageImages.Image = new Bitmap(imgStream);
+                        picMessageImages.Visible = true;
+                        Task.Delay(3000).ContinueWith(t =>
+                        {
+                            picMessageImages.Visible = false;
+                        },
+                    TaskScheduler.FromCurrentSynchronizationContext());
+                        break;
+                }
+            }
+        }
+     }
 }

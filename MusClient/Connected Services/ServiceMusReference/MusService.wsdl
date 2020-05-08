@@ -105,6 +105,12 @@
   <wsdl:message name="IMusService_RequestShowCards_OutputMessage">
     <wsdl:part name="parameters" element="tns:RequestShowCardsResponse" />
   </wsdl:message>
+  <wsdl:message name="IMusService_SendSpecialMessage_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendSpecialMessage" />
+  </wsdl:message>
+  <wsdl:message name="IMusService_SendSpecialMessage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendSpecialMessageResponse" />
+  </wsdl:message>
   <wsdl:portType name="IMusService">
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IMusService/Login" message="tns:IMusService_Login_InputMessage" />
@@ -169,6 +175,10 @@
     <wsdl:operation name="RequestShowCards">
       <wsdl:input wsaw:Action="http://tempuri.org/IMusService/RequestShowCards" message="tns:IMusService_RequestShowCards_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMusService/RequestShowCardsResponse" message="tns:IMusService_RequestShowCards_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendSpecialMessage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMusService/SendSpecialMessage" message="tns:IMusService_SendSpecialMessage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMusService/SendSpecialMessageResponse" message="tns:IMusService_SendSpecialMessage_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IMusService" type="tns:IMusService">
@@ -310,6 +320,15 @@
     </wsdl:operation>
     <wsdl:operation name="RequestShowCards">
       <soap:operation soapAction="http://tempuri.org/IMusService/RequestShowCards" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSpecialMessage">
+      <soap:operation soapAction="http://tempuri.org/IMusService/SendSpecialMessage" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

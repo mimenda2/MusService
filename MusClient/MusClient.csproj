@@ -253,5 +253,14 @@
   <ItemGroup>
     <EmbeddedResource Include="Res\mano.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Res\Gallina.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Res\Quejica.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Res\Loser.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

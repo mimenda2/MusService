@@ -85,7 +85,7 @@ namespace MusClient
                 {
                     if (State == MusState.FinishGame)
                         return true;
-                    var musData = c.GetMusData(generalData.GameName, generalData.UserName);
+                    var musData = c.GetMusData(generalData.GameName, generalData.TeamName, generalData.UserName);
                     foreach (var t in musData.MusTeams)
                     {
                         if (round < 0)
@@ -127,7 +127,7 @@ namespace MusClient
                 {
                     if (State == MusState.FinishGame)
                         return true;
-                    var musData = c.GetMusData(generalData.GameName, generalData.UserName);
+                    var musData = c.GetMusData(generalData.GameName, generalData.TeamName, generalData.UserName);
                     foreach (var t in musData.MusTeams)
                     {
                         if (round < 0)

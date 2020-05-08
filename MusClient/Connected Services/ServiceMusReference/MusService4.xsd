@@ -8,6 +8,7 @@
       <xs:element minOccurs="0" name="MusTeams" nillable="true" type="tns:ArrayOfMusTeamData" />
       <xs:element minOccurs="0" name="PointsToWin" type="xs:long" />
       <xs:element minOccurs="0" name="Round" type="xs:int" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/MusCommon.Enums" minOccurs="0" name="SpecialMessage" type="q1:MusSpecialMessages" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="MusData" nillable="true" type="tns:MusData" />
@@ -19,8 +20,8 @@
   <xs:element name="ArrayOfMusTeamData" nillable="true" type="tns:ArrayOfMusTeamData" />
   <xs:complexType name="MusTeamData">
     <xs:sequence>
-      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/MusCommon.Enums" minOccurs="0" name="CardsUser1" nillable="true" type="q1:ArrayOfMusCard" />
-      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/MusCommon.Enums" minOccurs="0" name="CardsUser2" nillable="true" type="q2:ArrayOfMusCard" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/MusCommon.Enums" minOccurs="0" name="CardsUser1" nillable="true" type="q2:ArrayOfMusCard" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/MusCommon.Enums" minOccurs="0" name="CardsUser2" nillable="true" type="q3:ArrayOfMusCard" />
       <xs:element minOccurs="0" name="GamePoints" type="xs:int" />
       <xs:element minOccurs="0" name="Points" type="xs:int" />
       <xs:element minOccurs="0" name="RoundUserName1" type="xs:int" />

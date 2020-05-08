@@ -53,4 +53,13 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="MusCard" nillable="true" type="tns:MusCard" />
+  <xs:simpleType name="MusSpecialMessages">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Gallina" />
+      <xs:enumeration value="Loser" />
+      <xs:enumeration value="Quejica" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="MusSpecialMessages" nillable="true" type="tns:MusSpecialMessages" />
 </xs:schema>

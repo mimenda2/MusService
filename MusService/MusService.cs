@@ -120,16 +120,16 @@ namespace MusWinService
             return "OK";
         }
 
-        public MusData GetMusData(string gameName, string userName)
+        public MusData GetMusData(string gameName, string teamName, string userName)
         {
-            return GetMusData(gameName, userName, false);
+            return GetMusData(gameName, teamName, userName, false);
         }
 
-        public MusData GetAllUserCards(string gameName, string userName)
+        public MusData GetAllUserCards(string gameName, string teamName, string userName)
         {
             var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
             AddTrace(game, $"{userName} pide mostrar cartas de todos los jugadores");
-            return GetMusData(gameName, userName, true);
+            return GetMusData(gameName, teamName, userName, true);
         }
         public List<MusCard> GetCards(string gameName, string teamName, string userName)
         {
@@ -140,10 +140,9 @@ namespace MusWinService
             var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
             var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
             var user = team.Users.FirstOrDefault(x => x.UserName == userName);
-            //foreach(MusCard discard in discarded)
-            //    user.Cards.Remove(discard);
-            AddTrace(game, $"{userName} se descarta {discarded?.Count} cartas: {string.Join(", ", discarded)}");
-            foreach(MusCard mC in discarded)
+            foreach (MusCard discard in discarded)
+                user.Cards.Remove(discard);
+            foreach (MusCard mC in discarded)
             {
                 if (mC != MusCard.Empty && mC != MusCard.Back)
                     game.Cards.CardsDiscarded.Add(mC);
@@ -241,14 +240,29 @@ namespace MusWinService
         public void RequestShowCards(string gameName, string teamName, string userName, int round)
         {
             var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
-            AddTrace(game, $"{userName} pide enseñar cartas en ronda: " + round);
+            AddTrace(game, $"{userName} pide enseñar cartas en ronda {round}");
             var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
             var user = team.Users.FirstOrDefault(x => x.UserName == userName);
             user.ShowCardsRound = round;
         }
+        public void SendSpecialMessage(string gameName, string teamName, string userName, MusSpecialMessages message)
+        {
+            var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
+            AddTrace(game, $"{userName} pide enviar mensaje especial: {message}");
+            var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
+
+            foreach (var t in game.Teams)
+            {
+                if (t != team)
+                {
+                    foreach (var u in t.Users)
+                        u.SpecialMessage = message;
+                }
+            }
+        }
         #endregion
 
-            #region Traces
+        #region Traces
         private static TraceSource mySource = new TraceSource("TraceMusService");
         public static void StartTraces()
         {
@@ -274,7 +288,7 @@ namespace MusWinService
             game.Traces.Add($"{DateTime.Now.ToString("HH:mm:ss")} {trace}");
         }
         #endregion  
-        MusData GetMusData(string gameName, string userName, bool getCards)
+        MusData GetMusData(string gameName, string teamName, string userName, bool getCards)
         {
             MusData musData = new MusData();
             try
@@ -282,26 +296,33 @@ namespace MusWinService
                 var game = MusDatabase.Games.FirstOrDefault(x => x.GameName == gameName);
                 if (game != null)
                 {
+                    var team = game.Teams.FirstOrDefault(x => x.TeamName == teamName);
+                    var user = team?.Users.FirstOrDefault(x => x.UserName == userName);
                     musData.MusTeams = new List<MusTeamData>();
-                    foreach (var team in game.Teams)
+                    foreach (var t in game.Teams)
                     {
                         musData.MusTeams.Add(new MusTeamData()
                         {
-                            TeamName = team.TeamName,
-                            UserName1 = team.Users?.Count > 0 ? team.Users[0].UserName : null,
-                            UserName2 = team.Users?.Count > 1 ? team.Users[1].UserName : null,
-                            RoundUserName1 = team.Users?.Count > 0 ? team.Users[0].CurrentRound : 0,
-                            RoundUserName2 = team.Users?.Count > 1 ? team.Users[1].CurrentRound : 0,
-                            ShowCardsName1 = team.Users?.Count > 0 ? team.Users[0].ShowCardsRound : 0,
-                            ShowCardsName2 = team.Users?.Count > 1 ? team.Users[1].ShowCardsRound : 0,
-                            Points = team.Puntuacion,
-                            GamePoints = team.GamePoints,
-                            CardsUser1 = getCards && team.Users?.Count > 0 ? team.Users[0].Cards : null,
-                            CardsUser2 = getCards && team.Users?.Count > 1 ? team.Users[1].Cards : null,
+                            TeamName = t.TeamName,
+                            UserName1 = t.Users?.Count > 0 ? t.Users[0].UserName : null,
+                            UserName2 = t.Users?.Count > 1 ? t.Users[1].UserName : null,
+                            RoundUserName1 = t.Users?.Count > 0 ? t.Users[0].CurrentRound : 0,
+                            RoundUserName2 = t.Users?.Count > 1 ? t.Users[1].CurrentRound : 0,
+                            ShowCardsName1 = t.Users?.Count > 0 ? t.Users[0].ShowCardsRound : 0,
+                            ShowCardsName2 = t.Users?.Count > 1 ? t.Users[1].ShowCardsRound : 0,
+                            Points = t.Puntuacion,
+                            GamePoints = t.GamePoints,
+                            CardsUser1 = getCards && t.Users?.Count > 0 ? t.Users[0].Cards : null,
+                            CardsUser2 = getCards && t.Users?.Count > 1 ? t.Users[1].Cards : null,
                         });
                     }
                     musData.PointsToWin = game.PointsToWin;
                     musData.HandUser = game.HandUser;
+                    if (user != null)
+                    {
+                        musData.SpecialMessage = user.SpecialMessage;
+                        user.SpecialMessage = MusSpecialMessages.None;
+                    }
                 }
             }
             catch (Exception ex)

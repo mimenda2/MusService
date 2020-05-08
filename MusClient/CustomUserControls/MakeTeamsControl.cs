@@ -86,8 +86,8 @@ namespace MusClient.CustomUserControls
                     {
                         if (IsDisposed || ParentForm.Disposing || ParentForm.IsDisposed)
                             return;
-                        data = c.GetMusData(generalData.GameName, generalData.UserName);
-                        if (data.MusTeams.Length == 2 &&
+                        data = c.GetMusData(generalData.GameName, generalData.TeamName, generalData.UserName);
+                        if (data.MusTeams?.Length == 2 &&
                             !string.IsNullOrEmpty(data.MusTeams[0].UserName1) &&
                             !string.IsNullOrEmpty(data.MusTeams[0].UserName2) &&
                             !string.IsNullOrEmpty(data.MusTeams[1].UserName1) &&
@@ -107,7 +107,7 @@ namespace MusClient.CustomUserControls
                         {
                             if (onlyCheckOnce)
                             {
-                                if (data.MusTeams.Length > 0)
+                                if (data.MusTeams?.Length > 0)
                                 {
                                     foreach(var t in data.MusTeams)
                                     {

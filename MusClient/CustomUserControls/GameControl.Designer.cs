@@ -36,6 +36,7 @@
             this.txtTraces = new System.Windows.Forms.TextBox();
             this.lblError = new System.Windows.Forms.Label();
             this.cmbHandUser = new System.Windows.Forms.ComboBox();
+            this.lblWaitDiscard = new System.Windows.Forms.Label();
             this.btnShowCards = new MusClient.CustomUserControls.ButtonWithImage();
             this.btnDiscard = new MusClient.CustomUserControls.ButtonWithImage();
             this.btnNextRound = new MusClient.CustomUserControls.ButtonWithImage();
@@ -47,10 +48,11 @@
             this.playerControl2 = new MusClient.CustomUserControls.PlayerControl();
             this.playerControl3 = new MusClient.CustomUserControls.PlayerControl();
             this.playerControl1 = new MusClient.CustomUserControls.PlayerControl();
-            this.lblWaitDiscard = new System.Windows.Forms.Label();
+            this.picMessageImages = new System.Windows.Forms.PictureBox();
             this.grpPoints.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudTeam2Points)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudTeam1Points)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picMessageImages)).BeginInit();
             this.SuspendLayout();
             // 
             // grpPoints
@@ -120,6 +122,16 @@
             this.cmbHandUser.Name = "cmbHandUser";
             this.cmbHandUser.Size = new System.Drawing.Size(129, 21);
             this.cmbHandUser.TabIndex = 15;
+            // 
+            // lblWaitDiscard
+            // 
+            this.lblWaitDiscard.AutoSize = true;
+            this.lblWaitDiscard.Location = new System.Drawing.Point(123, 709);
+            this.lblWaitDiscard.Name = "lblWaitDiscard";
+            this.lblWaitDiscard.Size = new System.Drawing.Size(104, 13);
+            this.lblWaitDiscard.TabIndex = 16;
+            this.lblWaitDiscard.Text = "Esperando al resto...";
+            this.lblWaitDiscard.Visible = false;
             // 
             // btnShowCards
             // 
@@ -249,21 +261,22 @@
             this.playerControl1.TeamName = null;
             this.playerControl1.UserName = null;
             // 
-            // lblWaitDiscard
+            // picMessageImages
             // 
-            this.lblWaitDiscard.AutoSize = true;
-            this.lblWaitDiscard.Location = new System.Drawing.Point(123, 709);
-            this.lblWaitDiscard.Name = "lblWaitDiscard";
-            this.lblWaitDiscard.Size = new System.Drawing.Size(104, 13);
-            this.lblWaitDiscard.TabIndex = 16;
-            this.lblWaitDiscard.Text = "Esperando al resto...";
-            this.lblWaitDiscard.Visible = false;
+            this.picMessageImages.Location = new System.Drawing.Point(244, 433);
+            this.picMessageImages.Name = "picMessageImages";
+            this.picMessageImages.Size = new System.Drawing.Size(100, 100);
+            this.picMessageImages.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picMessageImages.TabIndex = 17;
+            this.picMessageImages.TabStop = false;
+            this.picMessageImages.Visible = false;
             // 
             // GameControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Green;
+            this.Controls.Add(this.picMessageImages);
             this.Controls.Add(this.lblWaitDiscard);
             this.Controls.Add(this.cmbHandUser);
             this.Controls.Add(this.lblError);
@@ -282,6 +295,7 @@
             this.grpPoints.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudTeam2Points)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudTeam1Points)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picMessageImages)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -313,5 +327,6 @@
         private GamePointsControl gamePointsTeam2;
         private GamePointsControl gamePointsTeam1;
         private System.Windows.Forms.Label lblWaitDiscard;
+        private System.Windows.Forms.PictureBox picMessageImages;
     }
 }

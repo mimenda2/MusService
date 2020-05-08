@@ -24,7 +24,7 @@ namespace MusWinService
         string StartGame(string gameName, int pointsToWin);
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         [OperationContract, WebGet]
-        MusData GetMusData(string gameName, string userName);
+        MusData GetMusData(string gameName, string teamName, string userName);
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         [OperationContract, WebGet]
         List<MusCard> GetCards(string gameName, string teamName, string userName);
@@ -51,13 +51,16 @@ namespace MusWinService
         List<string> GetTraces(string gameName);
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         [OperationContract, WebGet]
-        MusData GetAllUserCards(string gameName, string userName);
+        MusData GetAllUserCards(string gameName, string teamName, string userName);
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         [OperationContract, WebGet]
         string ChangeHand(string gameName, string userName, string newHandUser);
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         [OperationContract, WebGet]
         void RequestShowCards(string gameName, string teamName, string userName, int round);
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract, WebGet]
+        void SendSpecialMessage(string gameName, string teamName, string userName, MusSpecialMessages message);
     }
 
     [DataContract]
@@ -77,7 +80,10 @@ namespace MusWinService
 
         [DataMember]
         public string HandUser { get; set; }
-        
+
+        [DataMember]
+        public MusSpecialMessages SpecialMessage { get; set; } = MusSpecialMessages.None;
+
     }
     [DataContract]
     public class MusTeamData

@@ -71,7 +71,9 @@ namespace PruebasServicioMus
             MusData musData;
             using (MyServiceClient c = new MyServiceClient(serverIP))
             {
-                musData = c.GetMusData(txtGameName.Text, txtSelectedPlayer.Text);
+                musData = c.GetMusData(txtGameName.Text,
+                    txtTeamName1.Text, 
+                    txtSelectedPlayer.Text);
             }
             txtNumCuentasA.Text = musData.MusTeams[0].Points.ToString();
             txtNumCuentasB.Text = musData.MusTeams[1].Points.ToString();
